@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public void Rotate(Vector2 rotationVector)
     {
-        _rotationX += rotationVector.y * RotationSpeed * Time.deltaTime;
+        _rotationX -= rotationVector.y * RotationSpeed * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(_rotationX,90, 0);
     }
 }
