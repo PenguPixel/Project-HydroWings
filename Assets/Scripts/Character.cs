@@ -7,17 +7,14 @@ public class Character : MonoBehaviour
 
     private InputAction _moveAction;
 
-    private InputAction _lookAction;
-
     private InputAction _attackAction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _moveAction = InputSystem.actions.FindAction("Move");
-        _lookAction = InputSystem.actions.FindAction("Look");
         _attackAction = InputSystem.actions.FindAction("Attack");
 
-        Cursor.visible = false;
+        Cursor.visible = true;
     }
 
     // Update is called once per frame
@@ -25,8 +22,6 @@ public class Character : MonoBehaviour
     {
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);
-
-        Vector2 lookVector = _lookAction.ReadValue<Vector2>();
-        CharacterController.Rotate(lookVector);
+        CharacterController.Rotate(movementVector.y);
     }
 }

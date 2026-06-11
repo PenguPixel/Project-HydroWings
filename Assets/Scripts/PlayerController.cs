@@ -1,16 +1,17 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private CharacterController _characterConroller;
 
-    public float MovementSpeed = 2f;
+    public float MovementSpeed = 5f;
 
-    public float AccelerationSpeed = 1.5f;
-
-    public float RotationSpeed = 5f;
-
-    private float _rotationX;
+    public float RotationSpeed = 50f;
+    public float ReturnSpeed = 60f;
+    public float MaxRotationAngle = 25f;
+    private float _rotationX = 0f;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,14 +20,25 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector2 movementVector)
     {
-        Vector3 move = transform.up * movementVector.y + transform.forward * movementVector.x;
-        move = move * (MovementSpeed * Time.deltaTime);
-        _characterConroller.Move(move);
+        Vector3 moveDirection = Vector3.up * movementVector.y + Vector3.right * movementVector.x;
+
+        Vector3 movement = moveDirection * (MovementSpeed * Time.deltaTime);
+        
+        _characterConroller.Move(movement);
     }
 
-    public void Rotate(Vector2 rotationVector)
+    public void Rotate(float verticalInput)
     {
-        _rotationX -= rotationVector.y * RotationSpeed * Time.deltaTime;
-        transform.localRotation = Quaternion.Euler(_rotationX,90, 0);
+        if (Mathf.Abs(verticalInput) > 0.01f)
+        {
+            _rotationX -= verticalInput * RotationSpeed * Time.deltaTime;
+        }
+        else
+        {
+            _rotationX = Mathf.MoveTowards(_rotationX, 0f, ReturnSpeed * Time.deltaTime);
+        }
+        
+        _rotationX = Math.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
+        transform.localRotation = Quaternion.Euler(_rotationX,90f, 0f);
     }
 }
