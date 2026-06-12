@@ -14,4 +14,15 @@ public class ProjectileStats : ScriptableObject
     public float Spread = 0;
     [Header("Projectile Prefabs")] 
     public List<GameObject> projectilePrefabs;
+
+    public GameObject GetRandomProjectilePrefab()
+    {
+        if (projectilePrefabs == null || projectilePrefabs.Count == 0)
+        {
+            Debug.Log($"ProjectilePrafabs List of {name} is empty or null");
+            return null;
+        }
+        int randomIndex = Random.Range(0, projectilePrefabs.Count);
+        return projectilePrefabs[randomIndex];
+    }
 }

@@ -3,17 +3,16 @@ using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
+    public CharacterStats Stats;
     public PlayerController CharacterController;
 
     private InputAction _moveAction;
 
-    private InputAction _attackAction;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+   // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _moveAction = InputSystem.actions.FindAction("Move");
-        _attackAction = InputSystem.actions.FindAction("Attack");
-
+        
         Cursor.visible = true;
     }
 
@@ -23,5 +22,11 @@ public class Character : MonoBehaviour
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
+       
+    }
+
+    private void Shoot()
+    {
+        throw new System.NotImplementedException();
     }
 }

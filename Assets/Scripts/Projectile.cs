@@ -5,39 +5,35 @@ using Random = Unity.Mathematics.Random;
 
 public class Projectile : MonoBehaviour
 {
-    public static ProjectileStats Stats;
-    private List<GameObject> _list;
-    private int _count;
-    private GameObject _localProjectilePrefab;
+    public  ProjectileStats Stats;
     
-
-    [SerializeField] private float attackCooldown;
     private float _localRemainingLifetime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _localRemainingLifetime = Stats.RemainingLifetime;
-        _list = Stats.projectilePrefabs;
-        
-        _localProjectilePrefab = PickProjectilePrefab(_list);
+        if (Stats != null)
+        {
+            _localRemainingLifetime = Stats.RemainingLifetime;
+        }
+        else
+        {
+            Debug.Log("Projectile Stats not set on {name}");
+        }
     }
 
-    private GameObject PickProjectilePrefab(List<GameObject> list)
-    {
-        Random rnd = new Random();
-        if(list != null)
-        {
-            int index = rnd.NextInt(list.Count);
-            GameObject prefab = list[index];
-        }
-        return _localProjectilePrefab;
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
+        MovementHandling();
         LifetimeHandling();
+    }
+
+    private void MovementHandling()
+    {
+        transform.Translate(Vector3.right * (Stats.Speed * Time.deltaTime), Space.World);
     }
 
     private void LifetimeHandling()
@@ -46,7 +42,6 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
         _localRemainingLifetime -= Time.deltaTime;
     }
 }
