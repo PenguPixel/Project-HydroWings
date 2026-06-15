@@ -37,7 +37,6 @@ public class WeaponController : MonoBehaviour
                 {
                     point.Shoot();
                 }
-                else return;
             }
         }
     }

@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
-       
+
+        movementVector += new Vector2((CameraController.speed / CharacterController.MovementSpeed) , 0);
+        CharacterController.Move(movementVector);
     }
 }

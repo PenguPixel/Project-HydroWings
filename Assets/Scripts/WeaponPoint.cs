@@ -64,7 +64,8 @@ public class WeaponPoint : MonoBehaviour
 
         if (prefabToSpawn != null)
         {
-            Instantiate(prefabToSpawn, transform.position, transform.rotation);
+            Quaternion rotation = Quaternion.Euler(0f, 0f, -90f);
+            Instantiate(prefabToSpawn, transform.position, rotation);
         }
     }
 
