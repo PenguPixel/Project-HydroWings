@@ -7,8 +7,6 @@ public class ProjectileStats : ScriptableObject
 {
     [Header("Projectile Stats")]
     public float damage = 100f;
-    public float FireRate = 1f;
-    public float Range = 5f;
     public float Speed = 1f;
     public float RemainingLifetime = 2f;
     public float Spread = 0;

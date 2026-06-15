@@ -4,6 +4,13 @@ using UnityEngine;
 public class WeaponPoint : MonoBehaviour
 {
     [SerializeField] private ProjectileStats stats;
+    [Header("LocalStats")]
+    public float FireRate = 0.4f;
+    private float _fireCooldownTimer = 0f;
+    [Header("AutoFireStats")]
+    public bool AutoFire = false;
+    public float Range = 0f;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Start()
@@ -20,12 +27,29 @@ public class WeaponPoint : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        CooldownHandling();
+    }
+
+    private void CooldownHandling()
+    {
+        if (_fireCooldownTimer <= 0f)
+        {
+            _fireCooldownTimer = FireRate;
+        }
+        else
+        {
+            _fireCooldownTimer -= Time.deltaTime;
+        }
+    }
+
     private void OnDestroy()
     {
         WeaponController controller = GetComponentInParent<WeaponController>();
         if (controller != null)
         {
-            controller.UnregisterWeaponpoint(this);
+            controller.UnregisterWeaponPoint(this);
         }
     }
 
@@ -36,6 +60,14 @@ public class WeaponPoint : MonoBehaviour
         if (prefabToSpawn != null)
         {
             Instantiate(prefabToSpawn, transform.position, transform.rotation);
+        }
+    }
+
+    public void Shoot()
+    {
+        if (_fireCooldownTimer !<=0)
+        {
+            Fire();
         }
     }
 }

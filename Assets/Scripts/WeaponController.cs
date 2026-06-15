@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,8 +9,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private List<WeaponPoint> activeWeaponPoints = new List<WeaponPoint>();
 
     [Header("Shooting Settings")]
-    [SerializeField] private float fireRate = 0.4f;
-    private float _fireCooldownTimer;
+    //[SerializeField] private float fireRate = 0.4f;
+    //private float _fireCooldownTimer;
 
     private InputAction _attackAction;
 
@@ -23,20 +24,26 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CooldownHandling();
+        //CooldownHandling();
         InputHandling();
     }
 
     private void InputHandling()
     {
-        if (_attackAction != null && _attackAction.IsPressed() &&  _fireCooldownTimer <= 0f)
+        if (_attackAction != null && _attackAction.IsPressed())
         {
-            Shoot();
-            _fireCooldownTimer = fireRate;
+            foreach (WeaponPoint point in activeWeaponPoints)
+            {
+                if (point != point.AutoFire)
+                {
+                    point.Shoot();
+                }
+                else return;
+            }
         }
     }
 
-    private void Shoot()
+    /*private void Shoot()
     {
         foreach (WeaponPoint point in activeWeaponPoints)
         {
@@ -45,15 +52,15 @@ public class WeaponController : MonoBehaviour
                 point.Fire();
             }
         }
-    }
+    }*/
 
-    private void CooldownHandling()
+    /*private void CooldownHandling()
     {
         if (_fireCooldownTimer > 0f)
         {
             _fireCooldownTimer -= Time.deltaTime;
         }
-    }
+    }*/
 
     public void RegisterWeaponPoint(WeaponPoint point)
         {
@@ -63,7 +70,7 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-    public void UnregisterWeaponpoint(WeaponPoint weaponPoint)
+    public void UnregisterWeaponPoint(WeaponPoint weaponPoint)
     {
         if (activeWeaponPoints.Contains(weaponPoint))
         {
