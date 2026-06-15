@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,16 +12,17 @@ public class PlayerController : MonoBehaviour
     public float ReturnSpeed = 60f;
     public float MaxRotationAngle = 25f;
     private float _rotationX = 0f;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _characterConroller = GetComponent<CharacterController>();
     }
+    
 
     public void Move(Vector2 movementVector)
     {
-        Vector3 moveDirection = Vector3.up * movementVector.y + Vector3.right * movementVector.x;
+        Vector3 moveDirection = up * movementVector.y + right * movementVector.x;
 
         Vector3 movement = moveDirection * (MovementSpeed * Time.deltaTime);
         
