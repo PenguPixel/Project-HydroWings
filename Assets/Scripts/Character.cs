@@ -24,9 +24,4 @@ public class Character : MonoBehaviour
         CharacterController.Rotate(movementVector.y);
        
     }
-
-    private void Shoot()
-    {
-        throw new System.NotImplementedException();
-    }
 }

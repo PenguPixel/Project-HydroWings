@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
-    [SerializeField] private float speed = 2f;
+    public float speed = 2f;
     [SerializeField] private float smoothTime = 0.2f;
     [SerializeField] private float maxCamOffsetY = 30;
 
