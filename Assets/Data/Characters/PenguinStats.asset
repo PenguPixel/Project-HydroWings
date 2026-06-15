@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45cf1fa10dc74a438fd09071a57c9ce, type: 3}
   m_Name: PenguinStats
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  MaxHealth: 0
+  MaxHealth: 500
   Resistances: 0
