@@ -24,7 +24,6 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CooldownHandling();
         InputHandling();
     }
 
@@ -43,24 +42,6 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    /*private void Shoot()
-    {
-        foreach (WeaponPoint point in activeWeaponPoints)
-        {
-            if (point != null)
-            {
-                point.Fire();
-            }
-        }
-    }*/
-
-    /*private void CooldownHandling()
-    {
-        if (_fireCooldownTimer > 0f)
-        {
-            _fireCooldownTimer -= Time.deltaTime;
-        }
-    }*/
 
     public void RegisterWeaponPoint(WeaponPoint point)
         {

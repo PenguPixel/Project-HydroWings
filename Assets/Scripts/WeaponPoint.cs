@@ -30,6 +30,10 @@ public class WeaponPoint : MonoBehaviour
     private void Update()
     {
         CooldownHandling();
+        if (AutoFire)
+        {
+            AutoShooting();
+        }
     }
 
     private void CooldownHandling()
@@ -68,6 +72,22 @@ public class WeaponPoint : MonoBehaviour
         if (_fireCooldownTimer !<=0)
         {
             Fire();
+        }
+    }
+
+    //TODO Method GetTarget
+    
+    public void AutoShooting()
+    {
+        //TODO Check Range and Target
+        if (_fireCooldownTimer <= 0f)
+        {
+            _fireCooldownTimer = FireRate;
+            Fire();
+        }
+        else
+        {
+            _fireCooldownTimer -= Time.deltaTime;
         }
     }
 }
