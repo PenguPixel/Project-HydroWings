@@ -13,13 +13,7 @@ MonoBehaviour:
   m_Name: WaterProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   damage: 100
-  FireRate: 10
-  Range: 5
   Speed: 20
   RemainingLifetime: 2
   Spread: 0
-  projectilePrefabs:
-  - {fileID: 3164936212862076333, guid: 3afc571111fcff7408af947335cd2628, type: 3}
-  - {fileID: 3922819441966907631, guid: 4b7f50b5e9789e94d9a7458381a56a27, type: 3}
-  - {fileID: 5632162005442438862, guid: d64695e8c00afd543aca6294a1b79ea2, type: 3}
-  - {fileID: 1803193714219734736, guid: 13e99157e69498e4098ebb25998604db, type: 3}
+  projectilePrefab: {fileID: 1137696020633802172, guid: e439ca46b8842cb4ba66b7acb41d1f5a, type: 3}

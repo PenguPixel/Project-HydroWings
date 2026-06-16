@@ -92,6 +92,7 @@ public class WeaponPoint : MonoBehaviour
         WeaponController controller = GetComponentInParent<WeaponController>();
         if (controller != null)
         {
+            _pool.Clear();
             controller.UnregisterWeaponPoint(this);
         }
     }
