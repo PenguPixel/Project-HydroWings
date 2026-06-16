@@ -1,9 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class WeaponPoint : MonoBehaviour
 {
     [SerializeField] private ProjectileStats stats;
+
+    private ObjectPool<Projectile> _pool;
+    
     [Header("LocalStats")]
     public float FireRate = 0.4f;
     private float _fireCooldownTimer = 0f;
@@ -26,6 +30,35 @@ public class WeaponPoint : MonoBehaviour
         {
             Debug.Log($"No WeaponController on {gameObject.name} ");
         }
+        
+        _pool = new ObjectPool<Projectile>(
+            createFunc: CreateProjectile,
+            actionOnGet: OnGetProjectile,
+            actionOnRelease: OnReleaseProjectile,
+            actionOnDestroy: OnDestroyProjectile,
+            collectionCheck: true,
+            defaultCapacity: 20,
+            maxSize: 50);
+    }
+
+    private void OnDestroyProjectile(Projectile obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnReleaseProjectile(Projectile obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnGetProjectile(Projectile obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    private Projectile CreateProjectile()
+    {
+        throw new NotImplementedException();
     }
 
     private void Update()
@@ -60,7 +93,7 @@ public class WeaponPoint : MonoBehaviour
 
     public void Fire()
     {
-        GameObject prefabToSpawn = stats.GetRandomProjectilePrefab();
+        GameObject prefabToSpawn = stats.projectilePrefab;
 
         if (prefabToSpawn != null)
         {
