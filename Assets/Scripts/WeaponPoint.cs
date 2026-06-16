@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -13,7 +14,6 @@ public class WeaponPoint : MonoBehaviour
     private float _fireCooldownTimer = 0f;
     [Header("AutoFireStats")]
     public bool AutoFire = false;
-
     [SerializeField] private float Range = 0f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
