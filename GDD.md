@@ -2,21 +2,32 @@
 
 ## 1. High Concept & Core Loop
 ### 1.1 Das High Concept (Die Vision)
-Wir kämpfen mit mit Flugtieren in Jet Form gegen Zuckerwesen die von der Zuckerindustrie (Endboss) geschickt wurden um uns ungesund zu machen.
+Wir kämpfen mit mit Flugtieren in Jet Form gegen Zuckerwesen die von der Zuckerindustrie (Endboss) geschickt wurden 
+um uns ungesund zu machen.
 Geschossen wird mit Wasser um den ganzen Zucker aufzulösen.
 > 
 
 ### 1.2 Kernmerkmale (Key Features)
-Gewaltfreies ShootEmUp Game für Kinder und Jugendliche mit Relitätbezug auf negative Auswirkungen von Zucker auf die Gesundheit.
+Gewaltfreies ShootEmUp Game für Kinder und Jugendliche mit Relitätbezug auf negative Auswirkungen von Zucker 
+auf die Gesundheit.
 
-* **Feature 1: Mit Wasser auf Zucker-Gegner schießen um sie zu besiegen ** 
-* **Feature 2:** 
-* **Feature 3:** 
+* Feature 1: Mit Wasser auf Zucker-Gegner schießen um sie zu besiegen  
+* Feature 2: Wasser muss nachgeladen werden, dafür muss man unter Wasser
+* Feature 3: Es gibt Power Ups die zusätzliche/stärkere Geschosse ermöglichen oder den Wasservorrat vergrößern
 >
 
 ### 1.3 Die Gameplay-Schleife (Core Loop)
-*Welche fortlaufenden Aktionen führt der Spieler primär aus? (Sekunden- / Minuten-basiert)*
-1. **Aktion A (Moment-to-Moment):** 2. **Aktion B (Herausforderung):** 3. **Aktion C (Belohnung/Fortschritt):** *Visuelle Kette:*
+Der Spieler steuert den Character und feuert dabei auf Gegner die wiederrum selbst auf den Character feuern 
+und deren Projektilen man ausweichen muss. Außerdem muss der Spieler seine Wassermunition im Auge behalten um für 
+intensive Phasen gerüstet zu sein.
+
+Es gibt Hundernisse im Level denen ausgewichen werden muss, teilweise wird das nur unter Wasser funktionieren.
+
+1. Aktion A (Moment-to-Moment):			Schießen, Gegner besiegen, ausweichen
+2. Aktion B (Herausforderung):			Starke Power Ups aufsammeln und Boss Gegner am Ende des Levels besiegen
+3. Aktion C (Belohnung/Fortschritt): 	Durch Abschüsse Punkte sammeln für permanente Upgrades um stärker in Level zu starten 
+										-> Metaprogression
+
 > [Aktion A] ➔ [Aktion B] ➔ [Aktion C] ➔ Zurück zu [Aktion A]
 
 ### 1.4 Zielgruppe & Plattformen
