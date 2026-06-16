@@ -40,25 +40,30 @@ public class WeaponPoint : MonoBehaviour
             defaultCapacity: 20,
             maxSize: 50);
     }
-
-    private void OnDestroyProjectile(Projectile obj)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnReleaseProjectile(Projectile obj)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void OnGetProjectile(Projectile obj)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     private Projectile CreateProjectile()
     {
-        throw new NotImplementedException();
+        GameObject projectileGO = Instantiate(stats.projectilePrefab);
+        Projectile projectile = projectileGO.GetComponent<Projectile>();
+        projectile.SetPool(_pool);
+        return projectile;
+    }
+    
+    private void OnGetProjectile(Projectile projectile)
+    {
+        projectile.transform.position = transform.position;
+        projectile.transform.rotation = transform.rotation;
+        projectile.gameObject.SetActive(true);
+    }
+    
+    private void OnReleaseProjectile(Projectile projectile)
+    {
+        projectile.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyProjectile(Projectile projectile)
+    {
+        Destroy(projectile.gameObject);
     }
 
     private void Update()
@@ -93,12 +98,9 @@ public class WeaponPoint : MonoBehaviour
 
     public void Fire()
     {
-        GameObject prefabToSpawn = stats.projectilePrefab;
-
-        if (prefabToSpawn != null)
+        if (_pool != null)
         {
-            Quaternion rotation = Quaternion.Euler(0f, 0f, -90f);
-            Instantiate(prefabToSpawn, transform.position, rotation);
+            _pool.Get();
         }
     }
 
