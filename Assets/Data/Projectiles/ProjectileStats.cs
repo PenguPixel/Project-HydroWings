@@ -10,10 +10,11 @@ public class ProjectileStats : ScriptableObject
     public float Speed = 1f;
     public float RemainingLifetime = 2f;
     public float Spread = 0;
-    [Header("Projectile Prefabs")] 
-    public List<GameObject> projectilePrefabs;
+    [Header("Projectile Prefab")] 
+    public GameObject projectilePrefab;
 
-    public GameObject GetRandomProjectilePrefab()
+    /*----------------------------  OLD VERSION-----------------
+     public GameObject GetRandomProjectilePrefab()
     {
         if (projectilePrefabs == null || projectilePrefabs.Count == 0)
         {
@@ -22,5 +23,5 @@ public class ProjectileStats : ScriptableObject
         }
         int randomIndex = Random.Range(0, projectilePrefabs.Count);
         return projectilePrefabs[randomIndex];
-    }
+    }*/
 }

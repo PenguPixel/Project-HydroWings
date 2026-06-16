@@ -1,16 +1,18 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Pool;
 using Random = Unity.Mathematics.Random;
 
 public class Projectile : MonoBehaviour
 {
     public  ProjectileStats Stats;
     
+    private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
         if (Stats != null)
         {
@@ -38,10 +40,27 @@ public class Projectile : MonoBehaviour
 
     private void LifetimeHandling()
     {
-        if (_localRemainingLifetime <= 0)
+        if (_localRemainingLifetime <= 0f)
+        {
+            ReleaseToPool();
+        }
+        _localRemainingLifetime -= Time.deltaTime;
+    }
+
+    public void ReleaseToPool()
+    {
+        if (_assignedPool != null)
+        {
+            _assignedPool.Release(this);
+        }
+        else
         {
             Destroy(gameObject);
         }
-        _localRemainingLifetime -= Time.deltaTime;
+    }
+
+    public void SetPool(ObjectPool<Projectile> pool)
+    {
+        _assignedPool = pool;
     }
 }
