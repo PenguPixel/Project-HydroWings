@@ -2,12 +2,19 @@
 
 ## 1. High Concept & Core Loop
 ### 1.1 Das High Concept (Die Vision)
-*Kurzbeschreibung des Spiels in 1–2 Sätzen (Der sogenannte "Elevator Pitch"). Was macht das Spiel besonders?*
+Wir kämpfen mit mit Flugtieren in Jet Form gegen Zuckerwesen die von der Zuckerindustrie (Endboss) geschickt wurden um uns ungesund zu machen.
+Geschossen wird mit Wasser um den ganzen Zucker aufzulösen.
 > 
 
 ### 1.2 Kernmerkmale (Key Features)
-*Die 3–5 wichtigsten Verkaufsargumente oder Alleinstellungsmerkmale des Spiels.*
-* **Feature 1:** * **Feature 2:** * **Feature 3:** ### 1.3 Die Gameplay-Schleife (Core Loop)
+Gewaltfreies ShootEmUp Game für Kinder und Jugendliche mit Relitätbezug auf negative Auswirkungen von Zucker auf die Gesundheit.
+
+* **Feature 1: Mit Wasser auf Zucker-Gegner schießen um sie zu besiegen ** 
+* **Feature 2:** 
+* **Feature 3:** 
+>
+
+### 1.3 Die Gameplay-Schleife (Core Loop)
 *Welche fortlaufenden Aktionen führt der Spieler primär aus? (Sekunden- / Minuten-basiert)*
 1. **Aktion A (Moment-to-Moment):** 2. **Aktion B (Herausforderung):** 3. **Aktion C (Belohnung/Fortschritt):** *Visuelle Kette:*
 > [Aktion A] ➔ [Aktion B] ➔ [Aktion C] ➔ Zurück zu [Aktion A]
