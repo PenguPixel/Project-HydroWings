@@ -7,11 +7,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] public EnemyStats  Stats;
     [SerializeField] public CameraStats  CameraStats;
     
+    /*
+    // TODO Enemy local stats, resistances and PowerUp-Drop logics
     [Header("Local Stats")]
     [SerializeField] private bool HasResist = false;
     public List<DamageType> Resistances;
     [SerializeField] private bool HasPowerup = false;
     public List<PowerUpType> PowerUps;
+    */
+    
+    // TODO Move Handling
+    // TODO damage dealt handling
+    // TODO damage received handling
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

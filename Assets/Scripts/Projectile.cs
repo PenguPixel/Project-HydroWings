@@ -37,11 +37,11 @@ public class Projectile : MonoBehaviour
     {
         if (Stats.EnemyProjectile)
         {
-            transform.Translate(Vector3.left * (Stats.Speed * Time.deltaTime), Space.World);
+            transform.Translate(Vector3.left * (Stats.BaseSpeed * Time.deltaTime), Space.World);
         }
         else
         {
-            transform.Translate(Vector3.right * (Stats.Speed * Time.deltaTime), Space.World);
+            transform.Translate(Vector3.right * (Stats.BaseSpeed * Time.deltaTime), Space.World);
         }
     }
 
