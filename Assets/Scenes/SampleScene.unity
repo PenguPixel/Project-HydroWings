@@ -304,8 +304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb88c75e09822e1429f677a0e0684a2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  stats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
   player: {fileID: 1566981510}
-  maxCamOffsetY: 30
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +499,67 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1001 &649381688
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2555510189026628006, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: FireRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Name
+      value: TigerEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
 --- !u!1 &751848371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1711,6 +1772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
   Stats: {fileID: 11400000, guid: cd53f5118cc51074987fcdb558a2b29f, type: 2}
+  CameraStats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
   CharacterController: {fileID: 1566981511}
 --- !u!114 &1566981513
 MonoBehaviour:
@@ -2180,3 +2242,4 @@ SceneRoots:
   - {fileID: 362382375}
   - {fileID: 1698142202}
   - {fileID: 855431994}
+  - {fileID: 649381688}
