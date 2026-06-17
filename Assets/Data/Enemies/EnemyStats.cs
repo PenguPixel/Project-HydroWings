@@ -8,6 +8,5 @@ public class EnemyStats : ScriptableObject
     public float MaxHealth;
     public float Speed;
     public int Bounty;      // Check if needed
-    [Header("Prefab")]
-    public GameObject EnemyPrefab;
+    public GameObject Projectile = null;
 }

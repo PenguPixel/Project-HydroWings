@@ -4,9 +4,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public EnemyStats  Stats;
-    [SerializeField] private bool HasPowerup = false;
-    public List<DamageType> Resistances;
+    
+    [Header("Local Stats")]
     [SerializeField] private bool HasResist = false;
+    public List<DamageType> Resistances;
+    [SerializeField] private bool HasPowerup = false;
     public List<PowerUpType> PowerUps;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
