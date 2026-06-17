@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public EnemyStats  Stats;
+    [Header("Scriptable Object Scripts")]
+    [SerializeField] public EnemyStats  Stats;
+    [SerializeField] public CameraStats  CameraStats;
     
     [Header("Local Stats")]
     [SerializeField] private bool HasResist = false;

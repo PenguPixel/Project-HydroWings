@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private CameraStats stats;
     [SerializeField] private Transform player;
-
-    public static float speed = 2f;
-    public static float smoothTime = 0.2f;
-    [SerializeField] private float maxCamOffsetY = 30;
 
     private float _currentX;
     private float _yVelocity = 0.0f;
@@ -24,11 +21,11 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
-        _currentX += speed * Time.deltaTime;
+        _currentX += stats.speed * Time.deltaTime;
 
         float targetY = player.position.y;
-        float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, smoothTime);
-        currentY = Math.Clamp(currentY, -maxCamOffsetY, maxCamOffsetY);
+        float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, stats.smoothTime);
+        currentY = Math.Clamp(currentY, -stats.maxCamOffsetY, stats.maxCamOffsetY);
 
         transform.position = new Vector3(_currentX, currentY, transform.position.z);
     }

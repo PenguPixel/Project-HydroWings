@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 
 public class WeaponPoint : MonoBehaviour
 {
+    [Header("Projectile Stats")]
     [SerializeField] private ProjectileStats stats;
 
     private ObjectPool<Projectile> _pool;
@@ -120,12 +121,7 @@ public class WeaponPoint : MonoBehaviour
         //TODO Check Range and Target
         if (_fireCooldownTimer <= 0f)
         {
-            _fireCooldownTimer = FireRate;
             Fire();
-        }
-        else
-        {
-            _fireCooldownTimer -= Time.deltaTime;
         }
     }
 }

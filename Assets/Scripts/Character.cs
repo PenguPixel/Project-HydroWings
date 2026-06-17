@@ -4,15 +4,17 @@ using UnityEngine.InputSystem;
 public class Character : MonoBehaviour
 {
     public CharacterStats Stats;
+    public CameraStats CameraStats;
     public PlayerController CharacterController;
 
     private InputAction _moveAction;
+    private float _cameraMoveSpeed;
 
    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _moveAction = InputSystem.actions.FindAction("Move");
-        
+
         Cursor.visible = true;
     }
 
@@ -23,7 +25,7 @@ public class Character : MonoBehaviour
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
 
-        movementVector += new Vector2((CameraController.speed / CharacterController.MovementSpeed) , 0);
+        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);
         CharacterController.Move(movementVector);
     }
 }

@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   Stats: {fileID: 11400000, guid: ff94e42739ca86f4c808d5a84f5921a5, type: 2}
-  HasPowerup: 0
-  Resistances: 
+  CameraStats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
   HasResist: 0
+  Resistances: 
+  HasPowerup: 0
   PowerUps: 
 --- !u!1001 &3351487537105598680
 PrefabInstance:
