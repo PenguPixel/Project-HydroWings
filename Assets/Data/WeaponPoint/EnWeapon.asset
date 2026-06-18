@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01081f944648d94eb6764e53448db89, type: 3}
   m_Name: EnWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPointStats
-  IsEnemyWeapon: 0
-  IsAutoFire: 0
-  FireRate: 1
+  IsEnemyWeapon: 1
+  IsAutoFire: 1
+  FireRate: 1.5
   WeaponRange: 5

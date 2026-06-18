@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FrSecondaryWeapon
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPointStats
   IsEnemyWeapon: 0
-  IsAutoFire: 0
-  FireRate: 1
+  IsAutoFire: 1
+  FireRate: 0.5
   WeaponRange: 5

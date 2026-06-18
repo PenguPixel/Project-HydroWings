@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPointStats
   IsEnemyWeapon: 0
   IsAutoFire: 0
-  FireRate: 1
+  FireRate: 0.3
   WeaponRange: 5

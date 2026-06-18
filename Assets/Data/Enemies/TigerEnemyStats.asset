@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d1bd9b685d092448e8530be9385a88, type: 3}
   m_Name: TigerEnemyStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  MaxHealth: 10
-  Speed: 2
+  MaxHealth: 100
+  MovementSpeed: 0
   Bounty: 50
-  Projectile: {fileID: 0}
