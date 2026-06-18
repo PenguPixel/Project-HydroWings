@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour
     public List<PowerUpType> PowerUps;
     */
     
-    // TODO Move Handling
+    // TODO Layer handling
+    // TODO Move handling
     // TODO damage dealt handling
     // TODO damage received handling
     
