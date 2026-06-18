@@ -35,7 +35,14 @@ public class Projectile : MonoBehaviour
 
     private void MovementHandling()
     {
-        transform.Translate(Vector3.right * (Stats.Speed * Time.deltaTime), Space.World);
+        if (Stats.EnemyProjectile)
+        {
+            transform.Translate(Vector3.left * (Stats.BaseSpeed * Time.deltaTime), Space.World);
+        }
+        else
+        {
+            transform.Translate(Vector3.right * (Stats.BaseSpeed * Time.deltaTime), Space.World);
+        }
     }
 
     private void LifetimeHandling()

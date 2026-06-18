@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd15365467394e4db2d5ef890a95b5f, type: 3}
-  m_Name: WaterProjectile
+  m_Name: FrWaterProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
-  damage: 100
-  Speed: 20
+  Basedamage: 10
+  BaseSpeed: 8
   RemainingLifetime: 2
   Spread: 0
+  EnemyProjectile: 0
   projectilePrefab: {fileID: 1137696020633802172, guid: e439ca46b8842cb4ba66b7acb41d1f5a, type: 3}
