@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6398648056003046237}
   - component: {fileID: 3519716183181021384}
-  m_Layer: 0
-  m_Name: LollipopProjectile
+  m_Layer: 8
+  m_Name: EnLollipopProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,6 +113,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1281f5a445269974dbd7478c8d09ad69, type: 3}
       propertyPath: m_Name
       value: Lollipop
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1281f5a445269974dbd7478c8d09ad69, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
