@@ -63,8 +63,6 @@ public class Projectile : MonoBehaviour
                 ReleaseToPool();
             }
         }
-        
-        
     }
 
     private void DealDamageToCharacter(RaycastHit hitInfo)
