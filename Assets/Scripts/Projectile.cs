@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Projectile : MonoBehaviour
     
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
+    private bool _hasHit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
@@ -34,6 +36,20 @@ public class Projectile : MonoBehaviour
     {
         MovementHandling();
         LifetimeHandling();
+        float distanceThisFrame = projectileStats.BaseSpeed * Time.deltaTime;
+        _hasHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,
+            distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"));
+        if (_hasHit)
+        {
+            DealDamage(hit);
+        }
+        
+    }
+
+    private void DealDamage(RaycastHit hitInfo)
+    {
+        var enemyComponent = hitInfo.collider.GetComponent<Enemy>();
+        enemyComponent?.DealDamage(projectileStats.Basedamage);
     }
 
     private void MovementHandling()
