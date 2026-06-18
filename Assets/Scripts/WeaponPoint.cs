@@ -2,20 +2,20 @@ using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Pool;
+using Object = UnityEngine.Object;
 
 public class WeaponPoint : MonoBehaviour
 {
-    [Header("Projectile Stats")]
-    [SerializeField] private ProjectileStats stats;
+    [Header("Stats")]
+    [SerializeField] private ProjectileStats projectileStats;
+
+    [SerializeField] public WeaponPointStats weaponStats;
 
     private ObjectPool<Projectile> _pool;
     
     [Header("LocalStats")]
-    public float FireRate = 0.4f;
     private float _fireCooldownTimer = 0f;
-    [Header("AutoFireStats")]
-    public bool AutoFire = false;
-    [SerializeField] private float Range = 0f;
+    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -44,7 +44,7 @@ public class WeaponPoint : MonoBehaviour
     
     private Projectile CreateProjectile()
     {
-        GameObject projectileGO = Instantiate(stats.projectilePrefab);
+        GameObject projectileGO = Instantiate(projectileStats.projectilePrefab);
         Projectile projectile = projectileGO.GetComponent<Projectile>();
         projectile.SetPool(_pool);
         return projectile;
@@ -70,17 +70,48 @@ public class WeaponPoint : MonoBehaviour
     private void Update()
     {
         CooldownHandling();
-        if (AutoFire)
+        if (weaponStats.IsAutoFire)
         {
-            AutoShooting();
+            
+            var target = AcquireTarget();
+            if (target)
+            {
+                AutoShooting(target);
+            }
         }
+    }
+
+    private Enemy AcquireTarget()
+    {
+        var collidersInRange = Physics.OverlapSphere(transform.position, weaponStats.WeaponRange, LayerMask.GetMask("Enemy"));
+        Enemy targetCandidate = null;
+        foreach (var col in collidersInRange)
+        {
+            if (col.GetComponent<Enemy>() != null)
+            {
+                targetCandidate = col.GetComponent<Enemy>();
+                break;
+            }
+        }
+
+        if (targetCandidate == null) return targetCandidate;
+
+        foreach (var col in collidersInRange)
+        {
+            Enemy componentOfTarget = col.GetComponent<Enemy>();
+            if (componentOfTarget != null)
+            {
+                targetCandidate = componentOfTarget;
+            }
+        }
+        return targetCandidate;
     }
 
     private void CooldownHandling()
     {
         if (_fireCooldownTimer <= 0f)
         {
-            _fireCooldownTimer = FireRate;
+            _fireCooldownTimer = weaponStats.FireRate;
         }
         else
         {
@@ -113,13 +144,17 @@ public class WeaponPoint : MonoBehaviour
             Fire();
         }
     }
-
-    //TODO Method GetTarget
     
-    public void AutoShooting()
+    
+    public void AutoShooting(Enemy target)
     {
-        //TODO Check Range and Target
-        if (_fireCooldownTimer <= 0f)
+        if (_fireCooldownTimer <= 0f && target != null && !weaponStats.IsEnemyWeapon && weaponStats.IsAutoFire)
+        {
+            transform.LookAt(target.transform.position);
+            Fire();
+        }
+
+        if (_fireCooldownTimer <= 0f && weaponStats.IsEnemyWeapon)
         {
             Fire();
         }

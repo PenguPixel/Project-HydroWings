@@ -507,9 +507,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 939502130297620054, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585505314032195619, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468968725724710281, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 2555510189026628006, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
       propertyPath: FireRate
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247008931521771767, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4043370673647704528, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
       propertyPath: m_LocalPosition.x
@@ -551,9 +567,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4319788499114200077, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4593720320426440088, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413392806618272428, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551849643541045530, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6686541917264429283, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
       propertyPath: m_Name
       value: TigerEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1644,6 +1684,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 677087125002444752, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
   m_PrefabInstance: {fileID: 7335227708192469153}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1587952365 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5785793170180307753, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
+  m_PrefabInstance: {fileID: 7335227708192469153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1587952368
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587952365}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1698142201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2014,10 +2080,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1593857570793199581, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
+      propertyPath: Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1593857570793199581, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
+      propertyPath: AutoFire
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5785793170180307753, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1587952368}
   m_SourcePrefab: {fileID: 100100000, guid: 5ba14798b5dd17a4bb9b22dd9e45ba78, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

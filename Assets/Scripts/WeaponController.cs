@@ -33,10 +33,7 @@ public class WeaponController : MonoBehaviour
         {
             foreach (WeaponPoint point in activeWeaponPoints)
             {
-                if (point != point.AutoFire)
-                {
                     point.Shoot();
-                }
             }
         }
     }

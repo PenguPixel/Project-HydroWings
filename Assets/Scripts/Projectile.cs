@@ -6,7 +6,10 @@ using Random = Unity.Mathematics.Random;
 
 public class Projectile : MonoBehaviour
 {
-    public  ProjectileStats Stats;
+    [Header("Stats")]
+    [SerializeField] private  ProjectileStats projectileStats;
+
+    [SerializeField] private WeaponPointStats weaponStats;
     
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
@@ -14,9 +17,9 @@ public class Projectile : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
     {
-        if (Stats != null)
+        if (projectileStats != null)
         {
-            _localRemainingLifetime = Stats.RemainingLifetime;
+            _localRemainingLifetime = projectileStats.RemainingLifetime;
         }
         else
         {
@@ -27,7 +30,7 @@ public class Projectile : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         MovementHandling();
         LifetimeHandling();
@@ -35,13 +38,21 @@ public class Projectile : MonoBehaviour
 
     private void MovementHandling()
     {
-        if (Stats.EnemyProjectile)
+        if(!weaponStats.IsEnemyWeapon && weaponStats.IsAutoFire)
         {
-            transform.Translate(Vector3.left * (Stats.BaseSpeed * Time.deltaTime), Space.World);
+            float speed = projectileStats.BaseSpeed * Time.deltaTime;
+            Vector3 moveDirection = transform.forward * speed;
+            transform.Translate(moveDirection, Space.World);
+        } 
+        
+        if (weaponStats.IsEnemyWeapon)
+        {
+            transform.Translate(Vector3.left * (projectileStats.BaseSpeed * Time.deltaTime), Space.World);
         }
-        else
+
+        if (!weaponStats.IsEnemyWeapon && !weaponStats.IsAutoFire)
         {
-            transform.Translate(Vector3.right * (Stats.BaseSpeed * Time.deltaTime), Space.World);
+            transform.Translate(Vector3.right * (projectileStats.BaseSpeed * Time.deltaTime), Space.World);
         }
     }
 
