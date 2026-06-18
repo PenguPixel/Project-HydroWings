@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
     private bool _hasHit;
+    private bool _isEnemy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable()
@@ -22,6 +23,7 @@ public class Projectile : MonoBehaviour
         if (projectileStats != null)
         {
             _localRemainingLifetime = projectileStats.RemainingLifetime;
+            _isEnemy = projectileStats.IsEnemyProjectile;
         }
         else
         {
@@ -36,17 +38,42 @@ public class Projectile : MonoBehaviour
     {
         MovementHandling();
         LifetimeHandling();
+        
         float distanceThisFrame = projectileStats.BaseSpeed * Time.deltaTime;
-        _hasHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,
-            distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"));
-        if (_hasHit)
+        
+        if (!_isEnemy)
         {
-            DealDamage(hit);
+            _hasHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,
+                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"));
+            if (_hasHit)
+            {
+                Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
+                DealDamageToEnemy(hit);
+                ReleaseToPool();
+            }
         }
+        else
+        {
+            _hasHit = Physics.Raycast(transform.position, Vector3.left, out RaycastHit hit,
+                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Friendly"));
+            if (_hasHit)
+            {
+                Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
+                DealDamageToCharacter(hit);
+                ReleaseToPool();
+            }
+        }
+        
         
     }
 
-    private void DealDamage(RaycastHit hitInfo)
+    private void DealDamageToCharacter(RaycastHit hitInfo)
+    {
+        var characterComponent = hitInfo.collider.GetComponent<Character>();
+        characterComponent?.DealDamage(projectileStats.Basedamage);
+    }
+
+    private void DealDamageToEnemy(RaycastHit hitInfo)
     {
         var enemyComponent = hitInfo.collider.GetComponent<Enemy>();
         enemyComponent?.DealDamage(projectileStats.Basedamage);

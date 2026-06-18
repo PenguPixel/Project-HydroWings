@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnLollipopProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   Basedamage: 10
-  BaseSpeed: 8
+  BaseSpeed: 20
   RemainingLifetime: 2
   Spread: 0
-  EnemyProjectile: 1
+  IsEnemyProjectile: 1
   projectilePrefab: {fileID: 7149181363836051220, guid: 93a5a30ca17c8694386086e4ab690e55, type: 3}
