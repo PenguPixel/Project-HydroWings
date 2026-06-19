@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffc757f8f285a44384fda208d201320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPoint
-  projectileStats: {fileID: 0}
-  weaponStats: {fileID: 0}
+  projectileStats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
+  weaponStats: {fileID: 11400000, guid: 923c75442982bc049ac0ed92d817d3d6, type: 2}
 --- !u!1 &8723569561935452007
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 942801026560693992}
   - component: {fileID: 1211477799158133296}
   - component: {fileID: 3982844713544387496}
+  - component: {fileID: 4248470952482655975}
   m_Layer: 8
   m_Name: TigerEnemy
   m_TagString: Untagged
@@ -143,6 +144,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.81
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &4248470952482655975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723569561935452007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29a074d529cf945029ef7cf40540c9df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineAnimate
+  m_Target: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_LoopMode: 1
+  m_Method: 1
+  m_Duration: 1
+  m_MaxSpeed: 2
+  m_EasingMode: 0
+  m_AlignmentMode: 3
+  m_ObjectForwardAxis: 2
+  m_ObjectUpAxis: 1
+  m_StartOffset: 0
 --- !u!1001 &3351487537105598680
 PrefabInstance:
   m_ObjectHideFlags: 0
