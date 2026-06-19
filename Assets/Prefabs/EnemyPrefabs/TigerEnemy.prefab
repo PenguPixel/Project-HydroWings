@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6080238151411096268}
   - component: {fileID: 2555510189026628006}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WeaponPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffc757f8f285a44384fda208d201320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPoint
-  stats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
-  FireRate: 0.4
-  AutoFire: 1
-  Range: 0
+  projectileStats: {fileID: 0}
+  weaponStats: {fileID: 0}
 --- !u!1 &8723569561935452007
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +58,7 @@ GameObject:
   - component: {fileID: 942801026560693992}
   - component: {fileID: 1211477799158133296}
   - component: {fileID: 3982844713544387496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TigerEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +74,7 @@ Transform:
   m_GameObject: {fileID: 8723569561935452007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.97, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -97,7 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   Stats: {fileID: 11400000, guid: ff94e42739ca86f4c808d5a84f5921a5, type: 2}
-  CameraStats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
 --- !u!54 &1211477799158133296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,7 +141,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 0.81
   m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1001 &3351487537105598680
 PrefabInstance:
@@ -154,6 +151,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4043370673647704528}
     m_Modifications:
+    - target: {fileID: -8967421934556692433, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -194,9 +195,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7678609976652794667, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -5151492872390713093, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1899713942768260492, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -988049349003069381, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -833666613262984766, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
       propertyPath: m_Name
       value: animal-tiger
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1243781170782604608, guid: 574c8ee068568ed4dba87d2ddec427cb, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

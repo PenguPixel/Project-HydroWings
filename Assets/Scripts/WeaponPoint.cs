@@ -12,6 +12,8 @@ public class WeaponPoint : MonoBehaviour
     [SerializeField] public WeaponPointStats weaponStats;
 
     private ObjectPool<Projectile> _pool;
+    public bool HasActiveProjectiles => _pool != null && _pool.CountActive > 0;
+        
     
     [Header("LocalStats")]
     private float _fireCooldownTimer = 0f;
@@ -121,14 +123,13 @@ public class WeaponPoint : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log($"OnDestroy auf {gameObject.name} wurde aufgerufen");
         WeaponController controller = GetComponentInParent<WeaponController>();
         if (controller != null)
         {
-            _pool.Clear();
-            _pool.Dispose();
             controller.UnregisterWeaponPoint(this);
         }
+        _pool?.Clear();
+        _pool?.Dispose();
     }
 
     public void Fire()
