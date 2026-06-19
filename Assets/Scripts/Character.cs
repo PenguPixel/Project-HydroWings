@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
 
-        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);
+        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);     // Movement o x-axis to the right along cam movement
         CharacterController.Move(movementVector);
     }
 
