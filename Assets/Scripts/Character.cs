@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68d23188d7d03164da6cb9444e69faac, type: 3}
   m_Name: CameraStats
   m_EditorClassIdentifier: Assembly-CSharp::CameraStats
-  speed: 0
+  speed: 2
   maxCamOffsetY: 8
   smoothTime: 0.2

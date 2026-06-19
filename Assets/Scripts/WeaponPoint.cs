@@ -69,7 +69,7 @@ public class WeaponPoint : MonoBehaviour
         Destroy(projectile.gameObject);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         CooldownHandling();
         if (weaponStats.IsAutoFire)
