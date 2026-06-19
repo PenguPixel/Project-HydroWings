@@ -10,7 +10,7 @@ public class ProjectileStats : ScriptableObject
     public float BaseSpeed = 1f;
     public float RemainingLifetime = 2f;
     public float Spread = 0;
-    public bool EnemyProjectile = false;
+    public bool IsEnemyProjectile = false;
     [Header("Projectile Prefab")] 
     public GameObject projectilePrefab;
 }

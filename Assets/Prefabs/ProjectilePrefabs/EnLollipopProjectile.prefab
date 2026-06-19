@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5cb97ceabd448f41bebafd843523786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  Stats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
+  projectileStats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
+  weaponStats: {fileID: 11400000, guid: 923c75442982bc049ac0ed92d817d3d6, type: 2}
 --- !u!1001 &8458256464472837970
 PrefabInstance:
   m_ObjectHideFlags: 0
