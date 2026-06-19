@@ -110,10 +110,12 @@ public class Projectile : MonoBehaviour
     {
         if (_assignedPool != null)
         {
+            Debug.Log($"{this.name} kehrt zum Pool zurück");
             _assignedPool.Release(this);
         }
         else
         {
+            Debug.Log($"{this.name} hat keinen Pool mehr");
             Destroy(gameObject);
         }
     }

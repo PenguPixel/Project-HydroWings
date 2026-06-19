@@ -121,10 +121,12 @@ public class WeaponPoint : MonoBehaviour
 
     private void OnDestroy()
     {
+        Debug.Log($"OnDestroy auf {gameObject.name} wurde aufgerufen");
         WeaponController controller = GetComponentInParent<WeaponController>();
         if (controller != null)
         {
             _pool.Clear();
+            _pool.Dispose();
             controller.UnregisterWeaponPoint(this);
         }
     }

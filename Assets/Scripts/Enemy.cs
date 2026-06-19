@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class Enemy : MonoBehaviour
 {
@@ -47,6 +49,8 @@ public class Enemy : MonoBehaviour
 
         if (wouldBeHealth == 0)
         {
+            Object localWeapon = GetComponentInChildren<WeaponPoint>();
+            Destroy(localWeapon);
             Destroy(gameObject);
             return;
         }
