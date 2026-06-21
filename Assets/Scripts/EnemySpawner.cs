@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         _currentX += camStats.speed * Time.deltaTime;   // Movement on the x-axis to the right along camera movement
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
