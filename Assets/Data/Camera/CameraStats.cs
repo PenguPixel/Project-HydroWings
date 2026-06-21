@@ -5,5 +5,6 @@ public class CameraStats : ScriptableObject
 {
     public float speed;
     public float maxCamOffsetY;
+    public float maxCamOffsetX;
     public float smoothTime;
 }

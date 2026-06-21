@@ -6,4 +6,6 @@ public class CharacterStats : ScriptableObject
 {
     [Header("Character Stats")] 
     public int MaxHealth;
+
+    public float MaxWaterAmount { get; set; } 
 }
