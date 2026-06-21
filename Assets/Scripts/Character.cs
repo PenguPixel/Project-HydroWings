@@ -21,13 +21,13 @@ public class Character : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
 
-        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);
+        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);     // Movement o x-axis to the right along cam movement
         CharacterController.Move(movementVector);
     }
 

@@ -132,7 +132,7 @@ public class WeaponPoint : MonoBehaviour
         _pool?.Dispose();
     }
 
-    public void Fire()
+    private void Fire()
     {
         if (_pool != null)
         {
