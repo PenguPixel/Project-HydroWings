@@ -11,7 +11,8 @@ public class Character : MonoBehaviour
     private InputAction _moveAction;
     private float _cameraMoveSpeed;
     private float _currentHealth;
-    private bool _isSubmerged = false;  // TODO Submerge Methode bauen -> macht momentan UnderwaterDepth evtl. auf Event umbauen? 
+    private bool _isSubmerged = false;
+    private float _fixedZPosition = 0f;
 
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Awake()
@@ -43,6 +44,11 @@ public class Character : MonoBehaviour
         
         movementVector += new Vector2((_cameraMoveSpeed / CharacterController.MovementSpeed) , 0);
         CharacterController.Move(movementVector);
+        
+        // Character always stays at Z = 0 
+        Vector3 currentPos = transform.position;
+        currentPos.z = _fixedZPosition;
+        transform.position = currentPos;
         
         // Underwater State and Refill 
         if (_isSubmerged && _waterResource != null)
