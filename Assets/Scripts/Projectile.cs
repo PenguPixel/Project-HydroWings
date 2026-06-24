@@ -47,7 +47,7 @@ public class Projectile : MonoBehaviour
                 distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"));
             if (_hasHit)
             {
-                Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
+                //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
                 DealDamageToEnemy(hit);
                 ReleaseToPool();
             }
@@ -58,7 +58,7 @@ public class Projectile : MonoBehaviour
                 distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Friendly"));
             if (_hasHit)
             {
-                Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
+                //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
                 DealDamageToCharacter(hit);
                 ReleaseToPool();
             }
@@ -110,12 +110,12 @@ public class Projectile : MonoBehaviour
     {
         if (_assignedPool != null)
         {
-            Debug.Log($"{this.name} kehrt zum Pool zurück");
+            //Debug.Log($"{this.name} kehrt zum Pool zurück");
             _assignedPool.Release(this);
         }
         else
         {
-            Debug.Log($"{this.name} hat keinen Pool mehr");
+            //Debug.Log($"{this.name} hat keinen Pool mehr");
             Destroy(gameObject);
         }
     }

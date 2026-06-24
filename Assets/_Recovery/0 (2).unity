@@ -357,7 +357,6 @@ MonoBehaviour:
   availablePaths:
   - {fileID: 1873946653}
   - {fileID: 523687227}
-  camStats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
   MaxEnemys: 4
   SpawnRate: 2
 --- !u!4 &345763940

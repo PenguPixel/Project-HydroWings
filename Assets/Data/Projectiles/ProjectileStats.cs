@@ -11,6 +11,9 @@ public class ProjectileStats : ScriptableObject
     public float RemainingLifetime = 2f;
     public float Spread = 0;
     public bool IsEnemyProjectile = false;
+    public bool UsesWater = false;
+    public float WaterCostPerShot = 5f;
+    
     [Header("Projectile Prefab")] 
     public GameObject projectilePrefab;
 }
