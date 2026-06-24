@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public class UnderwaterDepth : MonoBehaviour
@@ -14,16 +15,19 @@ public class UnderwaterDepth : MonoBehaviour
     [SerializeField] private VolumeProfile surfacePostProcessing;
     [SerializeField] private VolumeProfile underwaterPostProcessing;
 
+    public static UnityEvent<bool> OnSubmerged = new UnityEvent<bool>();
+    private bool _wasSubmergedLastFrame;
+    
     // Update is called once per frame
     void Update()
     {
-        if (mainCamera.position.y < depth)
+        bool isCurrentlySubmerged = mainCamera.position.y < depth;
+        
+        if (isCurrentlySubmerged != _wasSubmergedLastFrame)
         {
-            EnableEffects(true);
-        }
-        else
-        {
-            EnableEffects(false);
+            EnableEffects(isCurrentlySubmerged);
+            OnSubmerged?.Invoke(isCurrentlySubmerged);
+            _wasSubmergedLastFrame = isCurrentlySubmerged;
         }
     }
 

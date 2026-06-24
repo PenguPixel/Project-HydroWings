@@ -17,7 +17,8 @@ public class Character : MonoBehaviour
    void Awake()
    {
        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
-   } 
+   }
+   
    void Start()
     {
         _waterResource = GetComponent<WaterResource>(); 
@@ -25,6 +26,7 @@ public class Character : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
+        UnderwaterDepth.OnSubmerged.AddListener(SetSubmerged);
     }
 
     private void SetCameraMoveSpeed(float camSpeed)
@@ -66,5 +68,11 @@ public class Character : MonoBehaviour
         }
 
         _currentHealth = wouldBeHealth;
+    }
+    
+    private void SetSubmerged(bool isSubmerged)
+    {
+        _isSubmerged = isSubmerged;
+        Debug.Log($"Character is Submerged: {_isSubmerged}");
     }
 }
