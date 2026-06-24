@@ -23,18 +23,7 @@ public class WeaponPoint : MonoBehaviour
 
     private void Start()
     {
-        WeaponController controller = GetComponentInParent<WeaponController>();
-
-        if (controller != null)
-        {
-            controller.RegisterWeaponPoint(this);
-        }
-        else
-        {
-            Debug.Log($"No WeaponController on {gameObject.name} ");
-        }
-        
-        _pool = new ObjectPool<Projectile>(
+       _pool = new ObjectPool<Projectile>(
             createFunc: CreateProjectile,
             actionOnGet: OnGetProjectile,
             actionOnRelease: OnReleaseProjectile,
@@ -42,6 +31,37 @@ public class WeaponPoint : MonoBehaviour
             collectionCheck: true,
             defaultCapacity: 20,
             maxSize: 50);
+    }
+    
+    private void OnEnable()
+    {
+        // Nur für das manuelle Event anmelden, wenn es KEINE Auto-Waffe ist
+        if (weaponStats != null && !weaponStats.IsAutoFire)
+        {
+            WeaponController.OnManualShootPressed += Shoot;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (weaponStats != null && !weaponStats.IsAutoFire)
+        {
+            WeaponController.OnManualShootPressed -= Shoot;
+        }
+    }
+    
+    private void Update()
+    {
+        CooldownHandling();
+        if (weaponStats.IsAutoFire)
+        {
+            
+            var target = AcquireTarget();
+            if (target)
+            {
+                AutoShooting(target);
+            }
+        }
     }
     
     private Projectile CreateProjectile()
@@ -67,20 +87,6 @@ public class WeaponPoint : MonoBehaviour
     private void OnDestroyProjectile(Projectile projectile)
     {
         Destroy(projectile.gameObject);
-    }
-
-    private void Update()
-    {
-        CooldownHandling();
-        if (weaponStats.IsAutoFire)
-        {
-            
-            var target = AcquireTarget();
-            if (target)
-            {
-                AutoShooting(target);
-            }
-        }
     }
 
     private Enemy AcquireTarget()
@@ -111,11 +117,7 @@ public class WeaponPoint : MonoBehaviour
 
     private void CooldownHandling()
     {
-        if (_fireCooldownTimer <= 0f)
-        {
-            _fireCooldownTimer = weaponStats.FireRate;
-        }
-        else
+        if (_fireCooldownTimer > 0f)
         {
             _fireCooldownTimer -= Time.deltaTime;
         }
@@ -123,11 +125,6 @@ public class WeaponPoint : MonoBehaviour
 
     private void OnDestroy()
     {
-        WeaponController controller = GetComponentInParent<WeaponController>();
-        if (controller != null)
-        {
-            controller.UnregisterWeaponPoint(this);
-        }
         _pool?.Clear();
         _pool?.Dispose();
     }
@@ -142,9 +139,10 @@ public class WeaponPoint : MonoBehaviour
 
     public void Shoot()
     {
-        if (_fireCooldownTimer !<=0)
+        if (_fireCooldownTimer <=0)
         {
             Fire();
+            _fireCooldownTimer = weaponStats.FireRate;
         }
     }
     
@@ -155,11 +153,13 @@ public class WeaponPoint : MonoBehaviour
         {
             transform.LookAt(target.transform.position);
             Fire();
+            _fireCooldownTimer = weaponStats.FireRate;
         }
 
         if (_fireCooldownTimer <= 0f && weaponStats.IsEnemyWeapon)
         {
             Fire();
+            _fireCooldownTimer = weaponStats.FireRate;
         }
     }
 }

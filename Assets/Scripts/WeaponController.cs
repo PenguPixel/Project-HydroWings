@@ -5,15 +5,14 @@ using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
-    
-    [SerializeField] private List<WeaponPoint> activeWeaponPoints = new List<WeaponPoint>();
+    //[SerializeField] private List<WeaponPoint> activeWeaponPoints = new List<WeaponPoint>();
 
     [Header("Shooting Settings")]
     //[SerializeField] private float fireRate = 0.4f;
     //private float _fireCooldownTimer;
 
     private InputAction _attackAction;
-
+    public static System.Action OnManualShootPressed;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,20 +23,12 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputHandling();
-    }
-
-    private void InputHandling()
-    {
         if (_attackAction != null && _attackAction.IsPressed())
         {
-            foreach (WeaponPoint point in activeWeaponPoints)
-            {
-                    point.Shoot();
-            }
+            OnManualShootPressed?.Invoke();
         }
     }
-
+/*
 
     public void RegisterWeaponPoint(WeaponPoint point)
         {
@@ -54,4 +45,5 @@ public class WeaponController : MonoBehaviour
             activeWeaponPoints.Remove(weaponPoint);
         }
     }
+    */
 }

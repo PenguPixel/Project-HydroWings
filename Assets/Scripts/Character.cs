@@ -40,8 +40,8 @@ public class Character : MonoBehaviour
         movementVector += new Vector2((_cameraMoveSpeed / CharacterController.MovementSpeed) , 0);
         CharacterController.Move(movementVector);
     }
-
-    public void DealDamage(float incomingDamage)
+    
+    public void DealDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
     {
         float wouldBeHealth = _currentHealth - incomingDamage;
         if (wouldBeHealth < 0)
