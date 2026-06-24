@@ -7,8 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
     public List<SplineContainer> availablePaths;
-    public CameraStats camStats;
-
+    
     [SerializeField] int MaxEnemys = 10;
 
     [SerializeField] float SpawnRate = 2f;
@@ -18,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private float _spawnTimer;
 
     private float _currentX;
+    private float _currentCamSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,15 +33,22 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         
+        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
+        
         _currentX = transform.position.x;
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
         
     }
 
+    private void SetCameraMoveSpeed(float camSpeed)
+    {
+        _currentCamSpeed = camSpeed;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        _currentX += camStats.speed * Time.deltaTime;   // Movement on the x-axis to the right along camera movement
+        _currentX += _currentCamSpeed * Time.deltaTime;   // Movement on the x-axis to the right along camera movement
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
         
         _spawnTimer += Time.deltaTime;

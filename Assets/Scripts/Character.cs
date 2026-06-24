@@ -1,12 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
     public CharacterStats Stats;
-    public CameraStats CameraStats;
     public PlayerController CharacterController;
-
+    
     private InputAction _moveAction;
     private float _cameraMoveSpeed;
     private float _currentHealth;
@@ -14,10 +14,16 @@ public class Character : MonoBehaviour
    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
         _currentHealth = Stats.MaxHealth;
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
+    }
+
+    private void SetCameraMoveSpeed(float camSpeed)
+    {
+        _cameraMoveSpeed = camSpeed;
     }
 
     // Update is called once per frame
@@ -27,7 +33,8 @@ public class Character : MonoBehaviour
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
 
-        movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);     // Movement o x-axis to the right along cam movement
+        //movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);     // Movement on x-axis to the right along cam movement
+        movementVector += new Vector2((_cameraMoveSpeed / CharacterController.MovementSpeed) , 0);
         CharacterController.Move(movementVector);
     }
 

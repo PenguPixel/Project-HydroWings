@@ -1,17 +1,23 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CameraStats stats;
+    public static UnityEvent<float> MoveAction = new();
+    [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
+    private float _currentCamSpeed;
     private float _currentX;
     private float _yVelocity = 0.0f;
     
     void Start()
     {
         if (player == null) return;
+        _currentCamSpeed = stats.speed;
+        MoveAction.Invoke(_currentCamSpeed);
 
         _currentX = player.position.x;
         transform.position = new Vector3(_currentX, player.position.y,transform.position.z);
