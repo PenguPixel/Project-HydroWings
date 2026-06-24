@@ -19,8 +19,13 @@ public class EnemySpawner : MonoBehaviour
     private float _currentX;
     private float _currentCamSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        CameraController.MoveAction.AddListener(SetCamMoveSpeed);
+    }
     void Start()
     {
+        
         if (enemyPrefabs == null || enemyPrefabs.Count == 0)
         {
             Debug.Log("Keine Enemy Prefabs zugewiesen!");
@@ -33,22 +38,21 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
         
-        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
-        
         _currentX = transform.position.x;
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
         
     }
 
-    private void SetCameraMoveSpeed(float camSpeed)
+    private void SetCamMoveSpeed(float camSpeed)
     {
         _currentCamSpeed = camSpeed;
+        Debug.Log(_currentCamSpeed);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        _currentX += _currentCamSpeed * Time.deltaTime;   // Movement on the x-axis to the right along camera movement
+        _currentX += _currentCamSpeed * Time.fixedDeltaTime;   // Movement on the x-axis to the right along camera movement
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
         
         _spawnTimer += Time.deltaTime;

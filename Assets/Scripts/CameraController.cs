@@ -5,13 +5,14 @@ using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
-    public static UnityEvent<float> MoveAction = new();
+    public static readonly UnityEvent<float> MoveAction = new();
     [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
     private float _currentCamSpeed;
     private float _currentX;
     private float _yVelocity = 0.0f;
+    
     
     void Start()
     {

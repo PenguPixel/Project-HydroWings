@@ -12,9 +12,12 @@ public class Character : MonoBehaviour
     private float _currentHealth;
 
    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+   void Awake()
+   {
+       CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
+   } 
+   void Start()
     {
-        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
         _currentHealth = Stats.MaxHealth;
         _moveAction = InputSystem.actions.FindAction("Move");
 
