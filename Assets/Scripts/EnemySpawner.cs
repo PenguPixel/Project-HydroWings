@@ -46,7 +46,7 @@ public class EnemySpawner : MonoBehaviour
     private void SetCamMoveSpeed(float camSpeed)
     {
         _currentCamSpeed = camSpeed;
-        Debug.Log(_currentCamSpeed);
+        // Debug.Log(_currentCamSpeed);
     }
 
     // Update is called once per frame

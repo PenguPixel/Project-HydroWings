@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CameraStats
   m_EditorClassIdentifier: Assembly-CSharp::CameraStats
   speed: 2
-  maxCamOffsetY: 8
+  maxCamOffsetY: 5
   smoothTime: 0.2

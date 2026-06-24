@@ -16,19 +16,8 @@ public class Enemy : MonoBehaviour
     
     private float _currentHealth;
     
-    /*
-    // TODO Enemy local stats, resistances and PowerUp-Drop logics
-    [Header("Local Stats")]
-    [SerializeField] private bool HasResist = false;
-    public List<DamageType> Resistances;
-    [SerializeField] private bool HasPowerup = false;
-    public List<PowerUpType> PowerUps;
-    */
     
-    // TODO Layer handling
-    // TODO Move handling
-    // TODO damage dealt handling
-    // TODO damage received handling
+    // TODO Enemy local stats, resistances and PowerUp-Drop logics
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

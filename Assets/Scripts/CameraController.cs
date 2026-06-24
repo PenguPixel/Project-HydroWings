@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 
     private float _currentCamSpeed;
     private float _currentX;
+    // private float _cameraXOffset = 12f;
     private float _yVelocity = 0.0f;
     
     
@@ -20,7 +21,7 @@ public class CameraController : MonoBehaviour
         _currentCamSpeed = stats.speed;
         MoveAction.Invoke(_currentCamSpeed);
 
-        _currentX = player.position.x;
+        _currentX = transform.position.x;
         transform.position = new Vector3(_currentX, player.position.y,transform.position.z);
     }
     

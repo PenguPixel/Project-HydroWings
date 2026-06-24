@@ -132,8 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7562d1322f7c2b04f930a83c2b12599c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponController
-  activeWeaponPoints:
-  - {fileID: 2555510189026628006}
 --- !u!54 &582484257202241663
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -159,7 +157,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!135 &4901190511788524779
 SphereCollider:
