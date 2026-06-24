@@ -1,8 +1,5 @@
-using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Pool;
-using Object = UnityEngine.Object;
 
 public class WeaponPoint : MonoBehaviour
 {
