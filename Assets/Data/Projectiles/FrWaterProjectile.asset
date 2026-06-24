@@ -17,4 +17,6 @@ MonoBehaviour:
   RemainingLifetime: 2
   Spread: 0
   IsEnemyProjectile: 0
+  UsesWater: 1
+  WaterCostPerShot: 5
   projectilePrefab: {fileID: 1137696020633802172, guid: e439ca46b8842cb4ba66b7acb41d1f5a, type: 3}

@@ -38,7 +38,11 @@ public class PlayerController : MonoBehaviour
 
     public void Rotate(float verticalInput)
     {
-        if (Mathf.Abs(verticalInput) > 0.01f)
+        float currentY = transform.position.y;
+        bool hittingUpperBoundary = (currentY >= MaxCharacterOffsetY && verticalInput > 0f);
+        bool hittingLowerBoundary = (currentY <= MinCharacterOffsetY && verticalInput < 0f);
+        
+        if (Mathf.Abs(verticalInput) > 0.01f && !hittingUpperBoundary && !hittingLowerBoundary)
         {
             _rotationX -= verticalInput * RotationSpeed * Time.deltaTime;
         }
@@ -47,7 +51,7 @@ public class PlayerController : MonoBehaviour
             _rotationX = Mathf.MoveTowards(_rotationX, 0f, ReturnSpeed * Time.deltaTime);
         }
         
-        _rotationX = Math.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
+        _rotationX = Mathf.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
         transform.localRotation = Quaternion.Euler(_rotationX,90f, 0f);
     }
 }
