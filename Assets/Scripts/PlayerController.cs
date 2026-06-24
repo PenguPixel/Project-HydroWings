@@ -6,11 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     private CharacterController _characterConroller;
 
-    public float MovementSpeed = 5f;
+    [SerializeField]public float MovementSpeed = 5f;
 
-    public float RotationSpeed = 50f;
-    public float ReturnSpeed = 60f;
-    public float MaxRotationAngle = 25f;
+    [SerializeField]private float RotationSpeed = 50f;
+    [SerializeField]private float ReturnSpeed = 60f;
+    [SerializeField]private float MaxRotationAngle = 25f;
+    [SerializeField] private float MaxCharacterOffsetY = 10f;
+    [SerializeField] private float MinCharacterOffsetY = -10f;
+    
     private float _rotationX = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +30,10 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = moveDirection * (MovementSpeed * Time.deltaTime);
         
         _characterConroller.Move(movement);
+
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, MinCharacterOffsetY, MaxCharacterOffsetY);
+        transform.position = clampedPosition;
     }
 
     public void Rotate(float verticalInput)
