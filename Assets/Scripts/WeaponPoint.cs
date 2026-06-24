@@ -10,16 +10,16 @@ public class WeaponPoint : MonoBehaviour
 
     private ObjectPool<Projectile> _pool;
     public bool HasActiveProjectiles => _pool != null && _pool.CountActive > 0;
-        
     
-    [Header("LocalStats")]
     private float _fireCooldownTimer = 0f;
+    private WaterResource _waterResource;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Start()
     {
+        _waterResource = GetComponentInParent<WaterResource>();
        _pool = new ObjectPool<Projectile>(
             createFunc: CreateProjectile,
             actionOnGet: OnGetProjectile,
@@ -138,8 +138,23 @@ public class WeaponPoint : MonoBehaviour
     {
         if (_fireCooldownTimer <=0)
         {
-            Fire();
-            _fireCooldownTimer = weaponStats.FireRate;
+            if (projectileStats.UsesWater && _waterResource != null)
+            {
+                if (_waterResource.TryConsumeWater(projectileStats.WaterCostPerShot))
+                {
+                    Fire();
+                    _fireCooldownTimer = weaponStats.FireRate;
+                }
+                else
+                {
+                    Debug.Log("Keine Munition mehr!");
+                }
+            }
+            else
+            {
+                Fire();
+                _fireCooldownTimer = weaponStats.FireRate;
+            }
         }
     }
     

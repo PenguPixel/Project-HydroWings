@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class WeaponController : MonoBehaviour
 {
-   [Header("Shooting Settings")]
-
     private InputAction _attackAction;
     public static System.Action OnManualShootPressed;
     

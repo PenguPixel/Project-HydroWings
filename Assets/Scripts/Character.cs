@@ -6,10 +6,12 @@ public class Character : MonoBehaviour
 {
     public CharacterStats Stats;
     public PlayerController CharacterController;
-    
+
+    private WaterResource _waterResource;
     private InputAction _moveAction;
     private float _cameraMoveSpeed;
     private float _currentHealth;
+    private bool _isSubmerged = false;  // TODO Submerge Methode bauen -> macht momentan UnderwaterDepth evtl. auf Event umbauen? 
 
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Awake()
@@ -18,6 +20,7 @@ public class Character : MonoBehaviour
    } 
    void Start()
     {
+        _waterResource = GetComponent<WaterResource>(); 
         _currentHealth = Stats.MaxHealth;
         _moveAction = InputSystem.actions.FindAction("Move");
 
@@ -35,10 +38,15 @@ public class Character : MonoBehaviour
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
         CharacterController.Move(movementVector);
         CharacterController.Rotate(movementVector.y);
-
-        //movementVector += new Vector2((CameraStats.speed / CharacterController.MovementSpeed) , 0);     // Movement on x-axis to the right along cam movement
+        
         movementVector += new Vector2((_cameraMoveSpeed / CharacterController.MovementSpeed) , 0);
         CharacterController.Move(movementVector);
+        
+        // Underwater State and Refill 
+        if (_isSubmerged && _waterResource != null)
+        {
+            _waterResource.RefillOverTime();
+        }
     }
     
     public void DealDamage(float incomingDamage)    // Incoming damage handling if PC gets hit

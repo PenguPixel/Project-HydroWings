@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WaterState : MonoBehaviour
+public class WaterResource : MonoBehaviour
 {
     [SerializeField] private float maxWater = 100f;
+    [SerializeField] private float refillRate = 12.5f;
     private float _currentWater;
     
     public static UnityEvent<float, float> OnWaterChange;
@@ -26,9 +27,17 @@ public class WaterState : MonoBehaviour
         return false;
     }
 
-    public void RefillWater(float amount)
+    public void Refill(float amount)
     {
-        _currentWater += amount;
-        OnWaterChange?.Invoke(_currentWater, maxWater);
-    }   
+        if (_currentWater < maxWater)
+        {
+            _currentWater = Mathf.Min(_currentWater + amount, maxWater);
+            OnWaterChange?.Invoke(_currentWater, maxWater);
+        }
+    }
+
+    public void RefillOverTime()
+    {
+        Refill(refillRate *  Time.deltaTime);
+    }
 }
