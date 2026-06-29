@@ -7,7 +7,7 @@ public class WaterResource : MonoBehaviour
     [SerializeField] private float refillRate = 12.5f;
     private float _currentWater;
     
-    public static UnityEvent<float, float> OnWaterChange;
+    public static UnityEvent<float, float> OnWaterChange = new UnityEvent<float, float>();
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
