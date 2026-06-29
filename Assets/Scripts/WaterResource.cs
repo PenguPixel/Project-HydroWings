@@ -14,6 +14,7 @@ public class WaterResource : MonoBehaviour
     {
         _currentWater = maxWater;
         OnWaterChange?.Invoke(_currentWater, maxWater);
+        
     }
 
     public bool TryConsumeWater(float amount)

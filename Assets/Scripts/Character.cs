@@ -1,11 +1,14 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
     public CharacterStats Stats;
     public PlayerController CharacterController;
+
+    public static UnityEvent<float, float> OnHealthchange;
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
@@ -64,6 +67,8 @@ public class Character : MonoBehaviour
         {
             wouldBeHealth = 0;
         }
+        
+        OnHealthchange?.Invoke(wouldBeHealth, Stats.MaxHealth);
 
         Debug.Log(
             $"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
