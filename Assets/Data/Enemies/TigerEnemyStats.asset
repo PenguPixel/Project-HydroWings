@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TigerEnemyStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 20
-  MovementSpeed: 6
+  MovementSpeed: 2
   Bounty: 50
