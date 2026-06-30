@@ -6,6 +6,8 @@ public class EnemyStats : ScriptableObject
 {
     [Header("Stats")]
     public float MaxHealth;
+
+    public float MaxLifetime;
     public float MovementSpeed;
     public int Bounty;      // Check if needed
 }
