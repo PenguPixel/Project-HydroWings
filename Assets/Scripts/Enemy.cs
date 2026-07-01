@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using Object = UnityEngine.Object;
 
 public class Enemy : MonoBehaviour
@@ -15,7 +16,9 @@ public class Enemy : MonoBehaviour
     private WeaponPoint _localWeaponPoint;
     
     private float _currentHealth;
-    
+    private float _remainingLifetime;
+
+    public static UnityEvent<int> BountyOnDeath;
     
     // TODO Enemy local stats, resistances and PowerUp-Drop logics
     
@@ -26,11 +29,13 @@ public class Enemy : MonoBehaviour
         _localCollider = GetComponent<Collider>();
         _localWeaponPoint = GetComponentInChildren<WeaponPoint>();
         _currentHealth = Stats.MaxHealth;
+        _remainingLifetime = Stats.MaxLifetime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        LifetimeHandling();
         if (_isDead)
         {
             if (_localWeaponPoint == null || !_localWeaponPoint.HasActiveProjectiles)
@@ -38,6 +43,16 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    private void LifetimeHandling()
+    {
+        if (_remainingLifetime <= 0)
+        {
+            TriggerLocalDeath();
+            return;
+        }
+        _remainingLifetime -= Time.deltaTime;
     }
 
     public void DealDamage(float incomingDamage)
@@ -53,6 +68,7 @@ public class Enemy : MonoBehaviour
         if (wouldBeHealth == 0)
         {
             TriggerLocalDeath();
+            BountyOnDeath?.Invoke(Stats.Bounty);
             return;
         }
 

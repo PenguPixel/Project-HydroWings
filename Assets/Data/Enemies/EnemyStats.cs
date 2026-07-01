@@ -9,5 +9,5 @@ public class EnemyStats : ScriptableObject
 
     public float MaxLifetime;
     public float MovementSpeed;
-    public int Bounty;      // Check if needed
+    public int Bounty; 
 }

@@ -30,7 +30,7 @@ public class Character : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
-        UnderwaterDepth.OnSubmerged.AddListener(SetSubmerged);
+        UnderwaterController.OnSubmerged.AddListener(SetSubmerged);
     }
 
     private void SetCameraMoveSpeed(float camSpeed)
