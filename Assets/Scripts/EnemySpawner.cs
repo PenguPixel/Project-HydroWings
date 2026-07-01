@@ -19,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float _currentX;
     private float _currentCamSpeed;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -79,6 +80,7 @@ public class EnemySpawner : MonoBehaviour
         if (newEnemy.TryGetComponent<SplineAnimate>(out SplineAnimate splineAnimate))
         {
             splineAnimate.Container = selectedSpline;
+            splineAnimate.MaxSpeed = newEnemy.GetComponent<Enemy>().Stats.MovementSpeed;
             splineAnimate.Play();
         }
         

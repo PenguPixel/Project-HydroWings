@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Splines;
 using Object = UnityEngine.Object;
 
 public class Enemy : MonoBehaviour
