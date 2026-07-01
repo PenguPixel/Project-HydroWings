@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 
-public class UnderwaterDepth : MonoBehaviour
+public class UnderwaterController : MonoBehaviour
 {
     [Header("Depth Parameters")]
     [SerializeField] private Transform mainCamera;
