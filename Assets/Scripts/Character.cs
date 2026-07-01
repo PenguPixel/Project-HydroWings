@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     public CharacterStats Stats;
     public PlayerController CharacterController;
 
-    public static UnityEvent<float, float> OnHealthchange;
+    public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
@@ -27,6 +27,9 @@ public class Character : MonoBehaviour
     {
         _waterResource = GetComponent<WaterResource>(); 
         _currentHealth = Stats.MaxHealth;
+        
+        OnHealthchange.Invoke(_currentHealth, Stats.MaxHealth);
+        
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
