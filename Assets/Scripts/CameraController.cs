@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
     
     void Start()
     {
-        if (player == null) return;
+        if (!player) return;
         _currentCamSpeed = stats.speed;
         MoveAction.Invoke(_currentCamSpeed);
 
@@ -27,10 +27,10 @@ public class CameraController : MonoBehaviour
     
     void LateUpdate()
     {
-        if (player == null) return;
+        if (!player) return;
 
         _currentX += stats.speed * Time.deltaTime;
-
+        
         float targetY = player.position.y;
         float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, stats.smoothTime);
         currentY = Math.Clamp(currentY, -stats.maxCamOffsetY, stats.maxCamOffsetY);

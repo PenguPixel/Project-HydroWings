@@ -52,6 +52,6 @@ public class PlayerController : MonoBehaviour
         }
         
         _rotationX = Mathf.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
-        transform.localRotation = Quaternion.Euler(_rotationX,90f, 0f);
+        transform.localRotation = Quaternion.Euler(0f, 0f, -_rotationX);
     }
 }
