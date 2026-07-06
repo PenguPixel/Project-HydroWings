@@ -83,7 +83,10 @@ public class WeaponPoint : MonoBehaviour
 
     private void OnDestroyProjectile(Projectile projectile)
     {
-        Destroy(projectile.gameObject);
+        if (projectile != null)
+        {
+            Destroy(projectile.gameObject);
+        }
     }
 
     private Enemy AcquireTarget()

@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     {
         if (_isDead)
         {
-            if (_localWeaponPoint == null || !_localWeaponPoint.HasActiveProjectiles)
+            if (!_localWeaponPoint || !_localWeaponPoint.HasActiveProjectiles)
             {
                 Destroy(gameObject);
             }
