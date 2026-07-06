@@ -75,7 +75,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Rider related files
-*/idea/*
+*/.idea/*
 
 # Common IntelliJ Platform excludes
 
@@ -111,3 +111,5 @@ _UpgradeReport_Files/
 Thumbs.db
 Desktop.ini
 .DS_Store
+.idea/.idea.Project-HydroWings/.idea/indexLayout.xml
+/.idea

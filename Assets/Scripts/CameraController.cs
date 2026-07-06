@@ -1,22 +1,27 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
+    public static readonly UnityEvent<float> MoveAction = new();
+    [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
-    public static float speed = 2f;
-    public static float smoothTime = 0.2f;
-    [SerializeField] private float maxCamOffsetY = 30;
-
+    private float _currentCamSpeed;
     private float _currentX;
+    // private float _cameraXOffset = 12f;
     private float _yVelocity = 0.0f;
+    
     
     void Start()
     {
         if (player == null) return;
+        _currentCamSpeed = stats.speed;
+        MoveAction.Invoke(_currentCamSpeed);
 
-        _currentX = player.position.x;
+        _currentX = transform.position.x;
         transform.position = new Vector3(_currentX, player.position.y,transform.position.z);
     }
     
@@ -24,11 +29,11 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
-        _currentX += speed * Time.deltaTime;
+        _currentX += stats.speed * Time.deltaTime;
 
         float targetY = player.position.y;
-        float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, smoothTime);
-        currentY = Math.Clamp(currentY, -maxCamOffsetY, maxCamOffsetY);
+        float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, stats.smoothTime);
+        currentY = Math.Clamp(currentY, -stats.maxCamOffsetY, stats.maxCamOffsetY);
 
         transform.position = new Vector3(_currentX, currentY, transform.position.z);
     }

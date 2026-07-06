@@ -6,21 +6,14 @@ using UnityEngine;
 public class ProjectileStats : ScriptableObject
 {
     [Header("Projectile Stats")]
-    public float damage = 100f;
-    public float Speed = 1f;
+    public float Basedamage = 10f;
+    public float BaseSpeed = 1f;
     public float RemainingLifetime = 2f;
     public float Spread = 0;
-    [Header("Projectile Prefabs")] 
-    public List<GameObject> projectilePrefabs;
-
-    public GameObject GetRandomProjectilePrefab()
-    {
-        if (projectilePrefabs == null || projectilePrefabs.Count == 0)
-        {
-            Debug.Log($"ProjectilePrafabs List of {name} is empty or null");
-            return null;
-        }
-        int randomIndex = Random.Range(0, projectilePrefabs.Count);
-        return projectilePrefabs[randomIndex];
-    }
+    public bool IsEnemyProjectile = false;
+    public bool UsesWater = false;
+    public float WaterCostPerShot = 5f;
+    
+    [Header("Projectile Prefab")] 
+    public GameObject projectilePrefab;
 }
