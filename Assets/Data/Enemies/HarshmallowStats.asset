@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5d1bd9b685d092448e8530be9385a88, type: 3}
-  m_Name: TigerEnemyStats
+  m_Name: HarshmallowStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 20
-  MovementSpeed: 6
+  MovementSpeed: 2
   Bounty: 50
