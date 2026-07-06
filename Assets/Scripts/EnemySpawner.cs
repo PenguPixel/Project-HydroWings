@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -55,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         _currentX += _currentCamSpeed * Time.fixedDeltaTime;   // Movement on the x-axis to the right along camera movement
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
         
-        _spawnTimer += Time.deltaTime;
+        _spawnTimer += Time.fixedDeltaTime;
 
         if (_spawnTimer >= SpawnRate && _enemiesSpawned < MaxEnemys)
         {
