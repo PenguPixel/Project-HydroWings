@@ -44,28 +44,17 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 inputDirection = up * _currentMovementInput.y + right * _currentMovementInput.x;
-        Vector3 targetVelocity = new Vector3(
-            (inputDirection.x * MovementSpeed) + _camSpeed,
-            inputDirection.y * MovementSpeed,
-            0f
-        );
+        Vector3 targetVelocity = inputDirection * MovementSpeed;
         
         Vector3 currentVelocity = _rigidbody.linearVelocity;
         
-        Vector3 velocityDiff = targetVelocity - currentVelocity;
-        
-        Vector3 force = velocityDiff * (acceleration * Time.fixedDeltaTime);
-        force.z = 0f;
-        
-        _rigidbody.AddForce(force, ForceMode.VelocityChange);
-        
-        /*float smoothedInputX = Mathf.MoveTowards(currentVelocity.x - _camSpeed, targetVelocity.x, acceleration * Time.deltaTime);
-        float smoothedInputY = Mathf.MoveTowards(currentVelocity.y, targetVelocity.y, acceleration * Time.deltaTime);
+        float smoothedVelocityX = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, acceleration * Time.fixedDeltaTime);
+        float smoothedVelocityY = Mathf.MoveTowards(currentVelocity.y, targetVelocity.y, acceleration * Time.fixedDeltaTime);
 
-        Vector3 finalVelocity = new Vector3(smoothedInputX + _camSpeed, smoothedInputY, 0f);
-        _rigidbody.linearVelocity = finalVelocity;*/
+        _rigidbody.linearVelocity = new Vector3(smoothedVelocityX, smoothedVelocityY, 0f);
         
         Vector3 currentPos = _rigidbody.position;
+        currentPos.x += _camSpeed * Time.fixedDeltaTime;
         currentPos.y = Mathf.Clamp(currentPos.y, MinCharacterOffsetY, MaxCharacterOffsetY);
         currentPos.z = 0f;
         
