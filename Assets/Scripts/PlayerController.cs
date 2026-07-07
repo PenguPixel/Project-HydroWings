@@ -4,7 +4,8 @@ using static UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController _characterConroller;
+    //private CharacterController _characterController;
+    private Rigidbody _rigidbody;
 
     [SerializeField]public float MovementSpeed = 5f;
 
@@ -16,35 +17,42 @@ public class PlayerController : MonoBehaviour
     
     private float _rotationX = 0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        _characterConroller = GetComponent<CharacterController>();
+        _rigidbody = GetComponentInChildren<Rigidbody>();
+        _rigidbody.useGravity = false;
+        _rigidbody.isKinematic = false;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+
     }
     
 
-    public void Move(Vector2 movementVector)
+    public void Move(Vector2 movementVector, float cameraMoveSpeed)
     {
-        Vector3 moveDirection = up * movementVector.y + right * movementVector.x;
-
-        Vector3 movement = moveDirection * (MovementSpeed * Time.deltaTime);
+        Vector3 inputDirection = up * movementVector.y + right * movementVector.x;
+        Vector3 desiredMovement = inputDirection * MovementSpeed;
         
-        _characterConroller.Move(movement);
-
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, MinCharacterOffsetY, MaxCharacterOffsetY);
-        transform.position = clampedPosition;
+        desiredMovement.x += cameraMoveSpeed;
+        
+        _rigidbody.linearVelocity = desiredMovement;
+        
+        Vector3 currentPos = _rigidbody.position;
+        currentPos.y = Mathf.Clamp(currentPos.y, MinCharacterOffsetY, MaxCharacterOffsetY);
+        currentPos.z = 0f;
+        
+        _rigidbody.position = currentPos;
     }
 
-    public void Rotate(float verticalInput)
+    public void Rotate(float verticalInput, Transform visualTransform)
     {
-        float currentY = transform.position.y;
+        if (!visualTransform) return;
+        float currentY = _rigidbody.position.y;
         bool hittingUpperBoundary = (currentY >= MaxCharacterOffsetY && verticalInput > 0f);
         bool hittingLowerBoundary = (currentY <= MinCharacterOffsetY && verticalInput < 0f);
         
         if (Mathf.Abs(verticalInput) > 0.01f && !hittingUpperBoundary && !hittingLowerBoundary)
         {
-            _rotationX -= verticalInput * RotationSpeed * Time.deltaTime;
+            _rotationX -= verticalInput * RotationSpeed * Time.fixedDeltaTime;
         }
         else
         {
@@ -52,6 +60,6 @@ public class PlayerController : MonoBehaviour
         }
         
         _rotationX = Mathf.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
-        transform.localRotation = Quaternion.Euler(_rotationX,90f, 0f);
+        visualTransform.localRotation = Quaternion.Euler(_rotationX, 90f, 0f);
     }
 }
