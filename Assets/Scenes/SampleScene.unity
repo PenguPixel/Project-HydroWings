@@ -2073,9 +2073,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600be1a6440f169418d5fc9026957a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  MovementSpeed: 30
-  RotationSpeed: 100
-  ReturnSpeed: 100
+  MovementSpeed: 25
+  acceleration: 17
+  RotationSpeed: 75
+  ReturnSpeed: 90
   MaxRotationAngle: 25
   MaxCharacterOffsetY: 16
   MinCharacterOffsetY: -16
@@ -2129,7 +2130,7 @@ Rigidbody:
   m_GameObject: {fileID: 1503876331}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0.2
+  m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

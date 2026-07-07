@@ -48,7 +48,7 @@ public class Character : MonoBehaviour
         if (!CharacterController) return;
         
         Vector2 movementVector = _moveAction.ReadValue<Vector2>();
-        CharacterController.Move(movementVector, _cameraMoveSpeed);
+        CharacterController.SetMovementInput(movementVector);
         CharacterController.Rotate(movementVector.y, this.transform);
         
         // Character always stays at Z = 0 

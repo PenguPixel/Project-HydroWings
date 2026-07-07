@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     //private CharacterController _characterController;
     private Rigidbody _rigidbody;
 
-    [SerializeField]public float MovementSpeed = 5f;
+    [SerializeField]public float MovementSpeed = 30f;
+    [SerializeField] private float acceleration = 10f;
 
     [SerializeField]private float RotationSpeed = 50f;
     [SerializeField]private float ReturnSpeed = 60f;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MinCharacterOffsetY = -10f;
     
     private float _rotationX = 0f;
+    private float _camSpeed;
+    private Vector2 _currentMovementInput;
 
     void Awake()
     {
@@ -23,18 +26,44 @@ public class PlayerController : MonoBehaviour
         _rigidbody.useGravity = false;
         _rigidbody.isKinematic = false;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-
+        _rigidbody.WakeUp();
+        CameraController.MoveAction.AddListener(SetCamSpeed);
     }
-    
 
-    public void Move(Vector2 movementVector, float cameraMoveSpeed)
+    private void SetCamSpeed(float cameraSpeedValue)
     {
-        Vector3 inputDirection = up * movementVector.y + right * movementVector.x;
-        Vector3 desiredMovement = inputDirection * MovementSpeed;
+        _camSpeed = cameraSpeedValue;
+        Debug.Log("Set cam speed: " + cameraSpeedValue);
+    }
+
+    public void SetMovementInput(Vector2 input)
+    {
+        _currentMovementInput = input;
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 inputDirection = up * _currentMovementInput.y + right * _currentMovementInput.x;
+        Vector3 targetVelocity = new Vector3(
+            (inputDirection.x * MovementSpeed) + _camSpeed,
+            inputDirection.y * MovementSpeed,
+            0f
+        );
         
-        desiredMovement.x += cameraMoveSpeed;
+        Vector3 currentVelocity = _rigidbody.linearVelocity;
         
-        _rigidbody.linearVelocity = desiredMovement;
+        Vector3 velocityDiff = targetVelocity - currentVelocity;
+        
+        Vector3 force = velocityDiff * (acceleration * Time.fixedDeltaTime);
+        force.z = 0f;
+        
+        _rigidbody.AddForce(force, ForceMode.VelocityChange);
+        
+        /*float smoothedInputX = Mathf.MoveTowards(currentVelocity.x - _camSpeed, targetVelocity.x, acceleration * Time.deltaTime);
+        float smoothedInputY = Mathf.MoveTowards(currentVelocity.y, targetVelocity.y, acceleration * Time.deltaTime);
+
+        Vector3 finalVelocity = new Vector3(smoothedInputX + _camSpeed, smoothedInputY, 0f);
+        _rigidbody.linearVelocity = finalVelocity;*/
         
         Vector3 currentPos = _rigidbody.position;
         currentPos.y = Mathf.Clamp(currentPos.y, MinCharacterOffsetY, MaxCharacterOffsetY);
