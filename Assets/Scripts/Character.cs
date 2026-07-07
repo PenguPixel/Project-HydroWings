@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Awake()
    {
+       CharacterController = GetComponentInParent<PlayerController>();
        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
    }
    
@@ -44,17 +45,16 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 movementVector = _moveAction.ReadValue<Vector2>();
-        CharacterController.Move(movementVector);
-        CharacterController.Rotate(movementVector.y);
+        if (!CharacterController) return;
         
-        movementVector += new Vector2((_cameraMoveSpeed / CharacterController.MovementSpeed) , 0);
-        CharacterController.Move(movementVector);
+        Vector2 movementVector = _moveAction.ReadValue<Vector2>();
+        CharacterController.SetMovementInput(movementVector);
+        CharacterController.Rotate(movementVector.y, this.transform);
         
         // Character always stays at Z = 0 
-        Vector3 currentPos = transform.position;
-        currentPos.z = _fixedZPosition;
-        transform.position = currentPos;
+        Vector3 localPos = transform.localPosition;
+        localPos.z = _fixedZPosition;
+        transform.localPosition = localPos;
         
         // Underwater State and Refill 
         if (_isSubmerged && _waterResource != null)

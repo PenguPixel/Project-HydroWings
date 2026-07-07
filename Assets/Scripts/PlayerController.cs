@@ -4,9 +4,11 @@ using static UnityEngine.Vector3;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController _characterConroller;
+    //private CharacterController _characterController;
+    private Rigidbody _rigidbody;
 
-    [SerializeField]public float MovementSpeed = 5f;
+    [SerializeField]public float MovementSpeed = 30f;
+    [SerializeField] private float acceleration = 10f;
 
     [SerializeField]private float RotationSpeed = 50f;
     [SerializeField]private float ReturnSpeed = 60f;
@@ -15,36 +17,60 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float MinCharacterOffsetY = -10f;
     
     private float _rotationX = 0f;
+    private float _camSpeed;
+    private Vector2 _currentMovementInput;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        _characterConroller = GetComponent<CharacterController>();
+        _rigidbody = GetComponentInChildren<Rigidbody>();
+        _rigidbody.useGravity = false;
+        _rigidbody.isKinematic = false;
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+        _rigidbody.WakeUp();
+        CameraController.MoveAction.AddListener(SetCamSpeed);
     }
-    
 
-    public void Move(Vector2 movementVector)
+    private void SetCamSpeed(float cameraSpeedValue)
     {
-        Vector3 moveDirection = up * movementVector.y + right * movementVector.x;
+        _camSpeed = cameraSpeedValue;
+        Debug.Log("Set cam speed: " + cameraSpeedValue);
+    }
 
-        Vector3 movement = moveDirection * (MovementSpeed * Time.deltaTime);
+    public void SetMovementInput(Vector2 input)
+    {
+        _currentMovementInput = input;
+    }
+
+    void FixedUpdate()
+    {
+        Vector3 inputDirection = up * _currentMovementInput.y + right * _currentMovementInput.x;
+        Vector3 targetVelocity = inputDirection * MovementSpeed;
         
-        _characterConroller.Move(movement);
+        Vector3 currentVelocity = _rigidbody.linearVelocity;
+        
+        float smoothedVelocityX = Mathf.MoveTowards(currentVelocity.x, targetVelocity.x, acceleration * Time.fixedDeltaTime);
+        float smoothedVelocityY = Mathf.MoveTowards(currentVelocity.y, targetVelocity.y, acceleration * Time.fixedDeltaTime);
 
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, MinCharacterOffsetY, MaxCharacterOffsetY);
-        transform.position = clampedPosition;
+        _rigidbody.linearVelocity = new Vector3(smoothedVelocityX, smoothedVelocityY, 0f);
+        
+        Vector3 currentPos = _rigidbody.position;
+        currentPos.x += _camSpeed * Time.fixedDeltaTime;
+        currentPos.y = Mathf.Clamp(currentPos.y, MinCharacterOffsetY, MaxCharacterOffsetY);
+        currentPos.z = 0f;
+        
+        _rigidbody.position = currentPos;
     }
 
-    public void Rotate(float verticalInput)
+    public void Rotate(float verticalInput, Transform visualTransform)
     {
-        float currentY = transform.position.y;
+        if (!visualTransform) return;
+        float currentY = _rigidbody.position.y;
         bool hittingUpperBoundary = (currentY >= MaxCharacterOffsetY && verticalInput > 0f);
         bool hittingLowerBoundary = (currentY <= MinCharacterOffsetY && verticalInput < 0f);
         
         if (Mathf.Abs(verticalInput) > 0.01f && !hittingUpperBoundary && !hittingLowerBoundary)
         {
-            _rotationX -= verticalInput * RotationSpeed * Time.deltaTime;
+            _rotationX -= verticalInput * RotationSpeed * Time.fixedDeltaTime;
         }
         else
         {
@@ -52,6 +78,6 @@ public class PlayerController : MonoBehaviour
         }
         
         _rotationX = Mathf.Clamp(_rotationX, -MaxRotationAngle, MaxRotationAngle);
-        transform.localRotation = Quaternion.Euler(_rotationX,90f, 0f);
+        visualTransform.localRotation = Quaternion.Euler(_rotationX, 90f, 0f);
     }
 }

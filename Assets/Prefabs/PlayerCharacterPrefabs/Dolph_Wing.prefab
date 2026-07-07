@@ -226,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
       propertyPath: m_Name
-      value: Dolph Wing
+      value: Dolph_Wing
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
       propertyPath: m_Layer
@@ -253,19 +253,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8486005913322631361}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5258862657299497505}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5598847815950737566}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6316110817970361566}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3055171431273492082}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4439059341152076154}
@@ -283,33 +274,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1f4b73b989baf2c4e8ed8d4f6b9a8474, type: 3}
   m_PrefabInstance: {fileID: 8482982562413452672}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &8486005913322631361
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8753012386978439377}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 8
-  m_CollisionDetection: 0
 --- !u!65 &5258862657299497505
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -320,42 +284,17 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1792
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1.67, z: 4.32}
   m_Center: {x: 0, y: -0.13, z: 0}
---- !u!143 &5598847815950737566
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8753012386978439377}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.62
-  m_Radius: 1
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!114 &6316110817970361566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,25 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
   Stats: {fileID: 11400000, guid: cd53f5118cc51074987fcdb558a2b29f, type: 2}
-  CharacterController: {fileID: 3055171431273492082}
---- !u!114 &3055171431273492082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8753012386978439377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 600be1a6440f169418d5fc9026957a9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  MovementSpeed: 10
-  RotationSpeed: 90
-  ReturnSpeed: 100
-  MaxRotationAngle: 25
-  MaxCharacterOffsetY: 16
-  MinCharacterOffsetY: -16
+  CharacterController: {fileID: 0}
 --- !u!114 &4439059341152076154
 MonoBehaviour:
   m_ObjectHideFlags: 0
