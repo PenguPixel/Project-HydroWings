@@ -9,7 +9,8 @@ using UnityEngine.Splines;
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
-    public List<SplineContainer> availablePaths;
+    public List<SplineContainer> availableEnemyPaths;
+    public List<SplineContainer> availableKamikazePaths;
 
     [SerializeField] private int defaultCapacity = 10;
     [SerializeField] private int maxSize = 50;
@@ -53,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (availablePaths == null || availablePaths.Count == 0)
+        if (availableEnemyPaths == null || availableEnemyPaths.Count == 0)
         {
             Debug.Log("Keine Pfade zugewiesen!");
             return;

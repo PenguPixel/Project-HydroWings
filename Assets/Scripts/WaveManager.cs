@@ -50,11 +50,22 @@ public class WaveManager : MonoBehaviour
                     continue;
                 }
 
-                if (_spawner.availablePaths != null && _spawner.availablePaths.Count > 0)
+                bool isKamikaze = data.prefab.GetComponent<EnemyStats>().IsKamikaze;
+
+                if (_spawner.availableEnemyPaths != null && _spawner.availableEnemyPaths.Count > 0)
                 {
-                    int randomPathIndex = Random.Range(0, _spawner.availablePaths.Count);
-                    SplineContainer selectedSpline = _spawner.availablePaths[randomPathIndex];
-                    _spawner.SpawnEnemy(data.prefab, selectedSpline); 
+                    if (isKamikaze)
+                    {
+                        int randomPathIndex = Random.Range(0, _spawner.availableKamikazePaths.Count);
+                        SplineContainer selectedSpline = _spawner.availableKamikazePaths[randomPathIndex];
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline); 
+                    }
+                    else
+                    {
+                        int randomPathIndex = Random.Range(0, _spawner.availableEnemyPaths.Count);
+                        SplineContainer selectedSpline = _spawner.availableEnemyPaths[randomPathIndex];
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline); 
+                    }
                 }
                 else
                 {
