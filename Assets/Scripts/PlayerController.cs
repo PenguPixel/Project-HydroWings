@@ -19,10 +19,15 @@ public class PlayerController : MonoBehaviour
     private float _rotationX = 0f;
     private float _camSpeed;
     private Vector2 _currentMovementInput;
+    
+    private bool _isTouchingObstacle;
+    private bool _isTouchingBackwall;
+    private Character _character;
 
     void Awake()
     {
-        _rigidbody = GetComponentInChildren<Rigidbody>();
+        _character = GetComponentInChildren<Character>();
+        _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.useGravity = false;
         _rigidbody.isKinematic = false;
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
@@ -39,6 +44,27 @@ public class PlayerController : MonoBehaviour
     public void SetMovementInput(Vector2 input)
     {
         _currentMovementInput = input;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log($"Character OnCollisionStay {collision.gameObject.name}");
+        if (collision.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+        {
+            _isTouchingObstacle = true;
+            Debug.Log("Touching Obstacle");
+        }
+
+        if (collision.collider.TryGetComponent<Backwall>(out Backwall backwall))
+        {
+            _isTouchingBackwall = true;
+            Debug.Log("Touching Backwall");
+        }
+        
+        if (_isTouchingObstacle && _isTouchingBackwall)
+        {
+            _character.DealDamage(_character.Stats.MaxHealth);
+        }
     }
 
     void FixedUpdate()
@@ -59,6 +85,9 @@ public class PlayerController : MonoBehaviour
         currentPos.z = 0f;
         
         _rigidbody.position = currentPos;
+        
+        _isTouchingObstacle = false;
+        _isTouchingBackwall = false;
     }
 
     public void Rotate(float verticalInput, Transform visualTransform)

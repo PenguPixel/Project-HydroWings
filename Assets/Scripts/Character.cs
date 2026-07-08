@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     public PlayerController CharacterController;
 
     public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
+    public static UnityEvent OnPlayerDied = new UnityEvent();
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
@@ -16,6 +17,9 @@ public class Character : MonoBehaviour
     private float _currentHealth;
     private bool _isSubmerged = false;
     private float _fixedZPosition = 0f;
+
+    private bool _isTouchingBackwall;
+    private bool _isTouchingObstacle;
 
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Awake()
@@ -62,7 +66,28 @@ public class Character : MonoBehaviour
             _waterResource.RefillOverTime();
         }
     }
-    
+
+    /*private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log($"Character OnCollisionStay {collision.gameObject.name}");
+        if (collision.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
+        {
+            _isTouchingObstacle = true;
+            Debug.Log("Touching Obstacle");
+        }
+
+        if (collision.collider.TryGetComponent<Backwall>(out Backwall backwall))
+        {
+            _isTouchingBackwall = true;
+            Debug.Log("Touching Backwall");
+        }
+
+        if (_isTouchingObstacle && _isTouchingBackwall)
+        {
+            DealDamage(Stats.MaxHealth);
+        }
+    }*/
+
     public void DealDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
     {
         float wouldBeHealth = _currentHealth - incomingDamage;
@@ -77,6 +102,8 @@ public class Character : MonoBehaviour
             $"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
         if (wouldBeHealth == 0)
         {
+            OnPlayerDied.Invoke();
+            Debug.Log("Character wurde zerstört!");
             Destroy(gameObject);
             return;
         }
