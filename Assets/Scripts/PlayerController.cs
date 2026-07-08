@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     
     private bool _isTouchingObstacle;
     private bool _isTouchingBackwall;
+    private ContactPoint[] _contactPoints = new ContactPoint[4];
     private Character _character;
 
     void Awake()
@@ -38,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private void SetCamSpeed(float cameraSpeedValue)
     {
         _camSpeed = cameraSpeedValue;
-        Debug.Log("Set cam speed: " + cameraSpeedValue);
     }
 
     public void SetMovementInput(Vector2 input)
@@ -48,11 +48,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        Debug.Log($"Character OnCollisionStay {collision.gameObject.name}");
         if (collision.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
         {
-            _isTouchingObstacle = true;
-            Debug.Log("Touching Obstacle");
+            int contactCount = collision.GetContacts(_contactPoints);
+            for (int i = 0; i < contactCount; i++)
+            {
+                Vector3 normal = _contactPoints[i].normal;
+                Vector3 localNormal = transform.InverseTransformDirection(normal);
+
+                if (localNormal.x < -0.5f)
+                {
+                    _isTouchingObstacle = true;
+                    Debug.Log("Touching Obstacle at the front");
+                }
+            }
         }
 
         if (collision.collider.TryGetComponent<Backwall>(out Backwall backwall))

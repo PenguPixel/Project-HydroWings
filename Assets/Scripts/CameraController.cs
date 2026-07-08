@@ -11,7 +11,6 @@ public class CameraController : MonoBehaviour
 
     private float _currentCamSpeed;
     private float _currentX;
-    // private float _cameraXOffset = 12f;
     private float _yVelocity = 0.0f;
     
     
