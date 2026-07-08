@@ -1,21 +1,20 @@
 using System.Collections.Generic;
 using System.IO;
+using Interfaces;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.Splines;
 
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
     public List<SplineContainer> availablePaths;
-    
-    [SerializeField] int MaxEnemys = 10;
 
-    [SerializeField] float SpawnRate = 2f;
+    [SerializeField] private int defaultCapacity = 10;
+    [SerializeField] private int maxSize = 50;
 
-    private int _enemiesSpawned;
-
-    private float _spawnTimer;
+    private Dictionary<GameObject, IObjectPool<GameObject>> _pools = new();
 
     private float _currentX;
     private float _currentCamSpeed;
@@ -23,6 +22,27 @@ public class EnemySpawner : MonoBehaviour
     void Awake()
     {
         CameraController.MoveAction.AddListener(SetCamMoveSpeed);
+        foreach (var prefab in enemyPrefabs)
+        {
+            if (!prefab) continue;
+            _pools[prefab] = new ObjectPool<GameObject>(
+                createFunc: () => Instantiate(prefab),
+                actionOnGet: (obj) =>
+                {
+                    obj.SetActive(true);
+                },
+                actionOnRelease: (obj) =>
+                {
+                    obj.SetActive(false);
+                },
+                actionOnDestroy: (obj) =>
+                {
+                    Destroy(obj);
+                },
+                defaultCapacity: defaultCapacity,
+                maxSize: maxSize
+            );
+        }
     }
     void Start()
     {
@@ -55,32 +75,31 @@ public class EnemySpawner : MonoBehaviour
     {
         _currentX += _currentCamSpeed * Time.fixedDeltaTime;   // Movement on the x-axis to the right along camera movement
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
-        
-        _spawnTimer += Time.fixedDeltaTime;
-
-        if (_spawnTimer >= SpawnRate && _enemiesSpawned < MaxEnemys)
-        {
-            SpawnEnemy();
-            _enemiesSpawned++;
-            _spawnTimer = 0f;
-        }
     }
 
-    private void SpawnEnemy()
+    public void SpawnEnemy(GameObject prefab, SplineContainer spline)
     {
-        int randomPrefabIndex = Random.Range(0, enemyPrefabs.Count);
-        int randomPathIndex = Random.Range(0, availablePaths.Count);
+        if (!prefab) return;
         
-        GameObject selectedPrefab = enemyPrefabs[randomPrefabIndex];
-        SplineContainer selectedSpline = availablePaths[randomPathIndex];
-        
-        GameObject newEnemy = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
-
-        if (newEnemy.TryGetComponent<SplineAnimate>(out SplineAnimate splineAnimate))
+        if (_pools.TryGetValue(prefab, out var pool))
         {
-            splineAnimate.Container = selectedSpline;
-            splineAnimate.Play();
+            GameObject enemyObj = pool.Get();
+            enemyObj.transform.position = transform.position;
+            enemyObj.transform.rotation = Quaternion.identity;
+
+            if (enemyObj.TryGetComponent<Enemy>(out var enemy))
+            {
+                enemy.SetPool(pool);
+            }
+
+            if (enemyObj.TryGetComponent<IPoolableEnemy>(out var poolable))
+            {
+                poolable.OnSpawn(spline);
+            }
         }
-        
+        else
+        {
+            Debug.LogWarning($"Prefab {prefab.name} hat keinen zugewiesenen Pool!");
+        }
     }
 }
