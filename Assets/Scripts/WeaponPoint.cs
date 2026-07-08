@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public class WeaponPoint : MonoBehaviour
@@ -13,6 +14,9 @@ public class WeaponPoint : MonoBehaviour
     
     private float _fireCooldownTimer = 0f;
     private WaterResource _waterResource;
+
+    public UnityEvent OnEmpty;
+    private bool _isShuttingDown = false;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,7 +33,7 @@ public class WeaponPoint : MonoBehaviour
             defaultCapacity: 20,
             maxSize: 50);
     }
-    
+
     private void OnEnable()
     {
         // Nur für das manuelle Event anmelden, wenn es KEINE Auto-Waffe ist
@@ -79,6 +83,11 @@ public class WeaponPoint : MonoBehaviour
     private void OnReleaseProjectile(Projectile projectile)
     {
         projectile.gameObject.SetActive(false);
+
+        if (_isShuttingDown && !HasActiveProjectiles)
+        {
+            OnEmpty?.Invoke();
+        }
     }
 
     private void OnDestroyProjectile(Projectile projectile)
@@ -176,5 +185,12 @@ public class WeaponPoint : MonoBehaviour
             Fire();
             _fireCooldownTimer = weaponStats.FireRate;
         }
+    }
+
+    public void ShutdownAndNotify()
+    {
+        _isShuttingDown = true;
+        
+        if(!HasActiveProjectiles) OnEmpty?.Invoke();
     }
 }

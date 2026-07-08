@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: HarshmallowStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 20
-  MaxLifetime: 20
+  MaxLifetime: 10
   MovementSpeed: 2
   Bounty: 50

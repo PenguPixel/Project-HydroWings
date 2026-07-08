@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
+using UnityEngine.Splines;
 using Object = UnityEngine.Object;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPoolableEnemy
 {
     [Header("Scriptable Object Scripts")]
     [SerializeField] public EnemyStats  Stats;
 
-    private bool _isDead = false;
+    protected bool _isDead = false;
     private MeshRenderer _localMeshRenderer;
     private Collider _localCollider;
     private WeaponPoint _localWeaponPoint;
@@ -19,11 +22,17 @@ public class Enemy : MonoBehaviour
     private float _remainingLifetime;
 
     public static UnityEvent<int> BountyOnDeath;
+
+    public SplineAnimate splineAnimate;
+
+    private IObjectPool<GameObject> _myPool;
+    
+    public void SetPool(IObjectPool<GameObject> pool) => _myPool = pool;
     
     // TODO Enemy local stats, resistances and PowerUp-Drop logics
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         _localMeshRenderer = GetComponent<MeshRenderer>();
         _localCollider = GetComponent<Collider>();
@@ -35,14 +44,8 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_isDead) return;
         LifetimeHandling();
-        if (_isDead)
-        {
-            if (!_localWeaponPoint || !_localWeaponPoint.HasActiveProjectiles)
-            {
-                Destroy(gameObject);
-            }
-        }
     }
 
     private void LifetimeHandling()
@@ -57,6 +60,8 @@ public class Enemy : MonoBehaviour
 
     public void DealDamage(float incomingDamage)
     {
+        if (_isDead) return;
+        
         float wouldBeHealth = _currentHealth - incomingDamage;
         if (wouldBeHealth < 0)
         {
@@ -81,6 +86,29 @@ public class Enemy : MonoBehaviour
         if (_localMeshRenderer != null) _localMeshRenderer.enabled = false;
         if (_localCollider != null) _localCollider.enabled = false;
         if (_localWeaponPoint != null) _localWeaponPoint.enabled = false;
+        _myPool.Release(gameObject);
+    }
+
+    public void OnSpawn(SplineContainer spline)
+    {
+        if (!splineAnimate) splineAnimate = GetComponent<SplineAnimate>();
+        if (!_localMeshRenderer) _localMeshRenderer = GetComponent<MeshRenderer>();
+        if (!_localCollider) _localCollider = GetComponent<Collider>();
         
+        _isDead = false;
+        _currentHealth = Stats.MaxHealth;
+        _remainingLifetime = Stats.MaxLifetime;
+        
+        if (_localMeshRenderer != null) _localMeshRenderer.enabled = true;
+        if (_localCollider != null) _localCollider.enabled = true;
+        if (_localWeaponPoint != null) _localWeaponPoint.enabled = true;
+        
+        splineAnimate.Container = spline;
+        splineAnimate.Restart(true);
+    }
+
+    public void OnDespawn()
+    {
+        splineAnimate.Pause();
     }
 }
