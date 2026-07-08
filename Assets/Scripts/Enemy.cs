@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     [Header("Scriptable Object Scripts")]
     [SerializeField] public EnemyStats  Stats;
 
-    private bool _isDead = false;
+    protected bool _isDead = false;
     private MeshRenderer _localMeshRenderer;
     private Collider _localCollider;
     private WeaponPoint _localWeaponPoint;
@@ -86,25 +86,6 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         if (_localMeshRenderer != null) _localMeshRenderer.enabled = false;
         if (_localCollider != null) _localCollider.enabled = false;
         if (_localWeaponPoint != null) _localWeaponPoint.enabled = false;
-
-        if (_localWeaponPoint && _localWeaponPoint.HasActiveProjectiles)
-        {
-            _localWeaponPoint.OnEmpty.AddListener(FinalRelase);
-            _localWeaponPoint.ShutdownAndNotify();
-        }
-        else
-        {
-            FinalRelase();
-        }
-    }
-
-    private void FinalRelase()
-    {
-        if (_localWeaponPoint)
-        {
-            _localWeaponPoint.OnEmpty.RemoveListener(FinalRelase);
-        }
-        
         _myPool.Release(gameObject);
     }
 
@@ -118,9 +99,9 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _currentHealth = Stats.MaxHealth;
         _remainingLifetime = Stats.MaxLifetime;
         
-        if (_localMeshRenderer) _localMeshRenderer.enabled = true;
-        if (_localCollider) _localCollider.enabled = true;
-        if (_localWeaponPoint) _localWeaponPoint.enabled = true;
+        if (_localMeshRenderer != null) _localMeshRenderer.enabled = true;
+        if (_localCollider != null) _localCollider.enabled = true;
+        if (_localWeaponPoint != null) _localWeaponPoint.enabled = true;
         
         splineAnimate.Container = spline;
         splineAnimate.Restart(true);

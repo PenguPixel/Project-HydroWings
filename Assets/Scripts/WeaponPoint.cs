@@ -33,7 +33,7 @@ public class WeaponPoint : MonoBehaviour
             defaultCapacity: 20,
             maxSize: 50);
     }
-    
+
     private void OnEnable()
     {
         // Nur für das manuelle Event anmelden, wenn es KEINE Auto-Waffe ist

@@ -81,7 +81,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (!prefab) return;
         
-        if (_pools.TryGetValue(prefab, out var pool))
+        if (_pools.TryGetValue(prefab, out IObjectPool<GameObject> pool))
         {
             GameObject enemyObj = pool.Get();
             enemyObj.transform.position = transform.position;
