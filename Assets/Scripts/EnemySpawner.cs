@@ -78,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
     }
 
-    public void SpawnEnemy(GameObject prefab, SplineContainer spline)
+    public void SpawnEnemy(GameObject prefab, SplineContainer spline, float  movementSpeed)
     {
         if (!prefab) return;
         
@@ -91,6 +91,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemyObj.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.SetPool(pool);
+                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed;
             }
 
             if (enemyObj.TryGetComponent<IPoolableEnemy>(out var poolable))

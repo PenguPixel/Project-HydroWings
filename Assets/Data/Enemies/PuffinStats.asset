@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d1bd9b685d092448e8530be9385a88, type: 3}
   m_Name: PuffinStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  MaxHealth: 0
-  MaxLifetime: 0
-  MovementSpeed: 0
-  Bounty: 0
-  IsKamikaze: 0
+  MaxHealth: 10
+  MaxLifetime: 8
+  MovementSpeed: 2
+  Bounty: 50
+  IsKamikaze: 1

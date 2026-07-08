@@ -15,6 +15,10 @@ MonoBehaviour:
   triggerXPosition: 25
   enemies:
   - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
-    spawnTimeOffset: 2
+    spawnTimeOffset: 4
   - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
-    spawnTimeOffset: 3
+    spawnTimeOffset: 6
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 5
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 5
