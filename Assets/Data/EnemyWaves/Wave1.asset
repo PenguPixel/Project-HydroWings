@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95964f2009f2f3e419501cc64d3219e5, type: 3}
   m_Name: Wave1
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWave
-  triggerXPosition: 25
+  triggerXPosition: 20
   enemies:
   - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
     spawnTimeOffset: 4

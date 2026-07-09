@@ -639,8 +639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   cameraTransform: {fileID: 330585546}
   levelWaves:
-  - {fileID: 11400000, guid: 0a58635472d7a5f23b0d544f513a6152, type: 2}
   - {fileID: 11400000, guid: 9709d5b7af3f1ffde98be619ebf5fcb7, type: 2}
+  - {fileID: 11400000, guid: d2e92287b6e5bf2a987e47ad57e44b0f, type: 2}
 --- !u!1 &362382374
 GameObject:
   m_ObjectHideFlags: 0
