@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
+
 using Interfaces;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 using UnityEngine.Splines;
-using Object = UnityEngine.Object;
 
 public class Enemy : MonoBehaviour, IPoolableEnemy
 {
@@ -48,7 +45,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         LifetimeHandling();
     }
 
-    private void LifetimeHandling()
+    protected void LifetimeHandling()
     {
         if (_remainingLifetime <= 0)
         {

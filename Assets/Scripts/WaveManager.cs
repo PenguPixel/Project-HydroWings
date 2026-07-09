@@ -42,6 +42,7 @@ public class WaveManager : MonoBehaviour
                    active.timer >= active.wave.enemies[active.enemiesSpawnedCount].spawnTimeOffset)
             {
                 var data = active.wave.enemies[active.enemiesSpawnedCount];
+                
 
                 if (!data.prefab)
                 {
@@ -50,11 +51,25 @@ public class WaveManager : MonoBehaviour
                     continue;
                 }
 
-                if (_spawner.availablePaths != null && _spawner.availablePaths.Count > 0)
+                var prefabComponent = data.prefab.gameObject.GetComponent<Enemy>();
+                bool isKamikaze = prefabComponent.Stats.IsKamikaze;
+                float movementSpeed = prefabComponent.Stats.MovementSpeed;
+
+                if (_spawner.availableEnemyPaths != null && _spawner.availableEnemyPaths.Count > 0 && 
+                    _spawner.availableKamikazePaths != null && _spawner.availableKamikazePaths.Count > 0)
                 {
-                    int randomPathIndex = Random.Range(0, _spawner.availablePaths.Count);
-                    SplineContainer selectedSpline = _spawner.availablePaths[randomPathIndex];
-                    _spawner.SpawnEnemy(data.prefab, selectedSpline); 
+                    if (isKamikaze)
+                    {
+                        int randomPathIndex = Random.Range(0, _spawner.availableKamikazePaths.Count);
+                        SplineContainer selectedSpline = _spawner.availableKamikazePaths[randomPathIndex];
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed); 
+                    }
+                    else
+                    {
+                        int randomPathIndex = Random.Range(0, _spawner.availableEnemyPaths.Count);
+                        SplineContainer selectedSpline = _spawner.availableEnemyPaths[randomPathIndex];
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed); 
+                    }
                 }
                 else
                 {

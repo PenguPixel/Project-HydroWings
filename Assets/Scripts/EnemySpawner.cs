@@ -9,7 +9,8 @@ using UnityEngine.Splines;
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyPrefabs;
-    public List<SplineContainer> availablePaths;
+    public List<SplineContainer> availableEnemyPaths;
+    public List<SplineContainer> availableKamikazePaths;
 
     [SerializeField] private int defaultCapacity = 10;
     [SerializeField] private int maxSize = 50;
@@ -53,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
             return;
         }
 
-        if (availablePaths == null || availablePaths.Count == 0)
+        if (availableEnemyPaths == null || availableEnemyPaths.Count == 0)
         {
             Debug.Log("Keine Pfade zugewiesen!");
             return;
@@ -77,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
         transform.position = new Vector3(_currentX, transform.position.y, transform.position.z);
     }
 
-    public void SpawnEnemy(GameObject prefab, SplineContainer spline)
+    public void SpawnEnemy(GameObject prefab, SplineContainer spline, float  movementSpeed)
     {
         if (!prefab) return;
         
@@ -90,6 +91,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemyObj.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.SetPool(pool);
+                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed;
             }
 
             if (enemyObj.TryGetComponent<IPoolableEnemy>(out var poolable))

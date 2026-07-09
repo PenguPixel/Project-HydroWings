@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 [CreateAssetMenu(fileName = "EnemyStats", menuName = "Scriptable Objects/EnemyStats")]
 public class EnemyStats : ScriptableObject
@@ -9,5 +10,6 @@ public class EnemyStats : ScriptableObject
 
     public float MaxLifetime;
     public float MovementSpeed;
-    public int Bounty; 
+    public int Bounty;
+    public bool IsKamikaze;
 }
