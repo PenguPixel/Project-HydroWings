@@ -26,14 +26,17 @@ public class CameraController : MonoBehaviour
     
     void LateUpdate()
     {
-        if (player == null) return;
-
-        _currentX += stats.speed * Time.deltaTime;
-
+        if (!player) return;
+        
         float targetY = player.position.y;
         float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, stats.smoothTime);
         currentY = Math.Clamp(currentY, -stats.maxCamOffsetY, stats.maxCamOffsetY);
 
         transform.position = new Vector3(_currentX, currentY, transform.position.z);
+    }
+
+    private void FixedUpdate(){
+        
+        _currentX += stats.speed * Time.fixedDeltaTime;
     }
 }
