@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fbd15365467394e4db2d5ef890a95b5f, type: 3}
-  m_Name: EnLollipopProjectile
+  m_Name: EnSugarProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   Basedamage: 10
   BaseSpeed: 20
-  RemainingLifetime: 2
+  RemainingLifetime: 9
   Spread: 0
   IsEnemyProjectile: 1
-  projectilePrefab: {fileID: 7149181363836051220, guid: 93a5a30ca17c8694386086e4ab690e55, type: 3}
+  UsesWater: 0
+  WaterCostPerShot: 5
+  projectilePrefab: {fileID: 1137696020633802172, guid: 2f313dbb1b77ad54fbdaf2664dd44da3, type: 3}

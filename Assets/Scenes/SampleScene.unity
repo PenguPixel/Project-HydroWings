@@ -548,6 +548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   stats: {fileID: 11400000, guid: 093dfc4c79f04c3478e5c5e401afd8f0, type: 2}
   player: {fileID: 1503876334}
+  stopForBossFight: 0
+  timeUntilStop: 1
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2552,7 +2554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   MovementSpeed: 25
   acceleration: 50
-  RotationSpeed: 75
+  RotationSpeed: 25
   ReturnSpeed: 90
   MaxRotationAngle: 25
   MaxCharacterOffsetY: 16
@@ -2581,7 +2583,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.4, z: 0}
 --- !u!4 &1503876334
 Transform:
   m_ObjectHideFlags: 0
@@ -2786,82 +2788,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1503876334}
     m_Modifications:
-    - target: {fileID: 17517333363823353, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 643446811882993673, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336498710554812582, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1396513987825791189, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1793600255662578890, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2692189286697239398, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3916596969689069156, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4354771520428389638, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Size.x
-      value: 2.5727894
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Size.y
-      value: 1.6184708
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Center.x
-      value: 0.07450223
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Center.y
-      value: -0.10423547
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Center.z
-      value: -1.7056215e-16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5258862657299497505, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_ProvidesContacts
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936122981149661440, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 6316110817970361566, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
       propertyPath: CharacterController
       value: 
       objectReference: {fileID: 1503876332}
-    - target: {fileID: 6640981600980710851, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8228959218246482539, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2906,24 +2836,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dolph_Wing
       objectReference: {fileID: 0}
-    - target: {fileID: 8889244948511844071, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 8974079803808189644, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 9140404538682945560, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9190471601743076524, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

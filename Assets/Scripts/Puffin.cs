@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UIElements;
 using static UnityEngine.Quaternion;
 
-public class KamikazeEnemy : Enemy
+public class Puffin : Enemy
 {
         [SerializeField] private float attackSpeedMultiplier = 2f;
         [SerializeField] private float rotationSpeed = 15f;
@@ -15,7 +15,7 @@ public class KamikazeEnemy : Enemy
         private float _explosionDelay = 3f;
         private float _remainingDelay = 0f;
         public static UnityEvent<Type, Vector3> OnExplosion;
-        public static UnityEvent<KamikazeEnemy> OnCountdownTrigger;
+        public static UnityEvent<Puffin> OnCountdownTrigger;
         private void Update()
         {
                 if (_isDead) return;

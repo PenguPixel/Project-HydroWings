@@ -9,9 +9,14 @@ public class CameraController : MonoBehaviour
     [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
+    [SerializeField] private bool stopForBossFight;
+    [SerializeField] private float timeUntilStop = 1f;
+
     private float _currentCamSpeed;
     private float _currentX;
     private float _yVelocity = 0.0f;
+
+    private float _stopTimer;
     
     
     void Start()
@@ -26,14 +31,28 @@ public class CameraController : MonoBehaviour
     
     void LateUpdate()
     {
-        if (player == null) return;
-
-        _currentX += stats.speed * Time.deltaTime;
+        if (!player) return;
 
         float targetY = player.position.y;
         float currentY = Mathf.SmoothDamp(transform.position.y, targetY, ref _yVelocity, stats.smoothTime);
         currentY = Math.Clamp(currentY, -stats.maxCamOffsetY, stats.maxCamOffsetY);
 
         transform.position = new Vector3(_currentX, currentY, transform.position.z);
+    }
+
+    private void FixedUpdate()
+    {
+        if (stopForBossFight)
+        {
+            _stopTimer += Time.fixedDeltaTime;
+
+            if (_stopTimer >= timeUntilStop)
+            {
+                _currentCamSpeed = 0f;
+                MoveAction.Invoke(0f);
+            }
+        }
+
+        _currentX += _currentCamSpeed * Time.fixedDeltaTime;
     }
 }

@@ -10,7 +10,7 @@ public class ExplosionController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        KamikazeEnemy.OnExplosion.AddListener(TriggerExplosion);
+        Puffin.OnExplosion.AddListener(TriggerExplosion);
         explosionSound =  GetComponent<AudioSource>();
     }
 
