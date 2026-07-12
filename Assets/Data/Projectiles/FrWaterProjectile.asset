@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   Basedamage: 10
   BaseSpeed: 20
-  RemainingLifetime: 2
+  RemainingLifetime: 5
   Spread: 0
   IsEnemyProjectile: 0
   UsesWater: 1

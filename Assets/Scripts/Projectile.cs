@@ -73,8 +73,16 @@ public class Projectile : MonoBehaviour
 
     private void DealDamageToEnemy(RaycastHit hitInfo)
     {
-        var enemyComponent = hitInfo.collider.GetComponent<Enemy>();
-        enemyComponent?.DealDamage(projectileStats.Basedamage);
+        if (hitInfo.collider.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            enemy.DealDamage(projectileStats.Basedamage);
+            return;
+        }
+
+        if (hitInfo.collider.TryGetComponent<BossHitbox>(out BossHitbox bossHitbox))
+        {
+            bossHitbox.DealDamage(projectileStats.Basedamage);
+        }
     }
 
     private void MovementHandling()
