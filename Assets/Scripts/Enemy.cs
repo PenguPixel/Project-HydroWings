@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _remainingLifetime -= Time.deltaTime;
     }
 
-    public void DealDamage(float incomingDamage)
+    public void TakeDamage(float incomingDamage)
     {
         if (_isDead) return;
         

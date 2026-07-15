@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         if (_isTouchingObstacle && _isTouchingBackwall)
         {
-            _character.DealDamage(_character.Stats.MaxHealth);
+            _character.TakeDamage(_character.Stats.MaxHealth);
         }
     }
 

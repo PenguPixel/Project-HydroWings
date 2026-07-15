@@ -40,7 +40,7 @@ public class BossLiquidProjectile : MonoBehaviour
 
             if (character != null)
             {
-                character.DealDamage(damage);
+                character.TakeDamage(damage);
             }
 
             Release();
