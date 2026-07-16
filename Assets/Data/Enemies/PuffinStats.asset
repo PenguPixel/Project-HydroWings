@@ -17,4 +17,4 @@ MonoBehaviour:
   MovementSpeed: 3
   Bounty: 50
   IsKamikaze: 1
-  KamikazeDamage: 50
+  KamikazeDamage: 10
