@@ -11,7 +11,10 @@ public class KamikazeEnemy : Enemy
         [SerializeField] private float attackSpeedMultiplier = 2f;
         [SerializeField] private float rotationSpeed = 15f;
         [SerializeField] private float explosionDelay = 3f;
-        [SerializeField] private Renderer kamikazeRenderer;
+        [SerializeField] private MeshRenderer _blinkRenderer;
+        
+        private MaterialPropertyBlock _propBlock;
+        private static readonly int IsBlinking = Shader.PropertyToID("_IsBlinking");
         
         private bool _isInRange;
         private Vector3 _baseLookDirection = Vector3.left;
@@ -20,18 +23,28 @@ public class KamikazeEnemy : Enemy
 
         public static UnityEvent<Type, Vector3> OnExplosion;
         public static UnityEvent<KamikazeEnemy> OnCountdownTrigger;
+
+        private void Start()
+        {
+                _propBlock = new MaterialPropertyBlock();
+        }
+        
         private void Update()
         {
                 if (_isDead) return;
                 LifetimeHandling();
                 BasicMovementHandling();
 
-                if (_isExploding)
+                if (_isExploding) 
                 {
+                        _blinkRenderer.GetPropertyBlock(_propBlock);
+                        _propBlock.SetFloat(IsBlinking, _isInRange ? 1f : 0f);
+                        _blinkRenderer.SetPropertyBlock(_propBlock);
+                        
                         _explosionTimer += Time.deltaTime;
                         if (_explosionTimer >= explosionDelay)
                         {
-                                
+                                TriggerLocalDeath();
                         }
                 }
         }
@@ -67,7 +80,6 @@ public class KamikazeEnemy : Enemy
         {
         _explosionTimer = 0f;
         _isExploding = true;
-        
         }
 
         private void OnTriggerExit(Collider other)

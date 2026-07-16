@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _currentHealth = wouldBeHealth;
     }
 
-    private void TriggerLocalDeath()
+    protected void TriggerLocalDeath()
     {
         _isDead = true;
         if (_localMeshRenderer != null) _localMeshRenderer.enabled = false;
