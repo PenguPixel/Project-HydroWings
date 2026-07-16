@@ -15,14 +15,14 @@ public class KamikazeEnemy : Enemy
         
         private MaterialPropertyBlock _propBlock;
         private static readonly int IsBlinking = Shader.PropertyToID("_IsBlinking");
-        
+
+        private Collider _targetCollider;
         private bool _isInRange;
         private Vector3 _baseLookDirection = Vector3.left;
         private bool _isExploding = false;
         private float _explosionTimer = 0f;
 
-        public static UnityEvent<Type, Vector3> OnExplosion;
-        public static UnityEvent<KamikazeEnemy> OnCountdownTrigger;
+        public static UnityEvent<Vector3> OnExplosion = new UnityEvent<Vector3>();
 
         private void Start()
         {
@@ -38,13 +38,19 @@ public class KamikazeEnemy : Enemy
                 if (_isExploding) 
                 {
                         _blinkRenderer.GetPropertyBlock(_propBlock);
-                        _propBlock.SetFloat(IsBlinking, _isInRange ? 1f : 0f);
+                        _propBlock.SetFloat(IsBlinking, _isExploding ? 1f : 0f);
                         _blinkRenderer.SetPropertyBlock(_propBlock);
                         
                         _explosionTimer += Time.deltaTime;
                         if (_explosionTimer >= explosionDelay)
                         {
+                                if (_targetCollider != null)
+                                {
+                                        var target = _targetCollider.GetComponent<Character>();
+                                        target.TakeDamage(Stats.KamikazeDamage);
+                                }
                                 TriggerLocalDeath();
+                                OnExplosion?.Invoke(transform.position);
                         }
                 }
         }
@@ -78,13 +84,16 @@ public class KamikazeEnemy : Enemy
 
         private void TriggerSelfDestruction(Collider other)
         {
-        _explosionTimer = 0f;
-        _isExploding = true;
+                if (_isExploding) return;
+                _targetCollider = other;
+                _explosionTimer = 0f;
+                _isExploding = true;
         }
 
         private void OnTriggerExit(Collider other)
         {
                 _isInRange = false;
+                _targetCollider = null;
         }
 
         private void MoveTowardsTarget(Collider other)
