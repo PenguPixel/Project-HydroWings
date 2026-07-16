@@ -39,7 +39,7 @@ public class BossLollipopProjectile : MonoBehaviour
 
             if (character != null)
             {
-                character.DealDamage(damage);
+                character.TakeDamage(damage);
             }
 
             Release();

@@ -76,6 +76,8 @@ MonoBehaviour:
   splineAnimate: {fileID: 1089142664846909617}
   attackSpeedMultiplier: 1.5
   rotationSpeed: 3
+  explosionDelay: 4
+  _blinkRenderer: {fileID: 7968625840536616316}
 --- !u!54 &3024992672153447144
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,16 +138,16 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 132
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1911
+    m_Bits: 1907
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.15
+  m_Radius: 3.55
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &1309219259108373751
 PrefabInstance:
@@ -283,6 +285,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8988473479547308427, guid: 52056e19681d9cf969f9ed264c93a6be, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: 0c0f69732b83a13439e24160a96ad717, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -291,5 +297,10 @@ PrefabInstance:
 --- !u!4 &1558806804890931996 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 52056e19681d9cf969f9ed264c93a6be, type: 3}
+  m_PrefabInstance: {fileID: 1309219259108373751}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7968625840536616316 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8988473479547308427, guid: 52056e19681d9cf969f9ed264c93a6be, type: 3}
   m_PrefabInstance: {fileID: 1309219259108373751}
   m_PrefabAsset: {fileID: 0}

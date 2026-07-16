@@ -12,4 +12,5 @@ public class EnemyStats : ScriptableObject
     public float MovementSpeed;
     public int Bounty;
     public bool IsKamikaze;
+    public float KamikazeDamage;
 }

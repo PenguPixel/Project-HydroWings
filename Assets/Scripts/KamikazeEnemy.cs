@@ -2,27 +2,59 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Splines;
 using UnityEngine.UIElements;
 using static UnityEngine.Quaternion;
 
-public class Puffin : Enemy
+public class KamikazeEnemy : Enemy
 {
         [SerializeField] private float attackSpeedMultiplier = 2f;
         [SerializeField] private float rotationSpeed = 15f;
+        [SerializeField] private float explosionDelay = 3f;
+        [SerializeField] private MeshRenderer _blinkRenderer;
         
+        private MaterialPropertyBlock _propBlock;
+        private static readonly int IsBlinking = Shader.PropertyToID("_IsBlinking");
+
+        private Collider _targetCollider;
         private bool _isInRange;
         private Vector3 _baseLookDirection = Vector3.left;
-        private float _explosionDelay = 3f;
-        private float _remainingDelay = 0f;
-        public static UnityEvent<Type, Vector3> OnExplosion;
-        public static UnityEvent<Puffin> OnCountdownTrigger;
+        private bool _isExploding = false;
+        private float _explosionTimer = 0f;
+
+        public static UnityEvent<Vector3> OnExplosion = new UnityEvent<Vector3>();
+
+        private void Start()
+        {
+                _propBlock = new MaterialPropertyBlock();
+        }
+        
         private void Update()
         {
                 if (_isDead) return;
                 LifetimeHandling();
                 BasicMovementHandling();
-        }
 
+                if (_isExploding) 
+                {
+                        _blinkRenderer.GetPropertyBlock(_propBlock);
+                        _propBlock.SetFloat(IsBlinking, _isExploding ? 1f : 0f);
+                        _blinkRenderer.SetPropertyBlock(_propBlock);
+                        
+                        _explosionTimer += Time.deltaTime;
+                        if (_explosionTimer >= explosionDelay)
+                        {
+                                if (_targetCollider != null)
+                                {
+                                        var target = _targetCollider.GetComponent<Character>();
+                                        target.TakeDamage(Stats.KamikazeDamage);
+                                }
+                                TriggerLocalDeath();
+                                OnExplosion?.Invoke(transform.position);
+                        }
+                }
+        }
+        
         private void BasicMovementHandling()
         {
                 if (!_isInRange)
@@ -41,32 +73,27 @@ public class Puffin : Enemy
 
         private void OnTriggerStay(Collider other)
         {
-                _remainingDelay = _explosionDelay;
                 if (other)
                 {
                         splineAnimate.enabled = false;
                         _isInRange = true;
                         MoveTowardsTarget(other);
-                        TriggerExplosionTimer();
+                        TriggerSelfDestruction(other);
                 }
         }
 
-        private void TriggerExplosionTimer()
+        private void TriggerSelfDestruction(Collider other)
         {
-                OnCountdownTrigger?.Invoke(this);
-                if (_remainingDelay > 0)
-                {
-                        _remainingDelay -= Time.deltaTime;
-                }
-                else
-                {
-                        OnExplosion?.Invoke(GetType(), transform.position);
-                }
+                if (_isExploding) return;
+                _targetCollider = other;
+                _explosionTimer = 0f;
+                _isExploding = true;
         }
 
         private void OnTriggerExit(Collider other)
         {
                 _isInRange = false;
+                _targetCollider = null;
         }
 
         private void MoveTowardsTarget(Collider other)

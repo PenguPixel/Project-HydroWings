@@ -44,7 +44,7 @@ public class Projectile : MonoBehaviour
         if (!_isEnemy)
         {
             _hasHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit,
-                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"));
+                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Enemy"), QueryTriggerInteraction.Ignore);
             if (_hasHit)
             {
                 //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
         else
         {
             _hasHit = Physics.Raycast(transform.position, Vector3.left, out RaycastHit hit,
-                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Friendly"));
+                distanceThisFrame + Single.Epsilon, LayerMask.GetMask("Friendly"), QueryTriggerInteraction.Ignore);
             if (_hasHit)
             {
                 //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
@@ -68,14 +68,14 @@ public class Projectile : MonoBehaviour
     private void DealDamageToCharacter(RaycastHit hitInfo)
     {
         var characterComponent = hitInfo.collider.GetComponent<Character>();
-        characterComponent?.DealDamage(projectileStats.Basedamage);
+        characterComponent?.TakeDamage(projectileStats.Basedamage);
     }
 
     private void DealDamageToEnemy(RaycastHit hitInfo)
     {
         if (hitInfo.collider.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            enemy.DealDamage(projectileStats.Basedamage);
+            enemy.TakeDamage(projectileStats.Basedamage);
             return;
         }
 

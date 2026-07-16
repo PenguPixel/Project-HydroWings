@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _remainingLifetime -= Time.deltaTime;
     }
 
-    public void DealDamage(float incomingDamage)
+    public void TakeDamage(float incomingDamage)
     {
         if (_isDead) return;
         
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _currentHealth = wouldBeHealth;
     }
 
-    private void TriggerLocalDeath()
+    protected void TriggerLocalDeath()
     {
         _isDead = true;
         if (_localMeshRenderer != null) _localMeshRenderer.enabled = false;

@@ -88,7 +88,7 @@ public class Character : MonoBehaviour
         }
     }*/
 
-    public void DealDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
+    public void TakeDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
     {
         float wouldBeHealth = _currentHealth - incomingDamage;
         if (wouldBeHealth < 0)
