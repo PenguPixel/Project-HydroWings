@@ -8,6 +8,10 @@ public class BossLollipopAttack : MonoBehaviour
     [SerializeField] private BossLollipopProjectile lollipopPrefab;
     [SerializeField] private Transform spawnAreaCenter;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip lollipopSpawnSound;
+    [SerializeField] [Range(0f, 1f)] private float spawnVolume = 1f;
+
     [Header("Spawn Settings")]
     [SerializeField] private int lollipopCount = 6;
     [SerializeField] private float spawnWidth = 30f;
@@ -61,6 +65,15 @@ public class BossLollipopAttack : MonoBehaviour
     public void StartLollipopRain()
     {
         if (_isSpawning) return;
+
+        if (lollipopSpawnSound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                lollipopSpawnSound,
+                spawnAreaCenter.position,
+                spawnVolume
+            );
+        }
 
         StartCoroutine(SpawnLollipops());
     }
