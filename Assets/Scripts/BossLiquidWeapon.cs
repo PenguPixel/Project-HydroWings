@@ -7,6 +7,10 @@ public class BossLiquidWeapon : MonoBehaviour
     [SerializeField] private BossLiquidProjectile projectilePrefab;
     [SerializeField] private Transform spawnPoint;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip liquidShotSound;
+    [SerializeField] [Range(0f, 1f)] private float shotVolume = 1f;
+
     [Header("Spread")]
     [SerializeField] private int projectilesPerVolley = 5;
     [SerializeField] private float spreadAngle = 30f;
@@ -32,7 +36,7 @@ public class BossLiquidWeapon : MonoBehaviour
             maxSize: maxSize
         );
     }
-   
+
     private BossLiquidProjectile CreateProjectile()
     {
         BossLiquidProjectile projectile =
@@ -89,7 +93,6 @@ public class BossLiquidWeapon : MonoBehaviour
         if (projectilesPerVolley <= 1)
         {
             SpawnProjectile(baseDirection);
-
             return;
         }
 
@@ -130,6 +133,15 @@ public class BossLiquidWeapon : MonoBehaviour
             direction,
             _pool
         );
+
+        if (liquidShotSound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                liquidShotSound,
+                spawnPoint.position,
+                shotVolume
+            );
+        }
     }
 
     private void OnDestroy()

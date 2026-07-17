@@ -6,6 +6,10 @@ public class BossEnemySpawner : MonoBehaviour
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private EnemySpawner enemySpawner;
 
+    [Header("Spawn Sound")]
+    [SerializeField] private AudioClip fartSound;
+    [SerializeField] [Range(0f, 1f)] private float fartVolume = 1f;
+
     public void SpawnRandomEnemy()
     {
         if (enemyPrefabs == null || enemyPrefabs.Length == 0)
@@ -56,6 +60,19 @@ public class BossEnemySpawner : MonoBehaviour
             ];
         }
 
-        enemySpawner.SpawnEnemy(selectedPrefab, selectedPath, enemy.Stats.MovementSpeed);
+        enemySpawner.SpawnEnemy(
+            selectedPrefab,
+            selectedPath,
+            enemy.Stats.MovementSpeed
+        );
+
+        if (fartSound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                fartSound,
+                transform.position,
+                fartVolume
+            );
+        }
     }
 }
