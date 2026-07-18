@@ -71,7 +71,7 @@ public class BossLollipopAttack : MonoBehaviour
             AudioSource.PlayClipAtPoint(
                 lollipopSpawnSound,
                 spawnAreaCenter.position,
-                spawnVolume
+                spawnVolume * SFXVolumeManager.Volume
             );
         }
 

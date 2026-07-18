@@ -71,7 +71,7 @@ public class BossEnemySpawner : MonoBehaviour
             AudioSource.PlayClipAtPoint(
                 fartSound,
                 transform.position,
-                fartVolume
+                fartVolume * SFXVolumeManager.Volume
             );
         }
     }

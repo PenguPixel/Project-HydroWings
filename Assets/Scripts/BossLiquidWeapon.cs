@@ -139,7 +139,7 @@ public class BossLiquidWeapon : MonoBehaviour
             AudioSource.PlayClipAtPoint(
                 liquidShotSound,
                 spawnPoint.position,
-                shotVolume
+                shotVolume * SFXVolumeManager.Volume
             );
         }
     }

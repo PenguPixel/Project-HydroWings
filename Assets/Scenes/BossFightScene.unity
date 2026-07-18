@@ -1137,7 +1137,7 @@ Transform:
   m_GameObject: {fileID: 345763938}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.6, y: 4.5, z: -0.6}
+  m_LocalPosition: {x: 24, y: 4.5, z: -0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1622,7 +1622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 374b4dbcb244a234cb7949ec9833aeb0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.9
+      value: 49.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 374b4dbcb244a234cb7949ec9833aeb0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3683,7 +3683,7 @@ MonoBehaviour:
   weakPoints:
   - {fileID: 1716964972}
   - {fileID: 556540589}
-  bossStartDelay: 9
+  bossStartDelay: 11
   minimumIdleLoops: 2
   maximumIdleLoops: 3
   explosionCount: 12
@@ -6175,6 +6175,7 @@ GameObject:
   - component: {fileID: 2053240006}
   - component: {fileID: 2053240008}
   - component: {fileID: 2053240007}
+  - component: {fileID: 2053240009}
   m_Layer: 0
   m_Name: BossAudio
   m_TagString: Untagged
@@ -6311,7 +6312,7 @@ MonoBehaviour:
   introClip: {fileID: 8300000, guid: 759cffe6911ee3d4789ee3b0b3936840, type: 3}
   loopClip: {fileID: 8300000, guid: dd6fabf15937bb3408cd1f2a56574b7b, type: 3}
   outroClip: {fileID: 8300000, guid: a3d3d140f61e00348afc7f1e3ff0be64, type: 3}
-  volume: 0.05
+  volume: 1
 --- !u!82 &2053240008
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6409,6 +6410,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2053240009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053240004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56790f91e93a30440b5c2c8989adf00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicVolumeLoader
+  musicSources:
+  - {fileID: 2053240006}
 --- !u!1 &2106280857
 GameObject:
   m_ObjectHideFlags: 0
