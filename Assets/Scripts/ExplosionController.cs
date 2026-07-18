@@ -21,7 +21,11 @@ public class ExplosionController : MonoBehaviour
 
         if (explosionSound != null)
         {
-            AudioSource.PlayClipAtPoint(explosionSound, position, explosionVolume);
+            AudioSource.PlayClipAtPoint(
+                explosionSound, 
+                position, 
+                explosionVolume * SFXVolumeManager.Volume
+                );
         }
     }
 }

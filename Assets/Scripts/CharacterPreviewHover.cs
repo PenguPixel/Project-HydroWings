@@ -32,6 +32,15 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private Camera _mainCamera;
 
+    // Diese Sperre gilt gemeinsam für alle CharacterPreviewHover-Objekte.
+    private static bool _characterSelectionLocked;
+
+    private void Awake()
+    {
+        // Beim erneuten Laden der Character-Select-Szene zurücksetzen.
+        _characterSelectionLocked = false;
+    }
+
     private void Start()
     {
         if (model == null)
@@ -49,7 +58,7 @@ public class CharacterPreviewHover : MonoBehaviour
     {
         HoverAnimation();
 
-        if (!_isSelected)
+        if (!_isSelected && !_characterSelectionLocked)
         {
             CheckMouseHover();
             UpdateStatsImage();
@@ -106,7 +115,7 @@ public class CharacterPreviewHover : MonoBehaviour
             return;
         }
 
-        if (_isHovered)
+        if (_isHovered && !_characterSelectionLocked)
         {
             model.Rotate(
                 Vector3.up,
@@ -133,7 +142,8 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void CheckSelectionInput()
     {
-        if (!_isHovered ||
+        if (_characterSelectionLocked ||
+            !_isHovered ||
             Mouse.current == null ||
             !Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -145,13 +155,25 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void SelectCharacter()
     {
+        if (_characterSelectionLocked)
+        {
+            return;
+        }
+
+        // Sofort sperren, bevor Sound, Animation oder Szenenwechsel starten.
+        _characterSelectionLocked = true;
         _isSelected = true;
+
+        CharacterStatsImage.Instance?.Hide();
 
         CharacterSelection.SelectWing(wingType);
 
         if (audioSource && selectSound)
         {
-            audioSource.PlayOneShot(selectSound);
+            audioSource.PlayOneShot(
+                selectSound,
+                SFXVolumeManager.Volume
+            );
         }
 
         Debug.Log($"{wingType} wurde ausgewählt.");
