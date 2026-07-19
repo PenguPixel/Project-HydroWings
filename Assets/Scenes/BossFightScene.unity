@@ -5554,7 +5554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 833891945383158782, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6733466837421919402, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
       propertyPath: m_Enabled
@@ -5659,6 +5659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameUIController
   waterSlider: {fileID: 1425625197}
   healthSlider: {fileID: 1305965921}
+  scoreText: {fileID: 0}
 --- !u!1 &1873946651
 GameObject:
   m_ObjectHideFlags: 0
