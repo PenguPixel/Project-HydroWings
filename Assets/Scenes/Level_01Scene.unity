@@ -2281,6 +2281,53 @@ Transform:
   - {fileID: 1386028752}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1182067041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1182067043}
+  - component: {fileID: 1182067042}
+  m_Layer: 0
+  m_Name: ExplosionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1182067042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182067041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010b1f6537a873cc29cee3fb3caa1e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExplosionController
+  kamikazeExplosion: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
+  explosionSound: {fileID: 8300000, guid: 3183ed371679fa5438a923476c01f683, type: 3}
+  explosionVolume: 1
+--- !u!4 &1182067043
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182067041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23, y: 1.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1200367022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4393,3 +4440,4 @@ SceneRoots:
   - {fileID: 1873848133}
   - {fileID: 38014761}
   - {fileID: 1375092243}
+  - {fileID: 1182067043}
