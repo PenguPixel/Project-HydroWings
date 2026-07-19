@@ -9,8 +9,7 @@ public class BountyController : MonoBehaviour
 
     public static UnityEvent<int> OnScoreChange = new UnityEvent<int>();
     public static UnityEvent<int> OnUpgradePointsChange = new UnityEvent<int>();
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     private void OnEnable()
     {
         Enemy.BountyOnDeath.AddListener(AddAmount);

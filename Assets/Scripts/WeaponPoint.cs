@@ -18,9 +18,7 @@ public class WeaponPoint : MonoBehaviour
     public UnityEvent OnEmpty;
     private bool _isShuttingDown = false;
     
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+  
     private void Start()
     {
         _waterResource = GetComponentInParent<WaterResource>();

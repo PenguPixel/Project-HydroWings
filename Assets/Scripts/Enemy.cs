@@ -26,9 +26,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     
     public void SetPool(IObjectPool<GameObject> pool) => _myPool = pool;
     
-    // TODO Enemy local stats, resistances and PowerUp-Drop logics
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         _localMeshRenderer = GetComponent<MeshRenderer>();
@@ -37,8 +35,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         _currentHealth = Stats.MaxHealth;
         _remainingLifetime = Stats.MaxLifetime;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (_isDead) return;
@@ -49,7 +46,6 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     {
         if (_remainingLifetime <= 0)
         {
-            //Debug.Log($"Enemy {this.name} hat seine Lifetime überschritten und wird released");
             if (splineAnimate.Loop == SplineAnimate.LoopMode.Loop)
             {
                 if (splineAnimate.NormalizedTime >= 0.9f)
@@ -77,8 +73,6 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
             wouldBeHealth = 0;
         }
         
-        //Debug.Log($"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
-
         if (wouldBeHealth == 0)
         {
             BountyOnDeath.Invoke(Stats.Bounty);
