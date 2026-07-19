@@ -9,22 +9,25 @@ public class WeaponPoint : MonoBehaviour
 
     [SerializeField] public WeaponPointStats weaponStats;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip waterShootSound;
+    [SerializeField] [Range(0f, 1f)] private float shootVolume = 1f;
+
     private ObjectPool<Projectile> _pool;
     public bool HasActiveProjectiles => _pool != null && _pool.CountActive > 0;
-    
+
     private float _fireCooldownTimer = 0f;
     private WaterResource _waterResource;
 
     public UnityEvent OnEmpty;
     private bool _isShuttingDown = false;
-    
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void Start()
     {
         _waterResource = GetComponentInParent<WaterResource>();
-       _pool = new ObjectPool<Projectile>(
+
+        _pool = new ObjectPool<Projectile>(
             createFunc: CreateProjectile,
             actionOnGet: OnGetProjectile,
             actionOnRelease: OnReleaseProjectile,
@@ -50,21 +53,22 @@ public class WeaponPoint : MonoBehaviour
             WeaponController.OnManualShootPressed -= Shoot;
         }
     }
-    
+
     private void Update()
     {
         CooldownHandling();
+
         if (weaponStats.IsAutoFire)
         {
-            
             var target = AcquireTarget();
+
             if (target)
             {
                 AutoShooting(target);
             }
         }
     }
-    
+
     private Projectile CreateProjectile()
     {
         GameObject projectileGO = Instantiate(projectileStats.projectilePrefab);
@@ -72,14 +76,14 @@ public class WeaponPoint : MonoBehaviour
         projectile.SetPool(_pool);
         return projectile;
     }
-    
+
     private void OnGetProjectile(Projectile projectile)
     {
         projectile.transform.position = transform.position;
         projectile.transform.rotation = transform.rotation;
         projectile.gameObject.SetActive(true);
     }
-    
+
     private void OnReleaseProjectile(Projectile projectile)
     {
         projectile.gameObject.SetActive(false);
@@ -100,8 +104,13 @@ public class WeaponPoint : MonoBehaviour
 
     private Enemy AcquireTarget()
     {
-        var collidersInRange = Physics.OverlapSphere(transform.position, weaponStats.WeaponRange, LayerMask.GetMask("Enemy"));
+        var collidersInRange = Physics.OverlapSphere(
+            transform.position,
+            weaponStats.WeaponRange,
+            LayerMask.GetMask("Enemy"));
+
         Enemy targetCandidate = null;
+
         foreach (var col in collidersInRange)
         {
             if (col.GetComponent<Enemy>() != null)
@@ -111,16 +120,19 @@ public class WeaponPoint : MonoBehaviour
             }
         }
 
-        if (targetCandidate == null) return targetCandidate;
+        if (targetCandidate == null)
+            return targetCandidate;
 
         foreach (var col in collidersInRange)
         {
             Enemy componentOfTarget = col.GetComponent<Enemy>();
+
             if (componentOfTarget != null)
             {
                 targetCandidate = componentOfTarget;
             }
         }
+
         return targetCandidate;
     }
 
@@ -146,15 +158,27 @@ public class WeaponPoint : MonoBehaviour
         }
     }
 
+    private void PlayShootSound()
+    {
+        if (audioSource != null && waterShootSound != null)
+        {
+            audioSource.PlayOneShot(
+                waterShootSound,
+                shootVolume * SFXVolumeManager.Volume
+            );
+        }
+    }
+
     public void Shoot()
     {
-        if (_fireCooldownTimer <=0)
+        if (_fireCooldownTimer <= 0)
         {
             if (projectileStats.UsesWater && _waterResource != null)
             {
                 if (_waterResource.TryConsumeWater(projectileStats.WaterCostPerShot))
                 {
                     Fire();
+                    PlayShootSound();
                     _fireCooldownTimer = weaponStats.FireRate;
                 }
                 else
@@ -165,24 +189,30 @@ public class WeaponPoint : MonoBehaviour
             else
             {
                 Fire();
+                PlayShootSound();
                 _fireCooldownTimer = weaponStats.FireRate;
             }
         }
     }
-    
-    
+
     public void AutoShooting(Enemy target)
     {
-        if (_fireCooldownTimer <= 0f && target != null && !weaponStats.IsEnemyWeapon && weaponStats.IsAutoFire)
+        if (_fireCooldownTimer <= 0f &&
+            target != null &&
+            !weaponStats.IsEnemyWeapon &&
+            weaponStats.IsAutoFire)
         {
             transform.LookAt(target.transform.position);
             Fire();
+            PlayShootSound();
             _fireCooldownTimer = weaponStats.FireRate;
         }
 
-        if (_fireCooldownTimer <= 0f && weaponStats.IsEnemyWeapon)
+        if (_fireCooldownTimer <= 0f &&
+            weaponStats.IsEnemyWeapon)
         {
             Fire();
+            PlayShootSound();
             _fireCooldownTimer = weaponStats.FireRate;
         }
     }
@@ -190,7 +220,10 @@ public class WeaponPoint : MonoBehaviour
     public void ShutdownAndNotify()
     {
         _isShuttingDown = true;
-        
-        if(!HasActiveProjectiles) OnEmpty?.Invoke();
+
+        if (!HasActiveProjectiles)
+        {
+            OnEmpty?.Invoke();
+        }
     }
 }
