@@ -5,10 +5,14 @@ public class ParallaxController : MonoBehaviour
 {
     [SerializeField] private Transform[] backgrounds;   // Array containing background layers
     [SerializeField] private float smoothing = 10f;     // Smoothness of parallax effect
-    [SerializeField] private float multiplier = 15f;    // Parallax effect strength between background layers 
+    [SerializeField] private float multiplier = 0.15f;    // Parallax effect strength between background layers 
 
     private Transform cam;  // Main camera
-    private Vector3 previousCamPos;
+
+    private float[] startPositionsX;
+    private float startCamX;
+    
+    //private Vector3 previousCamPos;
 
     void Awake()
     {
@@ -17,21 +21,28 @@ public class ParallaxController : MonoBehaviour
 
     void Start()
     {
-        previousCamPos = cam.position;
+        startCamX = cam.position.x;
+        
+        startPositionsX = new float[backgrounds.Length];
+        for (int i = 0; i < backgrounds.Length; i++)
+        {
+            startPositionsX[i] = backgrounds[i].position.x;
+        }
     }
 
-    void Update()
+    void LateUpdate()
     {
-        for (var i = 0; i < backgrounds.Length; i++)
+        float camTravel = cam.position.x - startCamX;
+        
+        for (int i = 0; i < backgrounds.Length; i++)
         {
-            var parallax = (previousCamPos.x - cam.position.x) * (i * multiplier);
-            var targetX = backgrounds[i].position.x + parallax;
+            float parallaxFactor = 1f - (i * multiplier);
+
+            float targetX = startPositionsX[i] + (camTravel * parallaxFactor);
             
-            var targetPosition = new Vector3(targetX, backgrounds[i].position.y, backgrounds[i].position.z);
+            Vector3 targetPosition = new Vector3(targetX, backgrounds[i].position.y, backgrounds[i].position.z);
 
-            backgrounds[i].position = Vector3.Lerp(targetPosition, backgrounds[i].position, smoothing * Time.deltaTime);
+            backgrounds[i].position = Vector3.Lerp(backgrounds[i].position, targetPosition, smoothing * Time.deltaTime);
         }
-
-        previousCamPos = cam.position;
     }
 }
