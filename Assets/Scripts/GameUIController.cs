@@ -17,10 +17,10 @@ public class GameUIController : MonoBehaviour
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
-
     [SerializeField] private GameObject loseOverlayPanel;
+    [SerializeField] private GameObject gameOverButtons;
     [SerializeField] private float fadeDuration = 1.0f;
-    [SerializeField] private float panelTargetAlpha = 0.98f;
+    [SerializeField] private float panelTargetAlpha = 1f;
     private bool isFading = false;
     
 
@@ -48,6 +48,7 @@ public class GameUIController : MonoBehaviour
         {
             loseOverlayPanel.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
+            gameOverButtons.SetActive(false);
         }
     }
     
@@ -84,6 +85,8 @@ public class GameUIController : MonoBehaviour
         isFading = true;
         loseOverlayPanel.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        gameOverButtons.SetActive(true);
+        
         Image panelImage = loseOverlayPanel.GetComponent<Image>();
         TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
         
@@ -96,25 +99,35 @@ public class GameUIController : MonoBehaviour
         loseText.color = startTextColor;
         
 
-        float startGameSpeed = 1f;
-        float targetGameSpeed = 0f;
+        float startGameSpeed = 1.0f;
+        float targetGameSpeed = 0.0f;
 
         float elapsedTime = 0f;
+        float lastTimeScale = 1f;
+
+        bool canceledLerp = false;
         
-        while (elapsedTime < fadeDuration)
+        while (elapsedTime + 0.02f < fadeDuration)
         {
+            if (Time.timeScale > lastTimeScale)
+            {
+                canceledLerp = true;
+                break;
+            }
+            
             float currentFactor = elapsedTime / fadeDuration;
             
             panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
             loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
             Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
+            lastTimeScale = Time.timeScale;
             
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         
         panelImage.color = targetPanelColor;
-        Time.timeScale = targetGameSpeed;
+        if (!canceledLerp) Time.timeScale = targetGameSpeed;
         isFading = false;
     }
 }
