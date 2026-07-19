@@ -12,5 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95964f2009f2f3e419501cc64d3219e5, type: 3}
   m_Name: Wave4
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWave
-  triggerXPosition: 0
-  enemies: []
+  triggerXPosition: 130
+  enemies:
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 0
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 1
+  - prefab: {fileID: 3942286504853281072, guid: c24ccf1a88f803f67b04f378b6033029, type: 3}
+    spawnTimeOffset: 0
+  - prefab: {fileID: 3942286504853281072, guid: c24ccf1a88f803f67b04f378b6033029, type: 3}
+    spawnTimeOffset: 0
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 2
+  - prefab: {fileID: 8723569561935452007, guid: 914c165a4883e2143b2a2961ca813436, type: 3}
+    spawnTimeOffset: 1
+  - prefab: {fileID: 3942286504853281072, guid: c24ccf1a88f803f67b04f378b6033029, type: 3}
+    spawnTimeOffset: 0
+  - prefab: {fileID: 3942286504853281072, guid: c24ccf1a88f803f67b04f378b6033029, type: 3}
+    spawnTimeOffset: 0
