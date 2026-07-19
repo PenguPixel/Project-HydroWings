@@ -68,16 +68,12 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         if (_isDead) return;
         
         float wouldBeHealth = _currentHealth - incomingDamage;
-        if (wouldBeHealth < 0)
+        
+        if (wouldBeHealth <= 0)
         {
             wouldBeHealth = 0;
-        }
-        
-        if (wouldBeHealth == 0)
-        {
             BountyOnDeath.Invoke(Stats.Bounty);
             TriggerLocalDeath();
-            Debug.Log($"{gameObject.name} has been defeated. Add Bounty {Stats.Bounty}");
             return;
         }
 

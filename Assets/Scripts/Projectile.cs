@@ -49,7 +49,10 @@ public class Projectile : MonoBehaviour
             {
                 //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
                 DealDamageToEnemy(hit);
-                ReleaseToPool();
+                if (isActiveAndEnabled)
+                {
+                    ReleaseToPool();
+                }
             }
         }
         else
@@ -60,7 +63,10 @@ public class Projectile : MonoBehaviour
             {
                 //Debug.Log($"{this.name} hat ein Ziel getroffen: {hit.transform.name}");
                 DealDamageToCharacter(hit);
-                ReleaseToPool();
+                if (isActiveAndEnabled)
+                {
+                    ReleaseToPool();
+                }
             }
         }
         
@@ -109,7 +115,7 @@ public class Projectile : MonoBehaviour
 
     private void LifetimeHandling()
     {
-        if (_localRemainingLifetime <= 0f)
+        if (_localRemainingLifetime <= 0f && isActiveAndEnabled)
         {
             ReleaseToPool();
         }

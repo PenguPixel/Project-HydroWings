@@ -18,9 +18,9 @@ public class GameUIController : MonoBehaviour
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
 
-    [SerializeField] private Image loseOverlayPanel;
+    [SerializeField] private GameObject loseOverlayPanel;
     [SerializeField] private float fadeDuration = 1.0f;
-    [SerializeField] private float targetAlpha = 0.9f;
+    [SerializeField] private float panelTargetAlpha = 0.98f;
     private bool isFading = false;
     
 
@@ -44,9 +44,10 @@ public class GameUIController : MonoBehaviour
 
     private void Awake()
     {
-        if (loseOverlayPanel != null)
+        if (loseOverlayPanel != null && gameOverText != null)
         {
             loseOverlayPanel.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
         }
     }
     
@@ -70,35 +71,53 @@ public class GameUIController : MonoBehaviour
     
     private void TriggerLose()
     {
+        Debug.Log("Trigger Lose");
         if (isFading) return;
 
         if (loseOverlayPanel != null && loseOverlayPanel != null)
         {
-            StartCoroutine(FadeToDark());
+            Debug.Log("Trigger Lose 2");
+            StartCoroutine("FadeToLoseScreen");
         }
     }
 
-    private IEnumerator FadeToDark()
+    private IEnumerator FadeToLoseScreen()
     {
+        Debug.Log("Trigger Lose 3");
         isFading = true;
+        loseOverlayPanel.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
+        Image panelImage = loseOverlayPanel.GetComponent<Image>();
+        TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
         
-        Color startColor = new Color(0f,0f,0f,0f);
-        loseOverlayPanel.color = startColor;
+        Color startPanelColor = new Color(0f,0f,0f,0f);
+        Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
+        panelImage.color = startPanelColor;
+        
+        Color startTextColor = new Color(1f, 1f, 1f, 0f);
+        Color targetTextColor = new Color(1f, 1f, 1f, 1f);
+        loseText.color = startTextColor;
+        
+
+        float startGameSpeed = 1f;
+        float targetGameSpeed = 0f;
 
         float elapsedTime = 0f;
-        Color targetColor = new Color(0f, 0f, 0f, targetAlpha);
-
+        
         while (elapsedTime < fadeDuration)
         {
-            float curentFactor = elapsedTime / fadeDuration;
+            float currentFactor = elapsedTime / fadeDuration;
             
-            loseOverlayPanel.color = Color.Lerp(startColor, targetColor, curentFactor);
+            panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+            loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+            Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
             
             elapsedTime += Time.deltaTime;
             yield return null;
         }
         
-        loseOverlayPanel.color = targetColor;
+        panelImage.color = targetPanelColor;
+        Time.timeScale = targetGameSpeed;
         isFading = false;
     }
 }
