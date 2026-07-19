@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,15 @@ public class GameUIController : MonoBehaviour
     
     [Header("Score UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
+    
+    [Header("GameOverUI")]
+    [SerializeField] private TextMeshProUGUI gameOverText;
+
+    [SerializeField] private GameObject loseOverlayPanel;
+    [SerializeField] private float fadeDuration = 1.0f;
+    [SerializeField] private float panelTargetAlpha = 0.98f;
+    private bool isFading = false;
+    
 
     private int _currentScore;
 
@@ -21,6 +31,7 @@ public class GameUIController : MonoBehaviour
         WaterResource.OnWaterChange.AddListener(UpdateWaterUI);
         Character.OnHealthchange.AddListener(UpdateHealthUI);
         BountyController.OnScoreChange.AddListener(UpdateScoreUI);
+        Character.OnPlayerDied.AddListener(TriggerLose);
     }
 
     private void OnDisable()
@@ -28,6 +39,16 @@ public class GameUIController : MonoBehaviour
         WaterResource.OnWaterChange.RemoveListener(UpdateWaterUI);
         Character.OnHealthchange.RemoveListener(UpdateHealthUI);
         BountyController.OnScoreChange.RemoveListener(UpdateScoreUI);
+        Character.OnPlayerDied.RemoveListener(TriggerLose);
+    }
+
+    private void Awake()
+    {
+        if (loseOverlayPanel != null && gameOverText != null)
+        {
+            loseOverlayPanel.gameObject.SetActive(false);
+            gameOverText.gameObject.SetActive(false);
+        }
     }
     
     private void UpdateScoreUI(int newScore)
@@ -46,5 +67,54 @@ public class GameUIController : MonoBehaviour
     {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
+    }
+    
+    public void TriggerLose()
+    {
+        if (isFading) return;
+
+        if (loseOverlayPanel != null && loseOverlayPanel != null)
+        {
+            StartCoroutine("FadeToLoseScreen");
+        }
+    }
+
+    private IEnumerator FadeToLoseScreen()
+    {
+        isFading = true;
+        loseOverlayPanel.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
+        Image panelImage = loseOverlayPanel.GetComponent<Image>();
+        TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
+        
+        Color startPanelColor = new Color(0f,0f,0f,0f);
+        Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
+        panelImage.color = startPanelColor;
+        
+        Color startTextColor = new Color(1f, 1f, 1f, 0f);
+        Color targetTextColor = new Color(1f, 1f, 1f, 1f);
+        loseText.color = startTextColor;
+        
+
+        float startGameSpeed = 1f;
+        float targetGameSpeed = 0f;
+
+        float elapsedTime = 0f;
+        
+        while (elapsedTime < fadeDuration)
+        {
+            float currentFactor = elapsedTime / fadeDuration;
+            
+            panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+            loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+            Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        panelImage.color = targetPanelColor;
+        Time.timeScale = targetGameSpeed;
+        isFading = false;
     }
 }

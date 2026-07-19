@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class SceneFader : MonoBehaviour
 {
-    public static SceneFader Instance { get; private set; }
-
     [Header("References")]
     [SerializeField] private Image fadeImage;
 
@@ -19,9 +17,18 @@ public class SceneFader : MonoBehaviour
 
     private bool _isTransitioning;
 
+    public static SceneFader Instance { get; private set;}
+    
     private void Awake()
     {
-        Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
 
         fadeImage.gameObject.SetActive(true);
         fadeImage.raycastTarget = true;
@@ -51,6 +58,16 @@ public class SceneFader : MonoBehaviour
 
         StartCoroutine(FadeOutAndLoadScene(sceneName));
     }
+    
+    public void LoadScene(int sceneIndex)
+    {
+        if (_isTransitioning)
+            return;
+        Debug.Log(sceneIndex);
+
+        IEnumerator coroutine = FadeOutAndLoadScene(sceneIndex);
+        StartCoroutine(coroutine);
+    }
 
     public void ReloadCurrentScene()
     {
@@ -79,6 +96,19 @@ public class SceneFader : MonoBehaviour
         yield return FadeTo(1f, fadeOutDuration);
 
         SceneManager.LoadScene(sceneName);
+    }
+    
+    private IEnumerator FadeOutAndLoadScene(int sceneIndex)
+    {
+        _isTransitioning = true;
+
+        Debug.Log("Coroutine funzt");
+        fadeImage.gameObject.SetActive(true);
+        fadeImage.raycastTarget = true;
+
+        yield return FadeTo(1f, fadeOutDuration);
+
+        SceneManager.LoadScene(sceneIndex);
     }
 
     private IEnumerator FadeTo(float targetAlpha, float duration)
