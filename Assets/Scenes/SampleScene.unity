@@ -2100,6 +2100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionController
   kamikazeExplosion: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
+  explosionSound: {fileID: 8300000, guid: 3183ed371679fa5438a923476c01f683, type: 3}
+  explosionVolume: 1
 --- !u!4 &1184484984
 Transform:
   m_ObjectHideFlags: 0

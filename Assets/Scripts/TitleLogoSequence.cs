@@ -31,6 +31,9 @@ public class TitleLogoSequence : MonoBehaviour
 
     [Header("Music")]
     [SerializeField] private AudioSource musicSource;
+    [SerializeField] private Slider musicSlider;
+
+    private const string MusicVolumeKey = "MusicVolume";
 
     private bool menuOpened;
     private bool sceneIsLoading;
@@ -41,6 +44,8 @@ public class TitleLogoSequence : MonoBehaviour
 
     private void Start()
     {
+        SetupMusicVolume();
+
         HideIntroObjects();
         HideMenu();
         PrepareFadeImageBlack();
@@ -62,6 +67,34 @@ public class TitleLogoSequence : MonoBehaviour
         {
             StartCoroutine(SkipToMainMenu());
         }
+    }
+
+    private void SetupMusicVolume()
+    {
+        float savedVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+
+        if (musicSource != null)
+            musicSource.volume = savedVolume;
+
+        if (musicSlider != null)
+        {
+            musicSlider.minValue = 0f;
+            musicSlider.maxValue = 1f;
+            musicSlider.wholeNumbers = false;
+            musicSlider.value = savedVolume;
+
+            musicSlider.onValueChanged.RemoveListener(SetMusicVolume);
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        if (musicSource != null)
+            musicSource.volume = volume;
+
+        PlayerPrefs.SetFloat(MusicVolumeKey, volume);
+        PlayerPrefs.Save();
     }
 
     private IEnumerator StartWithFade()

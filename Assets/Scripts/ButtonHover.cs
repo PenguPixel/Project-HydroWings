@@ -1,7 +1,10 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonHover : MonoBehaviour,
+    IPointerEnterHandler,
+    IPointerExitHandler,
+    IPointerClickHandler
 {
     [SerializeField] private float hoverScale = 1.1f;
     [SerializeField] private float speed = 10f;
@@ -9,10 +12,20 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private Vector3 normalScale;
     private Vector3 targetScale;
 
-    private void Start()
+    private void Awake()
     {
         normalScale = transform.localScale;
         targetScale = normalScale;
+    }
+
+    private void OnEnable()
+    {
+        ResetScale();
+    }
+
+    private void OnDisable()
+    {
+        ResetScale();
     }
 
     private void Update()
@@ -20,7 +33,8 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         transform.localScale = Vector3.Lerp(
             transform.localScale,
             targetScale,
-            Time.deltaTime * speed);
+            Time.deltaTime * speed
+        );
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -31,5 +45,16 @@ public class ButtonHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerExit(PointerEventData eventData)
     {
         targetScale = normalScale;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ResetScale();
+    }
+
+    private void ResetScale()
+    {
+        targetScale = normalScale;
+        transform.localScale = normalScale;
     }
 }

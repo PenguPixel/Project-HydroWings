@@ -28,6 +28,31 @@ public class KamikazeEnemy : Enemy
         {
                 _propBlock = new MaterialPropertyBlock();
         }
+
+        private void OnEnable()
+        {
+                _targetCollider = null;
+                _isInRange = false;
+                _isExploding = false;
+                _explosionTimer = 0f;
+
+                if (splineAnimate != null)
+                {
+                        splineAnimate.enabled = true;
+                }
+
+                if (_blinkRenderer != null)
+                {
+                        if (_propBlock == null)
+                        {
+                                _propBlock = new MaterialPropertyBlock();
+                        }
+
+                        _blinkRenderer.GetPropertyBlock(_propBlock);
+                        _propBlock.SetFloat(IsBlinking, 0f);
+                        _blinkRenderer.SetPropertyBlock(_propBlock);
+                }
+        }
         
         private void Update()
         {
@@ -47,8 +72,13 @@ public class KamikazeEnemy : Enemy
                                 if (_targetCollider != null)
                                 {
                                         var target = _targetCollider.GetComponent<Character>();
-                                        target.TakeDamage(Stats.KamikazeDamage);
+
+                                        if (target != null)
+                                        {
+                                                target.TakeDamage(Stats.KamikazeDamage);
+                                        }
                                 }
+
                                 TriggerLocalDeath();
                                 OnExplosion?.Invoke(transform.position);
                         }
@@ -65,8 +95,13 @@ public class KamikazeEnemy : Enemy
                                 rotationSpeed * Time.deltaTime, 
                                 0.0f
                                 );
+
                         transform.rotation = LookRotation(newDirection);
-                        Vector3 moveDirection = transform.forward * (Stats.MovementSpeed * Time.deltaTime);
+
+                        Vector3 moveDirection =
+                                transform.forward *
+                                (Stats.MovementSpeed * Time.deltaTime);
+
                         transform.Translate(moveDirection, Space.World);
                 }
         }
@@ -85,6 +120,12 @@ public class KamikazeEnemy : Enemy
         private void TriggerSelfDestruction(Collider other)
         {
                 if (_isExploding) return;
+
+                Debug.Log(
+                        "Kamikaze wurde ausgelöst von: " +
+                        other.name
+                );
+
                 _targetCollider = other;
                 _explosionTimer = 0f;
                 _isExploding = true;
@@ -98,15 +139,27 @@ public class KamikazeEnemy : Enemy
 
         private void MoveTowardsTarget(Collider other)
         {
-                Vector3 targetDirection = other.transform.position - transform.position;
+                Vector3 targetDirection =
+                        other.transform.position -
+                        transform.position;
+
                 Vector3 newDirection = Vector3.RotateTowards(
                         transform.forward,
                         targetDirection,
                         rotationSpeed * Time.deltaTime,
                         0.0f
                 );
+
                 transform.rotation = LookRotation(newDirection);
-                Vector3 moveDirection = transform.forward * (Stats.MovementSpeed * attackSpeedMultiplier * Time.deltaTime);
+
+                Vector3 moveDirection =
+                        transform.forward *
+                        (
+                                Stats.MovementSpeed *
+                                attackSpeedMultiplier *
+                                Time.deltaTime
+                        );
+
                 transform.Translate(moveDirection, Space.World);
         }
 }
