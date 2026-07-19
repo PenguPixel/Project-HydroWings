@@ -74,9 +74,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KamikazeEnemy
   Stats: {fileID: 11400000, guid: cae54d44d48c52f579fd3251a236c397, type: 2}
   splineAnimate: {fileID: 1089142664846909617}
-  attackSpeedMultiplier: 1.5
+  attackSpeedMultiplier: 1.8
   rotationSpeed: 3
-  explosionDelay: 4
+  explosionDelay: 3
   _blinkRenderer: {fileID: 7968625840536616316}
 --- !u!54 &3024992672153447144
 Rigidbody:

@@ -67,27 +67,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    /*private void OnCollisionStay(Collision collision)
-    {
-        Debug.Log($"Character OnCollisionStay {collision.gameObject.name}");
-        if (collision.collider.TryGetComponent<Obstacle>(out Obstacle obstacle))
-        {
-            _isTouchingObstacle = true;
-            Debug.Log("Touching Obstacle");
-        }
-
-        if (collision.collider.TryGetComponent<Backwall>(out Backwall backwall))
-        {
-            _isTouchingBackwall = true;
-            Debug.Log("Touching Backwall");
-        }
-
-        if (_isTouchingObstacle && _isTouchingBackwall)
-        {
-            DealDamage(Stats.MaxHealth);
-        }
-    }*/
-
     public void TakeDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
     {
         float wouldBeHealth = _currentHealth - incomingDamage;

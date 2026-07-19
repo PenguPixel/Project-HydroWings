@@ -49,8 +49,20 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     {
         if (_remainingLifetime <= 0)
         {
-            TriggerLocalDeath();
-            return;
+            Debug.Log($"Enemy {this.name} hat seine Lifetime überschritten und wird released");
+            if (splineAnimate.Loop == SplineAnimate.LoopMode.Loop)
+            {
+                if (splineAnimate.NormalizedTime >= 0.9f)
+                {
+                    TriggerLocalDeath();
+                    return;
+                }
+            }
+            else
+            {
+                TriggerLocalDeath();
+                return;
+            }
         }
         _remainingLifetime -= Time.deltaTime;
     }

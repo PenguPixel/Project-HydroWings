@@ -62,13 +62,15 @@ public class WaveManager : MonoBehaviour
                     {
                         int randomPathIndex = Random.Range(0, _spawner.availableKamikazePaths.Count);
                         SplineContainer selectedSpline = _spawner.availableKamikazePaths[randomPathIndex];
-                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed); 
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed);
+                        active.timer = 0f;
                     }
                     else
                     {
                         int randomPathIndex = Random.Range(0, _spawner.availableEnemyPaths.Count);
                         SplineContainer selectedSpline = _spawner.availableEnemyPaths[randomPathIndex];
-                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed); 
+                        _spawner.SpawnEnemy(data.prefab, selectedSpline, movementSpeed);
+                        active.timer = 0f;
                     }
                 }
                 else
