@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        MovementHandling();
+        
         LifetimeHandling();
         
         float distanceThisFrame = projectileStats.BaseSpeed * Time.deltaTime;
@@ -63,6 +63,8 @@ public class Projectile : MonoBehaviour
                 ReleaseToPool();
             }
         }
+        
+        MovementHandling();
     }
 
     private void DealDamageToCharacter(RaycastHit hitInfo)

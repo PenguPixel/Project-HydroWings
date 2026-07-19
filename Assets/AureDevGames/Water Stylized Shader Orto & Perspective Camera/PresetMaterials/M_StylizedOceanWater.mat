@@ -25,12 +25,13 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _A_SHORT_HIKE_MODE
   - _PERSPECTIVE
   - _WORLD_SPACE_UV
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
+  m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses:
@@ -93,7 +94,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _A_SHORT_HIKE_MODE: 0
+    - _A_SHORT_HIKE_MODE: 1
     - _BOILING: 0
     - _BoilingSpeed: 0
     - _BoilingStrength: 1
@@ -105,7 +106,7 @@ Material:
     - _FoamBlend: 0.09
     - _FresnelPower: 1
     - _GradientRefractionScale: 10
-    - _HorizonDistance: 78
+    - _HorizonDistance: 13
     - _Hue: 1
     - _IntersectionFoamBlend: 1.09
     - _IntersectionFoamCutoff: 3.57
@@ -150,7 +151,7 @@ Material:
     - _WaveRiverLength: 0.73
     - _WaveRiverWidth: 0.16
     - _WaveSpeed: 0.25
-    - _WaveSteepness: 3.5
+    - _WaveSteepness: 0.5
     - _WaveStepness: 0.35
     - _WaveTileSize: 1.98
     m_Colors:
@@ -172,6 +173,6 @@ Material:
     - _TopColor: {r: 0, g: 0.17848217, b: 0.5622641, a: 0.44705883}
     - _UV: {r: 0, g: 0, b: 0, a: 0}
     - _UVRipples: {r: 0, g: 0, b: 0, a: 0}
-    - _WaveDirections: {r: 7.88, g: 4.82, b: 3.29, a: 1.54}
+    - _WaveDirections: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

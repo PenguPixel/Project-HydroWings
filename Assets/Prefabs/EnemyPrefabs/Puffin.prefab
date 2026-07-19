@@ -76,7 +76,7 @@ MonoBehaviour:
   splineAnimate: {fileID: 1089142664846909617}
   attackSpeedMultiplier: 1.8
   rotationSpeed: 3
-  explosionDelay: 3
+  explosionDelay: 2
   _blinkRenderer: {fileID: 7968625840536616316}
 --- !u!54 &3024992672153447144
 Rigidbody:

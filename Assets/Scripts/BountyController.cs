@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,26 +7,39 @@ public class BountyController : MonoBehaviour
     private int _currentScore;
     private int _currentUpgradePoints;
 
-    public static UnityEvent<int> OnScoreChanged;
-    public static UnityEvent<int> OnUpgradePointsChanged;
+    public static UnityEvent<int> OnScoreChange = new UnityEvent<int>();
+    public static UnityEvent<int> OnUpgradePointsChange = new UnityEvent<int>();
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable()
     {
         Enemy.BountyOnDeath.AddListener(AddAmount);
+    }
+
+    private void OnDisable()
+    {
+        Enemy.BountyOnDeath.RemoveListener(AddAmount);
+    }
+
+    private void Start()
+    {
+        _currentScore = 0;
+        _currentUpgradePoints = 0;
+        OnScoreChange?.Invoke(_currentScore);
     }
 
     private void AddAmount(int bountyAmount)
     {
         _currentScore += bountyAmount;
         _currentUpgradePoints += bountyAmount;
-        OnScoreChanged?.Invoke(_currentScore);
-        OnUpgradePointsChanged?.Invoke(_currentUpgradePoints);
+        OnScoreChange?.Invoke(_currentScore);
+        OnUpgradePointsChange?.Invoke(_currentUpgradePoints);
     }
 
     private void SpendAmount(int amount)
     {
         _currentUpgradePoints -= amount;
-        OnUpgradePointsChanged?.Invoke(_currentUpgradePoints);
+        OnUpgradePointsChange?.Invoke(_currentUpgradePoints);
     }
     
 }
