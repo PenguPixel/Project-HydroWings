@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PuffinStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 10
-  MaxLifetime: 40
+  MaxLifetime: 25
   MovementSpeed: 3
   Bounty: 50
   IsKamikaze: 1
-  KamikazeDamage: 10
+  KamikazeDamage: 5

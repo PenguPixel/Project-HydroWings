@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     private float _currentHealth;
     private float _remainingLifetime;
 
-    public static UnityEvent<int> BountyOnDeath;
+    public static UnityEvent<int> BountyOnDeath = new UnityEvent<int>();
 
     public SplineAnimate splineAnimate;
 
@@ -49,8 +49,20 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     {
         if (_remainingLifetime <= 0)
         {
-            TriggerLocalDeath();
-            return;
+            //Debug.Log($"Enemy {this.name} hat seine Lifetime überschritten und wird released");
+            if (splineAnimate.Loop == SplineAnimate.LoopMode.Loop)
+            {
+                if (splineAnimate.NormalizedTime >= 0.9f)
+                {
+                    TriggerLocalDeath();
+                    return;
+                }
+            }
+            else
+            {
+                TriggerLocalDeath();
+                return;
+            }
         }
         _remainingLifetime -= Time.deltaTime;
     }
@@ -65,12 +77,13 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
             wouldBeHealth = 0;
         }
         
-        Debug.Log($"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
+        //Debug.Log($"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
 
         if (wouldBeHealth == 0)
         {
+            BountyOnDeath.Invoke(Stats.Bounty);
             TriggerLocalDeath();
-            BountyOnDeath?.Invoke(Stats.Bounty);
+            Debug.Log($"{gameObject.name} has been defeated. Add Bounty {Stats.Bounty}");
             return;
         }
 
