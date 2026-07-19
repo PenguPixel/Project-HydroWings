@@ -17,8 +17,8 @@ public class GameUIController : MonoBehaviour
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
-
     [SerializeField] private GameObject loseOverlayPanel;
+    [SerializeField] private GameObject gameOverButtons;
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private float panelTargetAlpha = 1f;
     private bool isFading = false;
@@ -48,6 +48,7 @@ public class GameUIController : MonoBehaviour
         {
             loseOverlayPanel.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
+            gameOverButtons.SetActive(false);
         }
     }
     
@@ -84,6 +85,8 @@ public class GameUIController : MonoBehaviour
         isFading = true;
         loseOverlayPanel.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        gameOverButtons.SetActive(true);
+        
         Image panelImage = loseOverlayPanel.GetComponent<Image>();
         TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
         
