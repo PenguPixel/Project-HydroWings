@@ -69,21 +69,18 @@ public class GameUIController : MonoBehaviour
         healthSlider.value = currentHealth;
     }
     
-    private void TriggerLose()
+    public void TriggerLose()
     {
-        Debug.Log("Trigger Lose");
         if (isFading) return;
 
         if (loseOverlayPanel != null && loseOverlayPanel != null)
         {
-            Debug.Log("Trigger Lose 2");
             StartCoroutine("FadeToLoseScreen");
         }
     }
 
     private IEnumerator FadeToLoseScreen()
     {
-        Debug.Log("Trigger Lose 3");
         isFading = true;
         loseOverlayPanel.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
