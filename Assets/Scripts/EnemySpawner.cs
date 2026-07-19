@@ -26,6 +26,9 @@ public class EnemySpawner : MonoBehaviour
         foreach (var prefab in enemyPrefabs)
         {
             if (!prefab) continue;
+            
+            //TODO neue Werte für Gegner Prefabs zuweisen in Level02
+            
             _pools[prefab] = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(prefab),
                 actionOnGet: (obj) =>
