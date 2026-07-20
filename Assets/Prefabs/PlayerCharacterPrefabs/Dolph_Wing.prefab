@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 7974772488791404013}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: -1, z: 1.06}
+  m_LocalPosition: {x: -0, y: -0.72, z: 1.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,7 +48,7 @@ MonoBehaviour:
   projectileStats: {fileID: 11400000, guid: 6ee6cd9ada6b5db48860b99f000132fc, type: 2}
   weaponStats: {fileID: 11400000, guid: 737bf404c8bce984b81a131bbb5d246e, type: 2}
   audioSource: {fileID: 0}
-  waterShootSound: {fileID: 0}
+  waterShootSound: {fileID: 8300000, guid: e616d05f1f90a0a488e4d0b22ae19164, type: 3}
   shootVolume: 1
   OnEmpty:
     m_PersistentCalls:
