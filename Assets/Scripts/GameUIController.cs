@@ -122,7 +122,6 @@ public class GameUIController : MonoBehaviour
             Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
             lastTimeScale = Time.timeScale;
             
-            lastGameTime = Time.timeScale;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
