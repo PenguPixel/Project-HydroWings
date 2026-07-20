@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
-public class UpgradePreviewHover : MonoBehaviour
+public class UpgradeRotationHandler : MonoBehaviour
 {
     [Header("Model")]
     [SerializeField] private Transform model;
@@ -19,6 +22,7 @@ public class UpgradePreviewHover : MonoBehaviour
     [SerializeField] private float hoverRotationSpeed = 40f;
     [SerializeField] private float selectionRotationSpeed = 600f;
 
+
     private Camera _mainCamera;
     private Vector3 _startLocalPosition;
     private float _hoverPhaseOffset;
@@ -27,6 +31,7 @@ public class UpgradePreviewHover : MonoBehaviour
     private bool _isSelected;
 
     private static bool _selectionLocked;
+    
 
     private void Awake()
     {
@@ -123,7 +128,7 @@ public class UpgradePreviewHover : MonoBehaviour
 
         Debug.Log($"{name} wurde ausgewählt.");
 
-        StartCoroutine(LoadLevelAfterDelay());
+        //StartCoroutine(LoadLevelAfterDelay());
     }
 
     private IEnumerator LoadLevelAfterDelay()

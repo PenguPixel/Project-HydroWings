@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelectScene.unity
     guid: e5f5fa11c27c0904fb5bb6b90df065a4
   - enabled: 1
+    path: Assets/Scenes/UpgradeScene.unity
+    guid: 9020fb2f91fd909458ce0354bf3f1b9b
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1

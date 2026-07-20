@@ -1,23 +1,27 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private SceneFader _sceneFader;
     
+    public static UnityEvent<int> OnUpgradescreenLoad = new UnityEvent<int>();
     public static GameManager Instance { get; private set; }
     public static float GlobalDifficultiyMultiplier { get; private set; } = 1f;
 
     private void OnEnable()
     {
         CameraController.ReachEndOfLevel.AddListener(LoadUpgradeScreen);
+        UpgradeSceneHandler.OnLoadNextLevel.AddListener(LoadNextLevel);
     }
 
     private void OnDisable()
     {
         CameraController.ReachEndOfLevel.RemoveListener(LoadUpgradeScreen);
+        UpgradeSceneHandler.OnLoadNextLevel.RemoveListener(LoadNextLevel);
     }
 
     private void Awake()
@@ -50,10 +54,17 @@ public class GameManager : MonoBehaviour
         _sceneFader.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void LoadUpgradeScreen()
+    public void LoadUpgradeScreen(int originSceneIndex)
     {
         Time.timeScale = 1f;
-        _sceneFader.LoadScene((int) SceneName.UpgradeScene);  //TODO add new Scene to enum and change here
+        OnUpgradescreenLoad.Invoke(originSceneIndex);
+        _sceneFader.LoadScene((int) SceneName.UpgradeScene);  
+    }
+
+    public void LoadNextLevel(int nextSceneIndex)
+    {
+        Time.timeScale = 1.0f;
+        _sceneFader.LoadScene(nextSceneIndex);
     }
 }
 
