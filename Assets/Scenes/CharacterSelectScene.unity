@@ -1142,11 +1142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MusicVolumeLoader
   musicSources:
   - {fileID: 1556419546}
---- !u!4 &1572766466 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
-  m_PrefabInstance: {fileID: 1620539441}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1599365265 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4942e0cdd582aa0499befa1097b8bdcb, type: 3}
@@ -1326,7 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterPreviewHover
   wingType: 1
-  model: {fileID: 1572766466}
+  model: {fileID: 0}
   statsSprite: {fileID: 21300000, guid: 9ed11b4b3e6eba54ca31152408f7797a, type: 3}
   levelSceneName: Level_01Scene
   hoverHeight: 0.15
@@ -1479,9 +1474,9 @@ SceneRoots:
   - {fileID: 203844589}
   - {fileID: 1620539441}
   - {fileID: 1462199873}
-  - {fileID: 1556419547}
   - {fileID: 170303471}
   - {fileID: 137719953}
   - {fileID: 327774958}
   - {fileID: 1671590957830659435}
   - {fileID: 1421940111}
+  - {fileID: 1556419547}

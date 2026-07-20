@@ -13,7 +13,10 @@ public class BossAudio : MonoBehaviour
     [SerializeField] private AudioClip outroClip;
 
     [Header("Settings")]
+    [Tooltip("Grundlautstärke der Bossmusik. Wird mit dem Music-Slider multipliziert.")]
     [SerializeField, Range(0f, 1f)] private float volume = 0.3f;
+
+    private const string MusicVolumeKey = "MusicVolume";
 
     private Coroutine musicCoroutine;
     private bool musicStarted;
@@ -51,6 +54,8 @@ public class BossAudio : MonoBehaviour
     {
         if (introClip != null)
         {
+            ApplyMusicVolume(introOutroAudioSource);
+
             introOutroAudioSource.clip = introClip;
             introOutroAudioSource.loop = false;
             introOutroAudioSource.Play();
@@ -71,6 +76,8 @@ public class BossAudio : MonoBehaviour
 
         if (loopClip != null)
         {
+            ApplyMusicVolume(loopAudioSource);
+
             loopAudioSource.clip = loopClip;
             loopAudioSource.loop = true;
             loopAudioSource.Play();
@@ -112,6 +119,7 @@ public class BossAudio : MonoBehaviour
         }
 
         PrepareAudioSource(introOutroAudioSource);
+        ApplyMusicVolume(introOutroAudioSource);
 
         if (outroClip != null)
         {
@@ -129,10 +137,30 @@ public class BossAudio : MonoBehaviour
 
     private void PrepareAudioSource(AudioSource audioSource)
     {
+        if (audioSource == null)
+        {
+            return;
+        }
+
         audioSource.playOnAwake = false;
         audioSource.loop = false;
-        audioSource.volume = volume;
         audioSource.spatialBlend = 0f;
+
+        ApplyMusicVolume(audioSource);
+    }
+
+    private void ApplyMusicVolume(AudioSource audioSource)
+    {
+        if (audioSource == null)
+        {
+            return;
+        }
+
+        float savedMusicVolume =
+            PlayerPrefs.GetFloat(MusicVolumeKey, 1f);
+
+        audioSource.volume =
+            volume * savedMusicVolume;
     }
 
     private void StopAllAudio()
