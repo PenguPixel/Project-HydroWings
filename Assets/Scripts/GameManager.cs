@@ -34,13 +34,14 @@ public class GameManager : MonoBehaviour
 
    public void LoadTitleScreen()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
+        Debug.Log("Button funktioniert");
         _sceneFader.LoadScene((int) SceneName.TitleScene);
     }
 
     public void ReloadLevelScene()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1.0f;
         _sceneFader.LoadScene(SceneManager.GetActiveScene().name);
     }
 
