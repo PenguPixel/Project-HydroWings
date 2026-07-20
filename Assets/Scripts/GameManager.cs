@@ -25,11 +25,13 @@ public class GameManager : MonoBehaviour
 
    public void LoadTitleScreen()
     {
+        Time.timeScale = 1f;
         _sceneFader.LoadScene((int) SceneName.TitleScene);
     }
 
     public void ReloadLevelScene()
     {
+        Time.timeScale = 1f;
         _sceneFader.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

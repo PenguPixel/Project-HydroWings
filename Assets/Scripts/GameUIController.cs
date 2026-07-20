@@ -17,8 +17,8 @@ public class GameUIController : MonoBehaviour
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
-
     [SerializeField] private GameObject loseOverlayPanel;
+    [SerializeField] private GameObject gameOverButtons;
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private float panelTargetAlpha = 0.98f;
     private bool isFading = false;
@@ -48,6 +48,7 @@ public class GameUIController : MonoBehaviour
         {
             loseOverlayPanel.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
+            gameOverButtons.gameObject.SetActive(false);
         }
     }
     
@@ -84,6 +85,7 @@ public class GameUIController : MonoBehaviour
         isFading = true;
         loseOverlayPanel.gameObject.SetActive(true);
         gameOverText.gameObject.SetActive(true);
+        gameOverButtons.gameObject.SetActive(true);
         Image panelImage = loseOverlayPanel.GetComponent<Image>();
         TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
         
@@ -100,9 +102,12 @@ public class GameUIController : MonoBehaviour
         float targetGameSpeed = 0f;
 
         float elapsedTime = 0f;
+        float lastGameTime = 1f;
         
-        while (elapsedTime < fadeDuration)
+        while (elapsedTime + 0.01f < fadeDuration)
         {
+            if (lastGameTime > Time.timeScale) break;
+            
             float currentFactor = elapsedTime / fadeDuration;
             
             panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
@@ -110,6 +115,7 @@ public class GameUIController : MonoBehaviour
             Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
             
             elapsedTime += Time.deltaTime;
+            lastGameTime = elapsedTime;
             yield return null;
         }
         
