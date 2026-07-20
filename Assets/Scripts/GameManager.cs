@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     public void LoadUpgradeScreen()
     {
         Time.timeScale = 1f;
-        _sceneFader.LoadScene((int) SceneName.TitleScene);  //TODO add new Scene to enum and change here
+        _sceneFader.LoadScene((int) SceneName.UpgradeScene);  //TODO add new Scene to enum and change here
     }
 }
 
@@ -61,9 +61,9 @@ enum SceneName
 {
     TitleScene = 0,
     CharacterSelectScene = 1,
-    SampleScene = 2,
-    Level01Scene = 3,
-    Level02Scene = 4,
+    UpgradeScene = 2,
+    Level_01Scene = 3,
+    Level_02Scene = 4,
     BossLevelScene = 5
 }
 
