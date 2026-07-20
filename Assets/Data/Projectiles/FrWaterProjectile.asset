@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd15365467394e4db2d5ef890a95b5f, type: 3}
   m_Name: FrWaterProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
-  Basedamage: 10
+  Basedamage: 5
   BaseSpeed: 20
   RemainingLifetime: 5
   Spread: 0

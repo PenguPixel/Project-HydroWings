@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 public class WeaponPoint : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private ProjectileStats projectileStats;
+    [SerializeField] public ProjectileStats projectileStats;
 
     [SerializeField] public WeaponPointStats weaponStats;
 

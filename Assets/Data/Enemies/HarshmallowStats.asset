@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5d1bd9b685d092448e8530be9385a88, type: 3}
   m_Name: HarshmallowStats
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  MaxHealth: 20
-  MaxLifetime: 40
-  MovementSpeed: 5
-  Bounty: 50
+  MaxHealth: 15
+  MaxLifetime: 15
+  MovementSpeed: 3.5
+  Bounty: 80
   IsKamikaze: 0
+  KamikazeDamage: 0
