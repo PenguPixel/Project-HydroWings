@@ -3,18 +3,47 @@ using UnityEngine.Events;
 
 public class WaterResource : MonoBehaviour
 {
-    [SerializeField] private float maxWater = 100f;
-    [SerializeField] private float refillRate = 12.5f;
+    private float maxWater;
+    private float refillRate;
+
     private float _currentWater;
-    
-    public static UnityEvent<float, float> OnWaterChange = new UnityEvent<float, float>();
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public static UnityEvent<float, float> OnWaterChange =
+        new UnityEvent<float, float>();
+
+    private void Start()
     {
+        Character character =
+            GetComponent<Character>();
+
+        if (character != null &&
+            character.Stats != null)
+        {
+            maxWater =
+                character.Stats.MaxWaterAmount;
+
+            refillRate =
+                character.Stats.WaterRefillRate;
+
+            Debug.Log(
+                $"{name}: MaxWater = {maxWater}, " +
+                $"RefillRate = {refillRate}"
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                $"WaterResource auf {name}: " +
+                "Keine CharacterStats gefunden."
+            );
+        }
+
         _currentWater = maxWater;
-        OnWaterChange?.Invoke(_currentWater, maxWater);
-        
+
+        OnWaterChange?.Invoke(
+            _currentWater,
+            maxWater
+        );
     }
 
     public bool TryConsumeWater(float amount)
@@ -22,9 +51,15 @@ public class WaterResource : MonoBehaviour
         if (_currentWater >= amount)
         {
             _currentWater -= amount;
-            OnWaterChange?.Invoke(_currentWater, maxWater);
+
+            OnWaterChange?.Invoke(
+                _currentWater,
+                maxWater
+            );
+
             return true;
         }
+
         return false;
     }
 
@@ -32,13 +67,23 @@ public class WaterResource : MonoBehaviour
     {
         if (_currentWater < maxWater)
         {
-            _currentWater = Mathf.Min(_currentWater + amount, maxWater);
-            OnWaterChange?.Invoke(_currentWater, maxWater);
+            _currentWater =
+                Mathf.Min(
+                    _currentWater + amount,
+                    maxWater
+                );
+
+            OnWaterChange?.Invoke(
+                _currentWater,
+                maxWater
+            );
         }
     }
 
     public void RefillOverTime()
     {
-        Refill(refillRate *  Time.deltaTime);
+        Refill(
+            refillRate * Time.deltaTime
+        );
     }
 }

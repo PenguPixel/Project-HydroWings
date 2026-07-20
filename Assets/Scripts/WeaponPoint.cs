@@ -1,31 +1,64 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public class WeaponPoint : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] public ProjectileStats projectileStats;
-
     [SerializeField] public WeaponPointStats weaponStats;
+    [SerializeField] private CharacterStats characterStats;
 
-    [Header("Audio")]
+    [Header("Schusssound")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip waterShootSound;
-    [SerializeField] [Range(0f, 1f)] private float shootVolume = 1f;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField, Range(0f, 1f)] private float shootVolume = 1f;
 
     private ObjectPool<Projectile> _pool;
-    public bool HasActiveProjectiles => _pool != null && _pool.CountActive > 0;
 
-    private float _fireCooldownTimer = 0f;
+    public bool HasActiveProjectiles =>
+        _pool != null &&
+        _pool.CountActive > 0;
+
+    private float _fireCooldownTimer;
     private WaterResource _waterResource;
-
-    public UnityEvent OnEmpty;
-    private bool _isShuttingDown = false;
 
     private void Start()
     {
         _waterResource = GetComponentInParent<WaterResource>();
+
+        // Falls im Inspector keine AudioSource eingetragen wurde,
+        // wird automatisch auf diesem GameObject danach gesucht.
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+        }
+
+        if (weaponStats == null)
+        {
+            Debug.LogError(
+                $"WeaponPoint auf {name}: WeaponPointStats wurden nicht zugewiesen."
+            );
+
+            return;
+        }
+
+        if (projectileStats == null)
+        {
+            Debug.LogError(
+                $"WeaponPoint auf {name}: ProjectileStats wurden nicht zugewiesen."
+            );
+
+            return;
+        }
+
+        if (!weaponStats.IsEnemyWeapon &&
+            characterStats == null)
+        {
+            Debug.LogWarning(
+                $"WeaponPoint auf {name}: " +
+                "CharacterStats wurden nicht zugewiesen."
+            );
+        }
 
         _pool = new ObjectPool<Projectile>(
             createFunc: CreateProjectile,
@@ -34,13 +67,14 @@ public class WeaponPoint : MonoBehaviour
             actionOnDestroy: OnDestroyProjectile,
             collectionCheck: true,
             defaultCapacity: 20,
-            maxSize: 50);
+            maxSize: 50
+        );
     }
 
     private void OnEnable()
     {
-        // Nur für das manuelle Event anmelden, wenn es KEINE Auto-Waffe ist
-        if (weaponStats != null && !weaponStats.IsAutoFire)
+        if (weaponStats != null &&
+            !weaponStats.IsAutoFire)
         {
             WeaponController.OnManualShootPressed += Shoot;
         }
@@ -48,7 +82,8 @@ public class WeaponPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        if (weaponStats != null && !weaponStats.IsAutoFire)
+        if (weaponStats != null &&
+            !weaponStats.IsAutoFire)
         {
             WeaponController.OnManualShootPressed -= Shoot;
         }
@@ -56,174 +91,166 @@ public class WeaponPoint : MonoBehaviour
 
     private void Update()
     {
-        CooldownHandling();
-
-        if (weaponStats.IsAutoFire)
+        if (_fireCooldownTimer > 0f)
         {
-            var target = AcquireTarget();
+            _fireCooldownTimer -= Time.deltaTime;
+        }
 
-            if (target)
-            {
-                AutoShooting(target);
-            }
+        if (weaponStats != null &&
+            weaponStats.IsAutoFire)
+        {
+            AutoShoot();
         }
     }
 
     private Projectile CreateProjectile()
     {
-        GameObject projectileGO = Instantiate(projectileStats.projectilePrefab);
-        Projectile projectile = projectileGO.GetComponent<Projectile>();
+        GameObject projectileObject = Instantiate(
+            projectileStats.projectilePrefab
+        );
+
+        Projectile projectile =
+            projectileObject.GetComponent<Projectile>();
+
+        if (projectile == null)
+        {
+            Debug.LogError(
+                $"Das Projektil-Prefab {projectileStats.projectilePrefab.name} " +
+                "besitzt kein Projectile-Script."
+            );
+
+            Destroy(projectileObject);
+            return null;
+        }
+
+        projectileObject.SetActive(false);
         projectile.SetPool(_pool);
+
         return projectile;
     }
 
     private void OnGetProjectile(Projectile projectile)
     {
+        if (projectile == null)
+        {
+            return;
+        }
+
         projectile.transform.position = transform.position;
         projectile.transform.rotation = transform.rotation;
+
+        // Schaden vor dem Aktivieren festlegen.
+        if (!weaponStats.IsEnemyWeapon &&
+            characterStats != null)
+        {
+            projectile.SetDamage(
+                characterStats.AttackDamage
+            );
+        }
+        else
+        {
+            projectile.SetDamage(
+                projectileStats.Basedamage
+            );
+        }
+
         projectile.gameObject.SetActive(true);
     }
 
     private void OnReleaseProjectile(Projectile projectile)
     {
-        projectile.gameObject.SetActive(false);
-
-        if (_isShuttingDown && !HasActiveProjectiles)
+        if (projectile == null)
         {
-            OnEmpty?.Invoke();
+            return;
         }
+
+        projectile.gameObject.SetActive(false);
     }
 
     private void OnDestroyProjectile(Projectile projectile)
     {
-        if (projectile != null)
+        if (projectile == null)
         {
-            Destroy(projectile.gameObject);
+            return;
         }
+
+        Destroy(projectile.gameObject);
     }
 
-    private Enemy AcquireTarget()
+    private float GetFireRate()
     {
-        var collidersInRange = Physics.OverlapSphere(
-            transform.position,
-            weaponStats.WeaponRange,
-            LayerMask.GetMask("Enemy"));
-
-        Enemy targetCandidate = null;
-
-        foreach (var col in collidersInRange)
+        if (!weaponStats.IsEnemyWeapon &&
+            characterStats != null)
         {
-            if (col.GetComponent<Enemy>() != null)
-            {
-                targetCandidate = col.GetComponent<Enemy>();
-                break;
-            }
+            return characterStats.FireRate;
         }
 
-        if (targetCandidate == null)
-            return targetCandidate;
-
-        foreach (var col in collidersInRange)
-        {
-            Enemy componentOfTarget = col.GetComponent<Enemy>();
-
-            if (componentOfTarget != null)
-            {
-                targetCandidate = componentOfTarget;
-            }
-        }
-
-        return targetCandidate;
-    }
-
-    private void CooldownHandling()
-    {
-        if (_fireCooldownTimer > 0f)
-        {
-            _fireCooldownTimer -= Time.deltaTime;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        _pool?.Clear();
-        _pool?.Dispose();
-    }
-
-    private void Fire()
-    {
-        if (_pool != null)
-        {
-            _pool.Get();
-        }
-    }
-
-    private void PlayShootSound()
-    {
-        if (audioSource != null && waterShootSound != null)
-        {
-            audioSource.PlayOneShot(
-                waterShootSound,
-                shootVolume * SFXVolumeManager.Volume
-            );
-        }
+        return weaponStats.FireRate;
     }
 
     public void Shoot()
     {
-        if (_fireCooldownTimer <= 0)
+        if (_fireCooldownTimer > 0f)
         {
-            if (projectileStats.UsesWater && _waterResource != null)
+            return;
+        }
+
+        if (_pool == null)
+        {
+            return;
+        }
+
+        if (projectileStats.UsesWater &&
+            _waterResource != null)
+        {
+            bool hasWater =
+                _waterResource.TryConsumeWater(
+                    projectileStats.WaterCostPerShot
+                );
+
+            if (!hasWater)
             {
-                if (_waterResource.TryConsumeWater(projectileStats.WaterCostPerShot))
-                {
-                    Fire();
-                    PlayShootSound();
-                    _fireCooldownTimer = weaponStats.FireRate;
-                }
-                else
-                {
-                    Debug.Log("Keine Munition mehr!");
-                }
-            }
-            else
-            {
-                Fire();
-                PlayShootSound();
-                _fireCooldownTimer = weaponStats.FireRate;
+                Debug.Log("Nicht genug Wasser!");
+                return;
             }
         }
+
+        _pool.Get();
+        PlayShootSound();
+
+        _fireCooldownTimer = GetFireRate();
     }
 
-    public void AutoShooting(Enemy target)
+    private void AutoShoot()
     {
-        if (_fireCooldownTimer <= 0f &&
-            target != null &&
-            !weaponStats.IsEnemyWeapon &&
-            weaponStats.IsAutoFire)
+        if (_fireCooldownTimer > 0f)
         {
-            transform.LookAt(target.transform.position);
-            Fire();
-            PlayShootSound();
-            _fireCooldownTimer = weaponStats.FireRate;
+            return;
         }
 
-        if (_fireCooldownTimer <= 0f &&
-            weaponStats.IsEnemyWeapon)
+        if (_pool == null)
         {
-            Fire();
-            PlayShootSound();
-            _fireCooldownTimer = weaponStats.FireRate;
+            return;
         }
+
+        _pool.Get();
+        PlayShootSound();
+
+        _fireCooldownTimer = GetFireRate();
     }
 
-    public void ShutdownAndNotify()
+    private void PlayShootSound()
     {
-        _isShuttingDown = true;
-
-        if (!HasActiveProjectiles)
+        if (audioSource == null ||
+            shootSound == null)
         {
-            OnEmpty?.Invoke();
+            return;
         }
+
+        audioSource.PlayOneShot(
+            shootSound,
+            shootVolume
+        );
     }
+
 }

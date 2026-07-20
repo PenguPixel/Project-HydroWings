@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,9 +7,11 @@ public class Character : MonoBehaviour
     public CharacterStats Stats;
     public PlayerController CharacterController;
 
-    public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
-    public static UnityEvent OnPlayerDied = new UnityEvent();
-    
+    public static UnityEvent<float, float> OnHealthchange =
+        new UnityEvent<float, float>();
+
+    public static UnityEvent OnPlayerDied =
+        new UnityEvent();
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
@@ -33,21 +34,33 @@ public class Character : MonoBehaviour
         UnderwaterController.OnSubmerged.RemoveListener(SetSubmerged);
         HeartPowerUp.OnHeartCollected.RemoveListener(RestoreHealth);
     }
-    
 
-    void Awake()
-   {
-       CharacterController = GetComponentInParent<PlayerController>();
-       CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
-   }
-   
-   void Start()
+    private void Awake()
     {
-        _waterResource = GetComponent<WaterResource>(); 
+        CharacterController = GetComponentInParent<PlayerController>();
+        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
+    }
+
+    private void Start()
+    {
+        if (Stats == null)
+        {
+            Debug.LogError(
+                $"Character auf {gameObject.name}: CharacterStats fehlen."
+            );
+
+            return;
+        }
+
+        _waterResource = GetComponent<WaterResource>();
+
         _currentHealth = Stats.MaxHealth;
-        
-        OnHealthchange.Invoke(_currentHealth, Stats.MaxHealth);
-        
+
+        OnHealthchange.Invoke(
+            _currentHealth,
+            Stats.MaxHealth
+        );
+
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
@@ -58,62 +71,86 @@ public class Character : MonoBehaviour
         _cameraMoveSpeed = camSpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (!CharacterController) return;
-        
-        Vector2 movementVector = _moveAction.ReadValue<Vector2>();
+        if (!CharacterController || _moveAction == null)
+        {
+            return;
+        }
+
+        Vector2 movementVector =
+            _moveAction.ReadValue<Vector2>();
+
         CharacterController.SetMovementInput(movementVector);
-        CharacterController.Rotate(movementVector.y, this.transform);
-        
-        // Character always stays at Z = 0 
+
+        CharacterController.Rotate(
+            movementVector.y,
+            transform
+        );
+
         Vector3 localPos = transform.localPosition;
         localPos.z = _fixedZPosition;
         transform.localPosition = localPos;
-        
-        // Underwater State and Refill 
-        if (_isSubmerged && _waterResource != null)
+
+        if (_isSubmerged && _waterResource)
         {
             _waterResource.RefillOverTime();
         }
     }
 
-    public void TakeDamage(float incomingDamage)    // Incoming damage handling if PC gets hit
+    public void TakeDamage(float incomingDamage)
     {
-        float wouldBeHealth = _currentHealth - incomingDamage;
+        float wouldBeHealth =
+            _currentHealth - incomingDamage;
+
         if (wouldBeHealth < 0)
         {
             wouldBeHealth = 0;
         }
-        
-        OnHealthchange?.Invoke(wouldBeHealth, Stats.MaxHealth);
+
+        _currentHealth = wouldBeHealth;
+
+        OnHealthchange?.Invoke(
+            _currentHealth,
+            Stats.MaxHealth
+        );
 
         Debug.Log(
-            $"{this.name} wurde getroffen und hat {incomingDamage} Schaden genommen. Verbleibendes Leben: {_currentHealth}");
-        if (wouldBeHealth == 0)
+            $"{name} wurde getroffen und hat " +
+            $"{incomingDamage} Schaden genommen. " +
+            $"Verbleibendes Leben: {_currentHealth}"
+        );
+
+        if (_currentHealth == 0)
         {
             OnPlayerDied.Invoke();
-            Debug.Log("Character wurde zerstört!");
-            Destroy(gameObject);
-            return;
-        }
 
-        _currentHealth = wouldBeHealth;
+            Debug.Log("Character wurde zerstört!");
+
+            Destroy(gameObject);
+        }
     }
-    
+
     private void RestoreHealth(int healthAmount)
     {
-        float wouldBeHealth = _currentHealth + healthAmount;
-        if (wouldBeHealth > Stats.MaxHealth) return;
-        _currentHealth = wouldBeHealth;
-        Debug.Log($"{this.name} wurde geheilt {_currentHealth}");
+        float wouldBeHealth =
+            _currentHealth + healthAmount;
+
+        _currentHealth = Mathf.Min(wouldBeHealth, Stats.MaxHealth);
+
+        Debug.Log(
+            $"{name} wurde geheilt. Leben: {_currentHealth}"
+        );
+
         OnHealthchange.Invoke(_currentHealth, Stats.MaxHealth);
     }
-    
+
     private void SetSubmerged(bool isSubmerged)
     {
         _isSubmerged = isSubmerged;
-        Debug.Log($"Character is Submerged: {_isSubmerged}");
+
+        Debug.Log(
+            $"Character is Submerged: {_isSubmerged}"
+        );
     }
 }
