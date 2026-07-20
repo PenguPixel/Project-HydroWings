@@ -10,6 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d45cf1fa10dc74a438fd09071a57c9ce, type: 3}
-  m_Name: PenguinStats
+  m_Name: Pengu Wing Stats
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  MaxHealth: 100
+  MaxHealth: 130
+  MovementSpeed: 35
+  MaxWaterAmount: 150
+  WaterRefillRate: 150
+  AttackDamage: 2
+  FireRate: 0.2
