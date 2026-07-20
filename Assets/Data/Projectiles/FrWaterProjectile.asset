@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FrWaterProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   Basedamage: 5
-  BaseSpeed: 20
+  BaseSpeed: 25
   RemainingLifetime: 5
   Spread: 0
   IsEnemyProjectile: 0
