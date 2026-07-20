@@ -25,6 +25,16 @@ public class PlayerController : MonoBehaviour
     private ContactPoint[] _contactPoints = new ContactPoint[4];
     private Character _character;
 
+    private void OnEnable()
+    {
+        CameraController.MoveAction.AddListener(SetCamSpeed);
+    }
+
+    private void OnDisable()
+    {
+        CameraController.MoveAction.RemoveListener(SetCamSpeed);
+    }
+
     private void Awake()
     {
         _character = GetComponentInChildren<Character>();
@@ -35,7 +45,6 @@ public class PlayerController : MonoBehaviour
         _rigidbody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
         _rigidbody.WakeUp();
 
-        CameraController.MoveAction.AddListener(SetCamSpeed);
     }
 
     private void SetCamSpeed(float cameraSpeedValue)
