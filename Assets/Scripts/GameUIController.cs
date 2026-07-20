@@ -114,8 +114,8 @@ public class GameUIController : MonoBehaviour
             loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
             Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
             
+            lastGameTime = Time.timeScale;
             elapsedTime += Time.deltaTime;
-            lastGameTime = elapsedTime;
             yield return null;
         }
         

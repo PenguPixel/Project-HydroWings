@@ -21,8 +21,20 @@ public class Character : MonoBehaviour
     private bool _isTouchingBackwall;
     private bool _isTouchingObstacle;
 
-   // Start is called once before the first execution of Update after the MonoBehaviour is created
-   void Awake()
+    private void OnEnable()
+    {
+        UnderwaterController.OnSubmerged.AddListener(SetSubmerged);
+        HeartPowerUp.OnHeartCollected.AddListener(RestoreHealth);
+    }
+
+    private void OnDisable()
+    {
+        UnderwaterController.OnSubmerged.RemoveListener(SetSubmerged);
+        HeartPowerUp.OnHeartCollected.RemoveListener(RestoreHealth);
+    }
+    
+
+    void Awake()
    {
        CharacterController = GetComponentInParent<PlayerController>();
        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
@@ -38,7 +50,6 @@ public class Character : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
-        UnderwaterController.OnSubmerged.AddListener(SetSubmerged);
     }
 
     private void SetCameraMoveSpeed(float camSpeed)
@@ -88,6 +99,15 @@ public class Character : MonoBehaviour
         }
 
         _currentHealth = wouldBeHealth;
+    }
+    
+    private void RestoreHealth(int healthAmount)
+    {
+        float wouldBeHealth = _currentHealth + healthAmount;
+        if (wouldBeHealth > Stats.MaxHealth) return;
+        _currentHealth = wouldBeHealth;
+        Debug.Log($"{this.name} wurde geheilt {_currentHealth}");
+        OnHealthchange.Invoke(_currentHealth, Stats.MaxHealth);
     }
     
     private void SetSubmerged(bool isSubmerged)

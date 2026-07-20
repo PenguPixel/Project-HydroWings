@@ -7,7 +7,7 @@ public class HeartPowerUp : MonoBehaviour
 {
     [SerializeField] private int restoreLifeAmount = 5;
     [SerializeField] private float rotationSpeed = 5f;
-    public UnityEvent<int> OnHeartCollected;
+    public static UnityEvent<int> OnHeartCollected = new UnityEvent<int>();
 
     private void OnTriggerEnter(Collider other)
     {
