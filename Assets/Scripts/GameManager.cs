@@ -8,7 +8,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SceneFader _sceneFader;
     
     public static GameManager Instance { get; private set; }
-    
+
+    private void OnEnable()
+    {
+        CameraController.ReachEndOfLevel.AddListener(LoadUpgradeScreen);
+    }
+
+    private void OnDisable()
+    {
+        CameraController.ReachEndOfLevel.RemoveListener(LoadUpgradeScreen);
+    }
 
     private void Awake()
     {
@@ -33,6 +42,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         _sceneFader.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadUpgradeScreen()
+    {
+        Time.timeScale = 1f;
+        _sceneFader.LoadScene((int) SceneName.TitleScene);  //TODO add new Scene to enum and change here
     }
 }
 

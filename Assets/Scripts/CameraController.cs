@@ -6,11 +6,13 @@ using UnityEngine.Events;
 public class CameraController : MonoBehaviour
 {
     public static readonly UnityEvent<float> MoveAction = new();
+    public static UnityEvent ReachEndOfLevel = new UnityEvent();
     [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
     [SerializeField] private bool stopForBossFight;
     [SerializeField] private float timeUntilStop = 1f;
+    [SerializeField] private float endOfLevelX = 720f;
 
     private float _currentCamSpeed;
     private float _currentX;
@@ -54,5 +56,13 @@ public class CameraController : MonoBehaviour
         }
 
         _currentX += _currentCamSpeed * Time.fixedDeltaTime;
+
+        if (_currentX >= endOfLevelX)
+        {
+            float targetCamSpeed = 0f;
+            float lerpTime = 2f;
+            _currentCamSpeed = Mathf.Lerp(_currentCamSpeed, targetCamSpeed, lerpTime);
+            ReachEndOfLevel.Invoke();
+        }
     }
 }

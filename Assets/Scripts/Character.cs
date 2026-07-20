@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
 
     public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
     public static UnityEvent OnPlayerDied = new UnityEvent();
+    
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
