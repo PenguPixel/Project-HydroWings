@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private int defaultCapacity = 10;
     [SerializeField] private int maxSize = 50;
+    [SerializeField] private float levelOneMultiplier = 1f;
+    [SerializeField] private float levelTwoMultiplier = 1.8f;
 
     private Dictionary<GameObject, IObjectPool<GameObject>> _pools = new();
 
@@ -27,12 +29,13 @@ public class EnemySpawner : MonoBehaviour
         foreach (var prefab in enemyPrefabs)
         {
             if (!prefab) continue;
-
-            // Set enemy values for level 02 
-            if (SceneManager.GetActiveScene().name == "Level_02Scene")
-            {
-                SetLevelValues(prefab);
-            }
+            
+            // Set enemy values for level 01 + 02
+            float levelMultiplier = 1f;
+            if (SceneManager.GetActiveScene().name == "Level_01Scene") levelMultiplier = levelOneMultiplier;
+            if (SceneManager.GetActiveScene().name == "Level_02Scene") levelMultiplier = levelTwoMultiplier;
+            SetLevelValues(prefab, levelMultiplier);
+            
             
             _pools[prefab] = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(prefab),
@@ -54,27 +57,27 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private static void SetLevelValues(GameObject prefab)
+    private static void SetLevelValues(GameObject prefab, float levelMultiplier)
     {
         var enemyPrefab = prefab.GetComponent<Enemy>();
-        enemyPrefab.Stats.MaxHealth = 30;
-        enemyPrefab.Stats.MaxLifetime = 40;
-        enemyPrefab.Stats.MovementSpeed = 5;
+        enemyPrefab.Stats.MaxHealth *= levelMultiplier; 
+        enemyPrefab.Stats.MaxLifetime *= levelMultiplier;
+        enemyPrefab.Stats.MovementSpeed *= levelMultiplier;
 
         if (enemyPrefab.Stats.IsKamikaze)
         {
-            enemyPrefab.Stats.KamikazeDamage = 10;
-            enemyPrefab.Stats.Bounty = 80;
+            enemyPrefab.Stats.KamikazeDamage *= levelMultiplier;
+            enemyPrefab.Stats.Bounty *= Mathf.RoundToInt(levelMultiplier);
         }
 
         if (!enemyPrefab.Stats.IsKamikaze)
         {
-            enemyPrefab.Stats.Bounty = 120;
+            enemyPrefab.Stats.Bounty *= Mathf.RoundToInt(levelMultiplier);
 
             var enemyWeapon = enemyPrefab.GetComponentInChildren<WeaponPoint>();
-            enemyWeapon.weaponStats.FireRate = 2;
-            enemyWeapon.projectileStats.Basedamage = 10;
-            enemyWeapon.projectileStats.BaseSpeed = 20;
+            enemyWeapon.weaponStats.FireRate *= levelMultiplier;
+            enemyWeapon.projectileStats.Basedamage *= levelMultiplier;
+            enemyWeapon.projectileStats.BaseSpeed *= levelMultiplier;
         }
     }
 
