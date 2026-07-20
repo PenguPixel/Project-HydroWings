@@ -102,7 +102,7 @@ public class Projectile : MonoBehaviour
 
     public void SetDamage(float damage)
     {
-        var characterComponent = hitInfo.collider.GetComponent<Character>();
+        //var characterComponent = hitInfo.collider.GetComponent<Character>();
        // characterComponent?.TakeDamage(_scaledDamage);
         _currentDamage = damage;
     }
