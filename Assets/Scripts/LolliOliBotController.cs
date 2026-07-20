@@ -90,7 +90,7 @@ public class LolliOliBotController : MonoBehaviour
 
         SetWeakPointsActive(true);
 
-        if (bossHealthBar != null)
+        if (bossHealthBar)
         {
             bossHealthBar.SetActive(true);
         }
@@ -149,7 +149,7 @@ public class LolliOliBotController : MonoBehaviour
 
         foreach (Collider weakPoint in weakPoints)
         {
-            if (weakPoint != null)
+            if (weakPoint)
             {
                 weakPoint.enabled = active;
             }
@@ -194,17 +194,17 @@ public class LolliOliBotController : MonoBehaviour
 
         SetWeakPointsActive(false);
 
-        if (bossHealthBar != null)
+        if (bossHealthBar)
         {
             bossHealthBar.SetActive(false);
         }
 
-        if (bossAudio != null)
+        if (bossAudio)
         {
             bossAudio.PlayOutro();
         }
 
-        if (animator != null)
+        if (animator)
         {
             animator.SetTrigger(Death);
         }
@@ -235,7 +235,7 @@ public class LolliOliBotController : MonoBehaviour
         Vector3 finalExplosionPosition =
             transform.position + finalExplosionOffset;
 
-        if (kamikazeExplosion != null)
+        if (kamikazeExplosion)
         {
             GameObject finalExplosion = Instantiate(
                 kamikazeExplosion,
@@ -247,12 +247,12 @@ public class LolliOliBotController : MonoBehaviour
                 Vector3.one * finalExplosionScale;
         }
 
-        if (finalExplosionSound != null)
+        if (finalExplosionSound)
         {
             AudioSource.PlayClipAtPoint(
                 finalExplosionSound,
                 finalExplosionPosition,
-                finalExplosionVolume
+                finalExplosionVolume * SFXVolumeManager.Volume
             );
         }
 
