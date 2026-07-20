@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPoint
   projectileStats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
   weaponStats: {fileID: 11400000, guid: 923c75442982bc049ac0ed92d817d3d6, type: 2}
+  audioSource: {fileID: 0}
+  waterShootSound: {fileID: 8300000, guid: 4806ebfb44a4bad4ead48ef4a8c8668f, type: 3}
+  shootVolume: 1
   OnEmpty:
     m_PersistentCalls:
       m_Calls: []
