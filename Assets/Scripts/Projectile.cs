@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviour
 
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
+    private float _scaledDamage;
+    
     private float _currentDamage;
     private bool _hasHit;
     private bool _isEnemy;
@@ -36,7 +38,15 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Awake()
+    {
+        _scaledDamage = projectileStats.Basedamage * GameManager.GlobalDifficultiyMultiplier;
+    }
+
+    
+
+    // Update is called once per frame
+    void FixedUpdate()
     {
         LifetimeHandling();
 
@@ -92,6 +102,8 @@ public class Projectile : MonoBehaviour
 
     public void SetDamage(float damage)
     {
+        var characterComponent = hitInfo.collider.GetComponent<Character>();
+       // characterComponent?.TakeDamage(_scaledDamage);
         _currentDamage = damage;
     }
 

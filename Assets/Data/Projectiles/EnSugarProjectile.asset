@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnSugarProjectile
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileStats
   Basedamage: 5
-  BaseSpeed: 16
+  BaseSpeed: 15
   RemainingLifetime: 9
   Spread: 0
   IsEnemyProjectile: 1

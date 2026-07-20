@@ -26,6 +26,16 @@ public class PlayerController : MonoBehaviour
 
     private Character _character;
 
+    private void OnEnable()
+    {
+        CameraController.MoveAction.AddListener(SetCamSpeed);
+    }
+
+    private void OnDisable()
+    {
+        CameraController.MoveAction.RemoveListener(SetCamSpeed);
+    }
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -39,7 +49,6 @@ public class PlayerController : MonoBehaviour
 
         _rigidbody.WakeUp();
 
-        CameraController.MoveAction.AddListener(SetCamSpeed);
     }
 
     private void Start()

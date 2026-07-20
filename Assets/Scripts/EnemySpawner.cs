@@ -27,12 +27,6 @@ public class EnemySpawner : MonoBehaviour
         foreach (var prefab in enemyPrefabs)
         {
             if (!prefab) continue;
-
-            // Set enemy values for level 02 
-            if (SceneManager.GetActiveScene().name == "Level_02Scene")
-            {
-                SetLevelValues(prefab);
-            }
             
             _pools[prefab] = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(prefab),
@@ -51,30 +45,6 @@ public class EnemySpawner : MonoBehaviour
                 defaultCapacity: defaultCapacity,
                 maxSize: maxSize
             );
-        }
-    }
-
-    private static void SetLevelValues(GameObject prefab)
-    {
-        var enemyPrefab = prefab.GetComponent<Enemy>();
-        enemyPrefab.Stats.MaxHealth = 30;
-        enemyPrefab.Stats.MaxLifetime = 40;
-        enemyPrefab.Stats.MovementSpeed = 5;
-
-        if (enemyPrefab.Stats.IsKamikaze)
-        {
-            enemyPrefab.Stats.KamikazeDamage = 10;
-            enemyPrefab.Stats.Bounty = 80;
-        }
-
-        if (!enemyPrefab.Stats.IsKamikaze)
-        {
-            enemyPrefab.Stats.Bounty = 120;
-
-            var enemyWeapon = enemyPrefab.GetComponentInChildren<WeaponPoint>();
-            enemyWeapon.weaponStats.FireRate = 2;
-            enemyWeapon.projectileStats.Basedamage = 10;
-            enemyWeapon.projectileStats.BaseSpeed = 20;
         }
     }
 
@@ -124,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemyObj.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.SetPool(pool);
-                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed;
+                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed * GameManager.GlobalDifficultiyMultiplier;
             }
 
             if (enemyObj.TryGetComponent<IPoolableEnemy>(out var poolable))

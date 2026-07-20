@@ -21,6 +21,8 @@ public class KamikazeEnemy : Enemy
         private Vector3 _baseLookDirection = Vector3.left;
         private bool _isExploding = false;
         private float _explosionTimer = 0f;
+        private float _scaledKamikazeDamage;
+        private float _scaledMovementSpeed;
 
         public static UnityEvent<Vector3> OnExplosion = new UnityEvent<Vector3>();
 
@@ -31,6 +33,8 @@ public class KamikazeEnemy : Enemy
 
         private void OnEnable()
         {
+                _scaledKamikazeDamage = Stats.KamikazeDamage * GameManager.GlobalDifficultiyMultiplier;
+                _scaledMovementSpeed = Stats.MovementSpeed * GameManager.GlobalDifficultiyMultiplier;
                 _targetCollider = null;
                 _isInRange = false;
                 _isExploding = false;
@@ -53,6 +57,8 @@ public class KamikazeEnemy : Enemy
                         _blinkRenderer.SetPropertyBlock(_propBlock);
                 }
         }
+
+        
         
         private void Update()
         {
@@ -75,7 +81,7 @@ public class KamikazeEnemy : Enemy
 
                                         if (target != null)
                                         {
-                                                target.TakeDamage(Stats.KamikazeDamage);
+                                                target.TakeDamage(_scaledKamikazeDamage);
                                         }
                                 }
 
@@ -100,7 +106,7 @@ public class KamikazeEnemy : Enemy
 
                         Vector3 moveDirection =
                                 transform.forward *
-                                (Stats.MovementSpeed * Time.deltaTime);
+                                (_scaledMovementSpeed * Time.deltaTime);
 
                         transform.Translate(moveDirection, Space.World);
                 }
@@ -155,7 +161,7 @@ public class KamikazeEnemy : Enemy
                 Vector3 moveDirection =
                         transform.forward *
                         (
-                                Stats.MovementSpeed *
+                                _scaledMovementSpeed *
                                 attackSpeedMultiplier *
                                 Time.deltaTime
                         );
