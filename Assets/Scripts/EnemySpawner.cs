@@ -15,8 +15,6 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private int defaultCapacity = 10;
     [SerializeField] private int maxSize = 50;
-    [SerializeField] private float levelOneMultiplier = 1f;
-    [SerializeField] private float levelTwoMultiplier = 1.8f;
 
     private Dictionary<GameObject, IObjectPool<GameObject>> _pools = new();
 
@@ -29,13 +27,6 @@ public class EnemySpawner : MonoBehaviour
         foreach (var prefab in enemyPrefabs)
         {
             if (!prefab) continue;
-            
-            // Set enemy values for level 01 + 02
-            float levelMultiplier = 1f;
-            if (SceneManager.GetActiveScene().name == "Level_01Scene") levelMultiplier = levelOneMultiplier;
-            if (SceneManager.GetActiveScene().name == "Level_02Scene") levelMultiplier = levelTwoMultiplier;
-            SetLevelValues(prefab, levelMultiplier);
-            
             
             _pools[prefab] = new ObjectPool<GameObject>(
                 createFunc: () => Instantiate(prefab),
@@ -54,30 +45,6 @@ public class EnemySpawner : MonoBehaviour
                 defaultCapacity: defaultCapacity,
                 maxSize: maxSize
             );
-        }
-    }
-
-    private static void SetLevelValues(GameObject prefab, float levelMultiplier)
-    {
-        var enemyPrefab = prefab.GetComponent<Enemy>();
-        enemyPrefab.Stats.MaxHealth *= levelMultiplier; 
-        enemyPrefab.Stats.MaxLifetime *= levelMultiplier;
-        enemyPrefab.Stats.MovementSpeed *= levelMultiplier;
-
-        if (enemyPrefab.Stats.IsKamikaze)
-        {
-            enemyPrefab.Stats.KamikazeDamage *= levelMultiplier;
-            enemyPrefab.Stats.Bounty *= Mathf.RoundToInt(levelMultiplier);
-        }
-
-        if (!enemyPrefab.Stats.IsKamikaze)
-        {
-            enemyPrefab.Stats.Bounty *= Mathf.RoundToInt(levelMultiplier);
-
-            var enemyWeapon = enemyPrefab.GetComponentInChildren<WeaponPoint>();
-            enemyWeapon.weaponStats.FireRate *= levelMultiplier;
-            enemyWeapon.projectileStats.Basedamage *= levelMultiplier;
-            enemyWeapon.projectileStats.BaseSpeed *= levelMultiplier;
         }
     }
 
@@ -127,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemyObj.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.SetPool(pool);
-                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed;
+                enemy.gameObject.GetComponent<SplineAnimate>().MaxSpeed = movementSpeed * GameManager.GlobalDifficultiyMultiplier;
             }
 
             if (enemyObj.TryGetComponent<IPoolableEnemy>(out var poolable))

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SceneFader _sceneFader;
     
     public static GameManager Instance { get; private set; }
+    public static float GlobalDifficultiyMultiplier { get; private set; } = 1f;
 
     private void OnEnable()
     {
@@ -29,8 +30,12 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        
+        if (SceneManager.GetActiveScene().name == "Level_01Scene") GlobalDifficultiyMultiplier = 1f;
+        if (SceneManager.GetActiveScene().name == "Level_02Scene") GlobalDifficultiyMultiplier = 1.5f;
         Debug.Log(_sceneFader);
     }
+    
 
    public void LoadTitleScreen()
     {
@@ -56,7 +61,9 @@ enum SceneName
 {
     TitleScene = 0,
     CharacterSelectScene = 1,
+    SampleScene = 2,
     Level01Scene = 3,
-    BossLevelScene = 4
+    Level02Scene = 4,
+    BossLevelScene = 5
 }
 

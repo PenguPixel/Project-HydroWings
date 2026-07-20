@@ -14,6 +14,8 @@ public class Projectile : MonoBehaviour
     
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
+    private float _scaledDamage;
+    
     private bool _hasHit;
     private bool _isEnemy;
 
@@ -29,6 +31,11 @@ public class Projectile : MonoBehaviour
         {
             Debug.Log("Projectile Stats not set on {name}");
         }
+    }
+
+    private void Awake()
+    {
+        _scaledDamage = projectileStats.Basedamage * GameManager.GlobalDifficultiyMultiplier;
     }
 
     
@@ -76,7 +83,7 @@ public class Projectile : MonoBehaviour
     private void DealDamageToCharacter(RaycastHit hitInfo)
     {
         var characterComponent = hitInfo.collider.GetComponent<Character>();
-        characterComponent?.TakeDamage(projectileStats.Basedamage);
+        characterComponent?.TakeDamage(_scaledDamage);
     }
 
     private void DealDamageToEnemy(RaycastHit hitInfo)

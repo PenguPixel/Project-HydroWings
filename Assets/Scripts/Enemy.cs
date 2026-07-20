@@ -17,23 +17,31 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
     
     private float _currentHealth;
     private float _remainingLifetime;
-
+    private int _scaledBounty;
+    private float _scaledHealth;
+    private float _scaledLifetime;
+    private IObjectPool<GameObject> _myPool;
+    
     public static UnityEvent<int> BountyOnDeath = new UnityEvent<int>();
 
     public SplineAnimate splineAnimate;
-
-    private IObjectPool<GameObject> _myPool;
+    
     
     public void SetPool(IObjectPool<GameObject> pool) => _myPool = pool;
     
     
     void Awake()
     {
+        _scaledBounty = Mathf.CeilToInt(Stats.Bounty * GameManager.GlobalDifficultiyMultiplier);
+        _scaledHealth = Stats.MaxHealth * GameManager.GlobalDifficultiyMultiplier;
+        _scaledLifetime = Stats.MaxLifetime * GameManager.GlobalDifficultiyMultiplier;
+        
         _localMeshRenderer = GetComponent<MeshRenderer>();
         _localCollider = GetComponent<Collider>();
         _localWeaponPoint = GetComponentInChildren<WeaponPoint>();
-        _currentHealth = Stats.MaxHealth;
-        _remainingLifetime = Stats.MaxLifetime;
+        _currentHealth = _scaledHealth;
+        _remainingLifetime = _scaledLifetime;
+        
     }
     
     void Update()
@@ -72,7 +80,7 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         if (wouldBeHealth <= 0)
         {
             wouldBeHealth = 0;
-            BountyOnDeath.Invoke(Stats.Bounty);
+            BountyOnDeath.Invoke(_scaledBounty);
             TriggerLocalDeath();
             return;
         }
@@ -96,8 +104,8 @@ public class Enemy : MonoBehaviour, IPoolableEnemy
         if (!_localCollider) _localCollider = GetComponent<Collider>();
         
         _isDead = false;
-        _currentHealth = Stats.MaxHealth;
-        _remainingLifetime = Stats.MaxLifetime;
+        _currentHealth = _scaledHealth;
+        _remainingLifetime = _scaledLifetime;
         
         if (_localMeshRenderer != null) _localMeshRenderer.enabled = true;
         if (_localCollider != null) _localCollider.enabled = true;
