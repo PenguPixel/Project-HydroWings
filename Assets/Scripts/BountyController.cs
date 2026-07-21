@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class BountyController : MonoBehaviour
 {
     private int _currentScore;
-    private int _currentUpgradePoints;
+    public int CurrentUpgradePoints { get; private set; }
 
     public static UnityEvent<int> OnScoreChange = new UnityEvent<int>();
     public static UnityEvent<int> OnUpgradePointsChange = new UnityEvent<int>();
@@ -23,22 +23,21 @@ public class BountyController : MonoBehaviour
     private void Start()
     {
         _currentScore = 0;
-        _currentUpgradePoints = 0;
+        CurrentUpgradePoints = 0;
         OnScoreChange?.Invoke(_currentScore);
     }
 
     private void AddAmount(int bountyAmount)
     {
         _currentScore += bountyAmount;
-        _currentUpgradePoints += bountyAmount;
+        CurrentUpgradePoints += bountyAmount;
         OnScoreChange?.Invoke(_currentScore);
-        OnUpgradePointsChange?.Invoke(_currentUpgradePoints);
+        OnUpgradePointsChange?.Invoke(CurrentUpgradePoints);
     }
 
     private void SpendAmount(int amount)
     {
-        _currentUpgradePoints -= amount;
-        OnUpgradePointsChange?.Invoke(_currentUpgradePoints);
+        CurrentUpgradePoints -= amount;
+        OnUpgradePointsChange?.Invoke(CurrentUpgradePoints);
     }
-    
 }

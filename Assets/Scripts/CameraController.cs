@@ -2,11 +2,12 @@ using System;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     public static readonly UnityEvent<float> MoveAction = new();
-    public static UnityEvent ReachEndOfLevel = new UnityEvent();
+    public static UnityEvent<int> ReachEndOfLevel = new UnityEvent<int>();
     [SerializeField] public CameraStats stats;
     [SerializeField] private Transform player;
 
@@ -62,7 +63,8 @@ public class CameraController : MonoBehaviour
             float targetCamSpeed = 0f;
             float lerpTime = 2f;
             _currentCamSpeed = Mathf.Lerp(_currentCamSpeed, targetCamSpeed, lerpTime);
-            ReachEndOfLevel.Invoke();
+            int currentScene = SceneManager.GetActiveScene().buildIndex;
+            ReachEndOfLevel.Invoke(currentScene);
         }
     }
 }

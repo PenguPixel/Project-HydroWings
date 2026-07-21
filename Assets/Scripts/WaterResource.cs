@@ -20,7 +20,7 @@ public class WaterResource : MonoBehaviour
             character.Stats != null)
         {
             maxWater =
-                character.Stats.MaxWaterAmount;
+                character.CurrentMaxWaterResource;
 
             refillRate =
                 character.Stats.WaterRefillRate;
