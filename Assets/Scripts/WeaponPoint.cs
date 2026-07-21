@@ -21,6 +21,7 @@ public class WeaponPoint : MonoBehaviour
 
     private float _fireCooldownTimer;
     private WaterResource _waterResource;
+    private Character _character;
 
     private void Start()
     {
@@ -51,13 +52,17 @@ public class WeaponPoint : MonoBehaviour
             return;
         }
 
-        if (!weaponStats.IsEnemyWeapon &&
-            characterStats == null)
+        if (!weaponStats.IsEnemyWeapon)
         {
-            Debug.LogWarning(
-                $"WeaponPoint auf {name}: " +
-                "CharacterStats wurden nicht zugewiesen."
-            );
+            _character = GetComponentInParent<Character>();
+            
+            if (_character == null)
+            {
+                Debug.LogWarning(
+                    $"WeaponPoint auf {name}: " +
+                    "CharacterStats wurden nicht zugewiesen."
+                );
+            }
         }
 
         _pool = new ObjectPool<Projectile>(
@@ -139,20 +144,17 @@ public class WeaponPoint : MonoBehaviour
         projectile.transform.position = transform.position;
         projectile.transform.rotation = transform.rotation;
 
-        // Schaden vor dem Aktivieren festlegen.
-        if (!weaponStats.IsEnemyWeapon &&
-            characterStats != null)
+        float damageToDeal = 0f;
+
+        if (!weaponStats.IsEnemyWeapon)
         {
-            projectile.SetDamage(
-                characterStats.AttackDamage
-            );
+            if (_character != null)
+            {
+                damageToDeal = _character.CurrentAttackDamage;
+            }
         }
-        else
-        {
-            projectile.SetDamage(
-                projectileStats.Basedamage
-            );
-        }
+        
+        projectile.SetupDamage(damageToDeal, weaponStats.IsEnemyWeapon);
 
         projectile.gameObject.SetActive(true);
     }
@@ -179,8 +181,7 @@ public class WeaponPoint : MonoBehaviour
 
     private float GetFireRate()
     {
-        if (!weaponStats.IsEnemyWeapon &&
-            characterStats != null)
+        if (!weaponStats.IsEnemyWeapon)
         {
             return characterStats.FireRate;
         }

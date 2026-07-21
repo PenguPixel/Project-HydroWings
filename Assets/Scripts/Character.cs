@@ -7,15 +7,20 @@ public class Character : MonoBehaviour
     public CharacterStats Stats;
     public PlayerController CharacterController;
 
-    public static UnityEvent<float, float> OnHealthchange =
-        new UnityEvent<float, float>();
-
-    public static UnityEvent OnPlayerDied =
-        new UnityEvent();
+    public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
+    public static UnityEvent OnPlayerDied = new UnityEvent();
+    
+    public static UnityEvent<float> OnMaxHealthChanged = new UnityEvent<float>();
+    public static UnityEvent<float> OnMaxResourceChanged = new UnityEvent<float>();
+    public static UnityEvent<float> OnMaxAttackDamageChanged = new UnityEvent<float>();
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
-    private float _cameraMoveSpeed;
+    
+    public float CurrentMaxHealth {get; private set;}
+    public float CurrentMaxWaterResource { get; private set; }
+    public float CurrentAttackDamage { get; private set; }
+    
     private float _currentHealth;
     private bool _isSubmerged = false;
     private float _fixedZPosition = 0f;
@@ -27,18 +32,26 @@ public class Character : MonoBehaviour
     {
         UnderwaterController.OnSubmerged.AddListener(SetSubmerged);
         HeartPowerUp.OnHeartCollected.AddListener(RestoreHealth);
+        UpgradeSceneController.OnHealthUpgraded.AddListener(IncreaseMaxHealth);
+        UpgradeSceneController.OnWaterResourceUpgraded.AddListener(IncreaseMaxResource);
+        UpgradeSceneController.OnAttackDamageUpgraded.AddListener(IncreaseAttackDamage);
     }
 
     private void OnDisable()
     {
         UnderwaterController.OnSubmerged.RemoveListener(SetSubmerged);
         HeartPowerUp.OnHeartCollected.RemoveListener(RestoreHealth);
+        UpgradeSceneController.OnHealthUpgraded.RemoveListener(IncreaseMaxHealth);
+        UpgradeSceneController.OnWaterResourceUpgraded.RemoveListener(IncreaseMaxResource);
+        UpgradeSceneController.OnAttackDamageUpgraded.RemoveListener(IncreaseAttackDamage);
     }
 
     private void Awake()
     {
         CharacterController = GetComponentInParent<PlayerController>();
-        CameraController.MoveAction.AddListener(SetCameraMoveSpeed);
+        CurrentMaxHealth = Stats.MaxHealth;
+        CurrentMaxWaterResource = Stats.MaxWaterAmount;
+        CurrentAttackDamage = Stats.AttackDamage;
     }
 
     private void Start()
@@ -54,7 +67,7 @@ public class Character : MonoBehaviour
 
         _waterResource = GetComponent<WaterResource>();
 
-        _currentHealth = Stats.MaxHealth;
+        _currentHealth =CurrentMaxHealth;
 
         OnHealthchange.Invoke(
             _currentHealth,
@@ -64,11 +77,6 @@ public class Character : MonoBehaviour
         _moveAction = InputSystem.actions.FindAction("Move");
 
         Cursor.visible = true;
-    }
-
-    private void SetCameraMoveSpeed(float camSpeed)
-    {
-        _cameraMoveSpeed = camSpeed;
     }
 
     private void Update()
@@ -152,5 +160,23 @@ public class Character : MonoBehaviour
         Debug.Log(
             $"Character is Submerged: {_isSubmerged}"
         );
+    }
+    
+    private void IncreaseAttackDamage(int cost, float increaseAmount)
+    {
+        CurrentAttackDamage += increaseAmount;
+        OnMaxAttackDamageChanged.Invoke(CurrentAttackDamage);
+    }
+
+    private void IncreaseMaxResource(int cost, float increaseAmount)
+    {
+        CurrentMaxWaterResource += increaseAmount;
+        OnMaxResourceChanged.Invoke(CurrentMaxWaterResource);
+    }
+
+    private void IncreaseMaxHealth(int cost, float increaseAmount)
+    {
+        CurrentMaxHealth += increaseAmount;
+        OnMaxHealthChanged.Invoke(CurrentMaxHealth);
     }
 }

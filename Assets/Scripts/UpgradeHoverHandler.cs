@@ -5,14 +5,10 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
 
-public class UpgradeRotationHandler : MonoBehaviour
+public class UpgradeHoverHandler : MonoBehaviour
 {
     [Header("Model")]
     [SerializeField] private Transform model;
-
-    [Header("Scene")]
-    [SerializeField] private string levelSceneName = "Level_02Scene";
-    [SerializeField] private float loadDelay = 0.7f;
 
     [Header("Hover")]
     [SerializeField] private float hoverHeight = 0.15f;
@@ -20,7 +16,6 @@ public class UpgradeRotationHandler : MonoBehaviour
 
     [Header("Rotation")]
     [SerializeField] private float hoverRotationSpeed = 40f;
-    [SerializeField] private float selectionRotationSpeed = 600f;
 
 
     private Camera _mainCamera;
@@ -28,7 +23,6 @@ public class UpgradeRotationHandler : MonoBehaviour
     private float _hoverPhaseOffset;
 
     private bool _isHovered;
-    private bool _isSelected;
 
     private static bool _selectionLocked;
     
@@ -65,7 +59,6 @@ public class UpgradeRotationHandler : MonoBehaviour
         if (!_selectionLocked)
         {
             CheckMouseHover();
-            CheckSelection();
         }
 
         RotateModel();
@@ -114,53 +107,8 @@ public class UpgradeRotationHandler : MonoBehaviour
         }
     }
 
-    private void CheckSelection()
-    {
-        if (!_isHovered ||
-            Mouse.current == null ||
-            !Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            return;
-        }
-
-        _selectionLocked = true;
-        _isSelected = true;
-
-        Debug.Log($"{name} wurde ausgewählt.");
-
-        //StartCoroutine(LoadLevelAfterDelay());
-    }
-
-    private IEnumerator LoadLevelAfterDelay()
-    {
-        yield return new WaitForSeconds(loadDelay);
-
-        if (SceneFader.Instance != null)
-        {
-            SceneFader.Instance.LoadScene(levelSceneName);
-        }
-        else
-        {
-            Debug.LogError(
-                "Kein SceneFader in der UpgradeScene gefunden."
-            );
-        }
-    }
-
     private void RotateModel()
-    {
-        if (_isSelected)
-        {
-            model.Rotate(
-                Vector3.up,
-                selectionRotationSpeed *
-                Time.deltaTime,
-                Space.Self
-            );
-
-            return;
-        }
-
+    { 
         if (_isHovered)
         {
             model.Rotate(
@@ -168,7 +116,8 @@ public class UpgradeRotationHandler : MonoBehaviour
                 hoverRotationSpeed *
                 Time.deltaTime,
                 Space.Self
-            );
+                );
+            
         }
     }
 }

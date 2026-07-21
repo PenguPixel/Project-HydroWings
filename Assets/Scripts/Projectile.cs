@@ -10,7 +10,6 @@ public class Projectile : MonoBehaviour
 
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
-    private float _scaledDamage;
     
     private float _currentDamage;
     private bool _hasHit;
@@ -27,8 +26,7 @@ public class Projectile : MonoBehaviour
                 projectileStats.IsEnemyProjectile;
 
             // Standardwert, falls kein anderer Schaden gesetzt wird.
-            _currentDamage =
-                projectileStats.Basedamage;
+            //_currentDamage = projectileStats.Basedamage;
         }
         else
         {
@@ -38,11 +36,19 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void Awake()
+    public void SetupDamage(float damage, bool isEnemyProjectile)
     {
-        _scaledDamage = projectileStats.Basedamage * GameManager.GlobalDifficultiyMultiplier;
+        _isEnemy = isEnemyProjectile;
+        
+        if (!_isEnemy)
+        {
+            _currentDamage = damage;
+        }
+        else
+        {
+            _currentDamage = projectileStats.Basedamage * GameManager.GlobalDifficultiyMultiplier;
+        }
     }
-
     
 
     // Update is called once per frame
@@ -99,14 +105,7 @@ public class Projectile : MonoBehaviour
 
         MovementHandling();
     }
-
-    public void SetDamage(float damage)
-    {
-        //var characterComponent = hitInfo.collider.GetComponent<Character>();
-       // characterComponent?.TakeDamage(_scaledDamage);
-        _currentDamage = damage;
-    }
-
+    
     private void DealDamageToCharacter(
         RaycastHit hitInfo)
     {
@@ -125,6 +124,7 @@ public class Projectile : MonoBehaviour
                 out Enemy enemy))
         {
             enemy.TakeDamage(_currentDamage);
+            Debug.Log("Gegner bekommt Damage "+_currentDamage);
             return;
         }
 

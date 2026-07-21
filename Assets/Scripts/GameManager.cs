@@ -15,13 +15,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         CameraController.ReachEndOfLevel.AddListener(LoadUpgradeScreen);
-        UpgradeSceneHandler.OnLoadNextLevel.AddListener(LoadNextLevel);
+        UpgradeSceneController.OnLoadNextLevel.AddListener(LoadNextLevel);
     }
 
     private void OnDisable()
     {
         CameraController.ReachEndOfLevel.RemoveListener(LoadUpgradeScreen);
-        UpgradeSceneHandler.OnLoadNextLevel.RemoveListener(LoadNextLevel);
+        UpgradeSceneController.OnLoadNextLevel.RemoveListener(LoadNextLevel);
     }
 
     private void Awake()
