@@ -124,7 +124,6 @@ public class Projectile : MonoBehaviour
                 out Enemy enemy))
         {
             enemy.TakeDamage(_currentDamage);
-            Debug.Log("Gegner bekommt Damage "+_currentDamage);
             return;
         }
 
