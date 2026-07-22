@@ -1206,6 +1206,7 @@ MonoBehaviour:
   rotationSpeed: 25
   bountyProgressionData: {fileID: 11400000, guid: 9bbc863765daf7716be0d47216c14825, type: 2}
   playerProgressionData: {fileID: 11400000, guid: 10112ff155a74297a94067ba02aea36b, type: 2}
+  levelFlowData: {fileID: 0}
   baseHealthUpgradeCost: 100
   healthUpgradeAmount: 20
   baseResourceUpgradeCost: 100
@@ -2104,6 +2105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   sceneFader: {fileID: 1218643050}
+  levelFlowData: {fileID: 11400000, guid: 517f86ac094e0b028adbbe5c6369a197, type: 2}
 --- !u!4 &766565549
 Transform:
   m_ObjectHideFlags: 0

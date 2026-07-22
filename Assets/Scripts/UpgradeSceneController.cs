@@ -16,6 +16,7 @@ public class UpgradeSceneController : MonoBehaviour
     [Header("Data")] 
     [SerializeField] private BountyProgressionData bountyProgressionData;
     [SerializeField] private PlayerProgressionData playerProgressionData;
+    [SerializeField] private LevelFlowData levelFlowData;
     
     [Header("Upgrade Base Values")]
     [SerializeField] private int baseHealthUpgradeCost = 100;
@@ -120,7 +121,8 @@ public class UpgradeSceneController : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        int nextSceneIndex = _lastOriginSceneIndex++;
+        int nextSceneIndex = levelFlowData.currentLevelIndex++;
+        Debug.Log("nächster Szenen Index in UpgradeSceneController: " + nextSceneIndex);
         OnLoadNextLevel.Invoke(nextSceneIndex);
     }
 

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Scene Management")]
     [SerializeField] private SceneFader sceneFader;
+    [SerializeField] private LevelFlowData levelFlowData;
     
     public static UnityEvent<int> OnUpgradescreenLoad = new UnityEvent<int>();
     public static GameManager Instance { get; private set; }
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
     public void LoadUpgradeScreen(int originSceneIndex)
     {
         Time.timeScale = 1f;
-        OnUpgradescreenLoad.Invoke(originSceneIndex);
+        levelFlowData.currentLevelIndex = originSceneIndex;
         sceneFader.LoadScene((int) SceneName.UpgradeScene);  
     }
 

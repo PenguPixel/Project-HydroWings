@@ -3230,8 +3230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   sceneFader: {fileID: 1424979500}
-  bountyProgressionData: {fileID: 11400000, guid: 9bbc863765daf7716be0d47216c14825, type: 2}
-  bountyController: {fileID: 1375092242}
+  levelFlowData: {fileID: 11400000, guid: 517f86ac094e0b028adbbe5c6369a197, type: 2}
 --- !u!4 &986347627
 Transform:
   m_ObjectHideFlags: 0

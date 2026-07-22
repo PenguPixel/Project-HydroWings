@@ -64,6 +64,7 @@ public class CameraController : MonoBehaviour
             float lerpTime = 2f;
             _currentCamSpeed = Mathf.Lerp(_currentCamSpeed, targetCamSpeed, lerpTime);
             int currentScene = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log("Aktueller Szenen Index von Kamera" + currentScene);
             ReachEndOfLevel.Invoke(currentScene);
         }
     }
