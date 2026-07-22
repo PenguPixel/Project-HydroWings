@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4557348464956351894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5436738108786463517}
+  - component: {fileID: 8637899688018456312}
+  - component: {fileID: 9189903882669244211}
+  m_Layer: 0
+  m_Name: HealthUpgrade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5436738108786463517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4557348464956351894}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.0007854348, z: 0, w: 0.9999997}
+  m_LocalPosition: {x: -13.73, y: 0, z: -158.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6911545870281633638}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.09, z: 0}
+--- !u!65 &8637899688018456312
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4557348464956351894}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: -2.04, y: 0.84, z: 7.93}
+--- !u!114 &9189903882669244211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4557348464956351894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee4a76a06a274542b9691300dbc4fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHoverHandler
+  model: {fileID: 6911545870281633638}
+  hoverHeight: 0.15
+  hoverSpeed: 1
+  hoverRotationSpeed: 40
+--- !u!1001 &6368097728064981133
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5436738108786463517}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3852608
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.21
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.94625485
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.323422
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 37.74
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+      propertyPath: m_Name
+      value: Heart
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+--- !u!4 &6911545870281633638 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 37360b8aa700ca499a7bc35aa2ce08b2, type: 3}
+  m_PrefabInstance: {fileID: 6368097728064981133}
+  m_PrefabAsset: {fileID: 0}
