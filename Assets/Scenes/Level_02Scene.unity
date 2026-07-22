@@ -524,9 +524,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 74303536}
     m_Modifications:
     - target: {fileID: 5806119013835317953, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
+      propertyPath: shootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e616d05f1f90a0a488e4d0b22ae19164, type: 3}
+    - target: {fileID: 5806119013835317953, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 512868853}
+    - target: {fileID: 5806119013835317953, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
+      propertyPath: characterStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 9460d872e7a485d44b1c4f7ec78b0500, type: 2}
     - target: {fileID: 5806119013835317953, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
       propertyPath: waterShootSound
       value: 
@@ -6199,6 +6207,10 @@ PrefabInstance:
       propertyPath: CharacterController
       value: 
       objectReference: {fileID: 74303537}
+    - target: {fileID: 8375067014954180777, guid: 800dae2f2b8b40066951603c45d1972b, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 512868853}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

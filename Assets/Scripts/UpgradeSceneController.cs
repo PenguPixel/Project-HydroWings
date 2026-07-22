@@ -121,8 +121,9 @@ public class UpgradeSceneController : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        int nextSceneIndex = levelFlowData.currentLevelIndex++;
+        int nextSceneIndex = levelFlowData.currentLevelIndex + 1;
         Debug.Log("nächster Szenen Index in UpgradeSceneController: " + nextSceneIndex);
+        levelFlowData.currentLevelIndex = nextSceneIndex;
         OnLoadNextLevel.Invoke(nextSceneIndex);
     }
 

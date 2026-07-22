@@ -1086,7 +1086,7 @@ MonoBehaviour:
   player: {fileID: 74303536}
   stopForBossFight: 0
   timeUntilStop: 1
-  endOfLevelX: 60
+  endOfLevelX: 720
 --- !u!114 &257644030
 MonoBehaviour:
   m_ObjectHideFlags: 0
