@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
 
         _currentX = transform.position.x;
         transform.position = new Vector3(_currentX, player.position.y,transform.position.z);
+        
+        
     }
     
     void LateUpdate()

@@ -25,6 +25,8 @@ public class BossLollipopProjectile : MonoBehaviour
 
         if (Physics.SphereCast(transform.position, hitRadius, Vector3.down, out RaycastHit hit, distance, playerLayer, QueryTriggerInteraction.Ignore))
         {
+            Debug.Log(hit.collider.gameObject.name);
+            
             Character character = hit.collider.GetComponent<Character>();
 
             if (character == null)

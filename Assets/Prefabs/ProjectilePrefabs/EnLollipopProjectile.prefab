@@ -51,7 +51,7 @@ MonoBehaviour:
   hitRadius: 0.25
   playerLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
 --- !u!1001 &8458256464472837970
 PrefabInstance:
   m_ObjectHideFlags: 0
