@@ -53,7 +53,7 @@ MonoBehaviour:
   hitRadius: 0.15
   playerLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
 --- !u!135 &6160023421068154596
 SphereCollider:
   m_ObjectHideFlags: 0

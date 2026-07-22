@@ -9,7 +9,7 @@ public class LolliOliBotHealth : MonoBehaviour
     private bool _isDead;
 
     public UnityEvent<float, float> OnHealthChanged;
-    public UnityEvent OnDeath;
+    public static UnityEvent OnBossDeath = new UnityEvent();
 
     private void Start()
     {
@@ -42,7 +42,7 @@ public class LolliOliBotHealth : MonoBehaviour
             return;
 
         _isDead = true;
-        OnDeath?.Invoke();
+        OnBossDeath?.Invoke();  // hier Win Condition einfügen
 
         LolliOliBotController controller =
             GetComponent<LolliOliBotController>();

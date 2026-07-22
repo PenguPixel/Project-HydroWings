@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         
         if (SceneManager.GetActiveScene().name == "Level_01Scene") GlobalDifficultiyMultiplier = 1f;
         if (SceneManager.GetActiveScene().name == "Level_02Scene") GlobalDifficultiyMultiplier = 1.5f;
-        Debug.Log(sceneFader);
+        if (SceneManager.GetActiveScene().name == "BossLevelScene") GlobalDifficultiyMultiplier = 1f;
     }
     
 

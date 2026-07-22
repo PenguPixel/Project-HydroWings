@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BountyProgressionData
   currentScore: 0
   currentUpgradeScore: 0
+  currentHealthUpgradeCost: 100
+  currentResourceUpgradeCost: 100
+  currentDamageUpgradeCost: 100
