@@ -3,7 +3,27 @@ guid: 374b4dbcb244a234cb7949ec9833aeb0
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glas
+    second: {fileID: 2100000, guid: f0be94f1aab444b42824b6f1f384d9e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metall dunkel
+    second: {fileID: 2100000, guid: 74cb22691bb1a0b43a328f4a316faf46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metall hell
+    second: {fileID: 2100000, guid: 955a1e8853f22a14ebb7f5cbeb27939b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Schraube
+    second: {fileID: 2100000, guid: cd50cd7e151fe38499e83e2712d22514, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
