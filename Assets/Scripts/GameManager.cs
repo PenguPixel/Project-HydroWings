@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private SceneFader _sceneFader;
+    [Header("Scene Management")]
+    [SerializeField] private SceneFader sceneFader;
+    [SerializeField] private LevelFlowData levelFlowData;
     
     public static UnityEvent<int> OnUpgradescreenLoad = new UnityEvent<int>();
     public static GameManager Instance { get; private set; }
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviour
         
         if (SceneManager.GetActiveScene().name == "Level_01Scene") GlobalDifficultiyMultiplier = 1f;
         if (SceneManager.GetActiveScene().name == "Level_02Scene") GlobalDifficultiyMultiplier = 1.5f;
-        Debug.Log(_sceneFader);
+        Debug.Log(sceneFader);
     }
     
 
@@ -45,26 +47,26 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         Debug.Log("Button funktioniert");
-        _sceneFader.LoadScene((int) SceneName.TitleScene);
+        sceneFader.LoadScene((int) SceneName.TitleScene);
     }
 
     public void ReloadLevelScene()
     {
         Time.timeScale = 1.0f;
-        _sceneFader.LoadScene(SceneManager.GetActiveScene().name);
+        sceneFader.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void LoadUpgradeScreen(int originSceneIndex)
     {
         Time.timeScale = 1f;
-        OnUpgradescreenLoad.Invoke(originSceneIndex);
-        _sceneFader.LoadScene((int) SceneName.UpgradeScene);  
+        levelFlowData.currentLevelIndex = originSceneIndex;
+        sceneFader.LoadScene((int) SceneName.UpgradeScene);  
     }
 
     public void LoadNextLevel(int nextSceneIndex)
     {
         Time.timeScale = 1.0f;
-        _sceneFader.LoadScene(nextSceneIndex);
+        sceneFader.LoadScene(nextSceneIndex);
     }
 }
 

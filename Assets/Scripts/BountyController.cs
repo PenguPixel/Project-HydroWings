@@ -1,14 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class BountyController : MonoBehaviour
 {
-    private int _currentScore;
-    public int CurrentUpgradePoints { get; private set; }
+    [SerializeField] private BountyProgressionData _bountyProgressionData;
 
     public static UnityEvent<int> OnScoreChange = new UnityEvent<int>();
-    public static UnityEvent<int> OnUpgradePointsChange = new UnityEvent<int>();
     
     private void OnEnable()
     {
@@ -21,23 +20,15 @@ public class BountyController : MonoBehaviour
     }
 
     private void Start()
-    {
-        _currentScore = 0;
-        CurrentUpgradePoints = 0;
-        OnScoreChange?.Invoke(_currentScore);
+    { 
+        OnScoreChange?.Invoke(_bountyProgressionData.currentScore);
     }
 
     private void AddAmount(int bountyAmount)
     {
-        _currentScore += bountyAmount;
-        CurrentUpgradePoints += bountyAmount;
-        OnScoreChange?.Invoke(_currentScore);
-        OnUpgradePointsChange?.Invoke(CurrentUpgradePoints);
-    }
-
-    private void SpendAmount(int amount)
-    {
-        CurrentUpgradePoints -= amount;
-        OnUpgradePointsChange?.Invoke(CurrentUpgradePoints);
+        _bountyProgressionData.currentScore += bountyAmount;
+        _bountyProgressionData.currentUpgradeScore += bountyAmount;
+        
+        OnScoreChange?.Invoke(_bountyProgressionData.currentScore);
     }
 }

@@ -7,10 +7,16 @@ using UnityEngine.Events;
 public class UpgradeSceneController : MonoBehaviour
 {
     [SerializeField] private int testIndexForDebug;
+    [SerializeField] private int testScoreForDebug;
     
     [Header("Upgrade Meshes")]
     [SerializeField] private List<GameObject> upgradeMeshes = new List<GameObject>();
     [SerializeField] private float rotationSpeed = 15f;
+
+    [Header("Data")] 
+    [SerializeField] private BountyProgressionData bountyProgressionData;
+    [SerializeField] private PlayerProgressionData playerProgressionData;
+    [SerializeField] private LevelFlowData levelFlowData;
     
     [Header("Upgrade Base Values")]
     [SerializeField] private int baseHealthUpgradeCost = 100;
@@ -20,6 +26,14 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private int baseDamageUpgradeCost = 100;
     [SerializeField] private float damageUpgradeAmount = 5f;
     [SerializeField] private float upgradeCostMultiplier = 1.5f;
+    
+    [Header("Score")]
+    [SerializeField] private TextMeshProUGUI currentScoreText;
+
+    [Header("ValueUI")] 
+    [SerializeField] private TextMeshProUGUI healthAmountText;
+    [SerializeField] private TextMeshProUGUI resourceAmountText;
+    [SerializeField] private TextMeshProUGUI damageAmountText;
     
     [Header("CostUI")]
     [SerializeField] private TextMeshProUGUI healthCostText;
@@ -32,9 +46,11 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI maxAttackDamageText;
     
     public static UnityEvent<int> OnLoadNextLevel = new UnityEvent<int>();
+    /*
     public static UnityEvent<int,float> OnHealthUpgraded = new UnityEvent<int, float>();
     public static UnityEvent<int, float> OnWaterResourceUpgraded = new UnityEvent<int, float>();
     public static UnityEvent<int, float> OnAttackDamageUpgraded = new UnityEvent<int, float>();
+    */
 
     private int _lastOriginSceneIndex;
     private int _lastHealthUpgradeCost;
@@ -48,34 +64,41 @@ public class UpgradeSceneController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnUpgradescreenLoad.AddListener(SetOriginSceneIndex);
-        Character.OnMaxHealthChanged.AddListener(UpdateHealthStat);
+        /*Character.OnMaxHealthChanged.AddListener(UpdateHealthStat);
         Character.OnMaxResourceChanged.AddListener(UpdateResourceStat);
         Character.OnMaxAttackDamageChanged.AddListener(UpdateDamageStat);
+        */
     }
 
     private void OnDisable()
     {
         GameManager.OnUpgradescreenLoad.RemoveListener(SetOriginSceneIndex);
-        Character.OnMaxHealthChanged.RemoveListener(UpdateHealthStat);
+        /*Character.OnMaxHealthChanged.RemoveListener(UpdateHealthStat);
         Character.OnMaxResourceChanged.RemoveListener(UpdateResourceStat);
         Character.OnMaxAttackDamageChanged.RemoveListener(UpdateDamageStat);
+        */
     }
 
     private void Awake()
     {
-        _lastOriginSceneIndex = testIndexForDebug;
+        // ONLY FOR DEBUG
+        //_lastOriginSceneIndex = testIndexForDebug;
+        //bountyProgressionData.currentUpgradeScore = testScoreForDebug;
+        //---------------------------------------------------------------------------
+        
+        currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
         
         _lastHealthUpgradeCost = baseHealthUpgradeCost;
         _lastResourceUpgradeCost = baseResourceUpgradeCost;
         _lastDamageUpgradeCost = baseDamageUpgradeCost;
+
+        healthAmountText.text = "+ " + healthUpgradeAmount;
+        resourceAmountText.text = "+ " + resourceUpgradeAmount;
+        damageAmountText.text = "+ " + damageUpgradeAmount;
         
         healthCostText.text = _lastHealthUpgradeCost.ToString();
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
         damageCostText.text = _lastDamageUpgradeCost.ToString();
-
-        maxHealthText.text = GetComponent<Character>().CurrentMaxHealth.ToString();
-        maxResourceText.text = GetComponent<Character>().CurrentMaxWaterResource.ToString();
-        maxAttackDamageText.text = GetComponent<Character>().CurrentAttackDamage.ToString();
 
     }
 
@@ -85,6 +108,10 @@ public class UpgradeSceneController : MonoBehaviour
         {
             mesh.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
+        
+        maxHealthText.text = playerProgressionData.maxHealth.ToString();
+        maxResourceText.text = playerProgressionData.maxResource.ToString();
+        maxAttackDamageText.text = playerProgressionData.attackDamage.ToString();
     }
 
     private void SetOriginSceneIndex(int originSceneIndex)
@@ -94,15 +121,31 @@ public class UpgradeSceneController : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        int nextSceneIndex = _lastOriginSceneIndex++;
+        int nextSceneIndex = levelFlowData.currentLevelIndex + 1;
+        Debug.Log("nächster Szenen Index in UpgradeSceneController: " + nextSceneIndex);
+        levelFlowData.currentLevelIndex = nextSceneIndex;
         OnLoadNextLevel.Invoke(nextSceneIndex);
     }
 
     public void UpgradeMaxHealth()
     {
         int currentCost = _lastHealthUpgradeCost;
-        float upgradeAmount = healthUpgradeAmount;
-        OnHealthUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.maxHealth += healthUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
+        
         _lastHealthUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         healthCostText.text = _lastHealthUpgradeCost.ToString();
     }
@@ -110,8 +153,22 @@ public class UpgradeSceneController : MonoBehaviour
     public void UpgradeMaxWaterResource()
     {
         int currentCost = _lastResourceUpgradeCost;
-        float upgradeAmount = resourceUpgradeAmount;
-        OnWaterResourceUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.maxResource += resourceUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
+        
         _lastResourceUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
     }
@@ -119,13 +176,27 @@ public class UpgradeSceneController : MonoBehaviour
     public void UpgradeAttackDamage()
     {
         int currentCost = _lastDamageUpgradeCost;
-        float upgradeAmount = damageUpgradeAmount;
-        OnAttackDamageUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.attackDamage += damageUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
+        
         _lastDamageUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         damageCostText.text = _lastDamageUpgradeCost.ToString();
     }
 
-    public void UpdateHealthStat(float newMaxHealth)
+    /*public void UpdateHealthStat(float newMaxHealth)
     {
         maxHealthText.text = newMaxHealth.ToString();
     }
@@ -139,4 +210,5 @@ public class UpgradeSceneController : MonoBehaviour
     {
         maxResourceText.text = newAttackDamage.ToString();
     }
+    */
 }
