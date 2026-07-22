@@ -17,11 +17,21 @@ public class GameUIController : MonoBehaviour
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
-    [SerializeField] private GameObject loseOverlayPanel;
+    [SerializeField] private GameObject endOverlayPanel;
     [SerializeField] private GameObject gameOverButtons;
+    
+    [Header("Game Win Ui")]
+    [SerializeField] private TextMeshProUGUI gameWinText;
+    [SerializeField] private GameObject finalScoreBox;
+    [SerializeField] private TextMeshProUGUI finalScoreNumberText;
+    [SerializeField] private GameObject returnToTitleButton;
+    
+    [Header("Fade Values")]
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private float panelTargetAlpha = 1f;
+    
     private bool isFading = false;
+    private bool isWin = false;
     
 
     private int _currentScore;
@@ -32,6 +42,7 @@ public class GameUIController : MonoBehaviour
         Character.OnHealthchange.AddListener(UpdateHealthUI);
         BountyController.OnScoreChange.AddListener(UpdateScoreUI);
         Character.OnPlayerDied.AddListener(TriggerLose);
+        LolliOliBotHealth.OnBossDeath.AddListener(TriggerWin);
     }
 
     private void OnDisable()
@@ -40,15 +51,18 @@ public class GameUIController : MonoBehaviour
         Character.OnHealthchange.RemoveListener(UpdateHealthUI);
         BountyController.OnScoreChange.RemoveListener(UpdateScoreUI);
         Character.OnPlayerDied.RemoveListener(TriggerLose);
+        LolliOliBotHealth.OnBossDeath.RemoveListener(TriggerWin);
     }
 
     private void Awake()
     {
-        if (loseOverlayPanel != null && gameOverText != null)
+        if (endOverlayPanel != null && gameOverText != null)
         {
-            loseOverlayPanel.gameObject.SetActive(false);
+            endOverlayPanel.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
             gameOverButtons.SetActive(false);
+            gameWinText.gameObject.SetActive(false);
+            finalScoreBox.SetActive(false);
         }
     }
     
@@ -73,61 +87,131 @@ public class GameUIController : MonoBehaviour
     public void TriggerLose()
     {
         if (isFading) return;
+        isWin = false;
 
-        if (loseOverlayPanel != null && loseOverlayPanel != null)
+        if (endOverlayPanel != null && gameOverText != null && gameOverButtons != null)
         {
-            StartCoroutine("FadeToLoseScreen");
+            StartCoroutine("FadeToEndScreen");
+        }
+    }
+    
+    private void TriggerWin()
+    {
+        if (isFading)  return;
+        isWin = true;
+
+        if (endOverlayPanel != null && gameWinText != null && gameOverButtons != null)
+        {
+            StartCoroutine("FadeToEndScreen");
         }
     }
 
-    private IEnumerator FadeToLoseScreen()
+    private IEnumerator FadeToEndScreen()
     {
         isFading = true;
-        loseOverlayPanel.gameObject.SetActive(true);
-        gameOverText.gameObject.SetActive(true);
-        gameOverButtons.SetActive(true);
-        
-        Image panelImage = loseOverlayPanel.GetComponent<Image>();
-        TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
-        
-        Color startPanelColor = new Color(0f,0f,0f,0f);
-        Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
-        panelImage.color = startPanelColor;
-        
-        Color startTextColor = new Color(1f, 1f, 1f, 0f);
-        Color targetTextColor = new Color(1f, 1f, 1f, 1f);
-        loseText.color = startTextColor;
-        
+        endOverlayPanel.gameObject.SetActive(true);
 
-        float startGameSpeed = 1.0f;
-        float targetGameSpeed = 0.0f;
-
-        float elapsedTime = 0f;
-        float lastTimeScale = 1f;
-
-        bool canceledLerp = false;
-        
-        while (elapsedTime + 0.02f < fadeDuration)
+        if (!isWin)
         {
-            if (Time.timeScale > lastTimeScale)
+            gameOverText.gameObject.SetActive(true);
+            gameOverButtons.SetActive(true);
+
+            Image panelImage = endOverlayPanel.GetComponent<Image>();
+            TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
+
+            Color startPanelColor = new Color(0f, 0f, 0f, 0f);
+            Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
+            panelImage.color = startPanelColor;
+
+            Color startTextColor = new Color(1f, 1f, 1f, 0f);
+            Color targetTextColor = new Color(1f, 1f, 1f, 1f);
+            loseText.color = startTextColor;
+
+
+            float startGameSpeed = 1.0f;
+            float targetGameSpeed = 0.0f;
+
+            float elapsedTime = 0f;
+            float lastTimeScale = 1f;
+
+            bool canceledLerp = false;
+
+            while (elapsedTime + 0.02f < fadeDuration)
             {
-                canceledLerp = true;
-                break;
+                if (Time.timeScale > lastTimeScale)
+                {
+                    canceledLerp = true;
+                    break;
+                }
+
+                float currentFactor = elapsedTime / fadeDuration;
+
+                panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+                loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+                
+                Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
+                lastTimeScale = Time.timeScale;
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
             }
-            
-            float currentFactor = elapsedTime / fadeDuration;
-            
-            panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
-            loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
-            Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
-            lastTimeScale = Time.timeScale;
-            
-            elapsedTime += Time.deltaTime;
-            yield return null;
+
+            panelImage.color = targetPanelColor;
+            if (!canceledLerp) Time.timeScale = targetGameSpeed;
+            isFading = false;
         }
-        
-        panelImage.color = targetPanelColor;
-        if (!canceledLerp) Time.timeScale = targetGameSpeed;
-        isFading = false;
+        else
+        {
+            gameWinText.gameObject.SetActive(true);
+            returnToTitleButton.SetActive(true);
+            finalScoreBox.SetActive(true);
+
+            Image panelImage = endOverlayPanel.GetComponent<Image>();
+            TextMeshProUGUI winText = gameWinText.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI finalScoreText = finalScoreNumberText.GetComponent<TextMeshProUGUI>();
+
+            Color startPanelColor = new Color(0f, 0f, 0f, 0f);
+            Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
+            panelImage.color = startPanelColor;
+
+            Color startTextColor = new Color(1f, 1f, 1f, 0f);
+            Color targetTextColor = new Color(1f, 1f, 1f, 1f);
+            winText.color = startTextColor;
+            finalScoreText.color = startTextColor;
+
+
+            float startGameSpeed = 1.0f;
+            float targetGameSpeed = 0.0f;
+
+            float elapsedTime = 0f;
+            float lastTimeScale = 1f;
+
+            bool canceledLerp = false;
+
+            while (elapsedTime + 0.02f < fadeDuration)
+            {
+                if (Time.timeScale > lastTimeScale)
+                {
+                    canceledLerp = true;
+                    break;
+                }
+
+                float currentFactor = elapsedTime / fadeDuration;
+
+                panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+                winText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+                finalScoreText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+                
+                Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
+                lastTimeScale = Time.timeScale;
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            panelImage.color = targetPanelColor;
+            if (!canceledLerp) Time.timeScale = targetGameSpeed;
+            isFading = false;
+        }
     }
 }
