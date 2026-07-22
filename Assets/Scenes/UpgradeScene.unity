@@ -1224,6 +1224,10 @@ MonoBehaviour:
   maxHealthText: {fileID: 558114883}
   maxResourceText: {fileID: 1389325907}
   maxAttackDamageText: {fileID: 966280496}
+  audioSource: {fileID: 197201341}
+  successSound: {fileID: 8300000, guid: 972bd20cb7e3de887912f5efecf0d7a1, type: 3}
+  denySound: {fileID: 8300000, guid: dbe4db03b14c8ae0bb2175ec52fdf3a1, type: 3}
+  uIVolume: 1
 --- !u!4 &284413061
 Transform:
   m_ObjectHideFlags: 0
