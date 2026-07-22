@@ -28,6 +28,11 @@ public class UpgradeSceneController : MonoBehaviour
     
     [Header("Score")]
     [SerializeField] private TextMeshProUGUI currentScoreText;
+
+    [Header("ValueUI")] 
+    [SerializeField] private TextMeshProUGUI healthAmountText;
+    [SerializeField] private TextMeshProUGUI resourceAmountText;
+    [SerializeField] private TextMeshProUGUI damageAmountText;
     
     [Header("CostUI")]
     [SerializeField] private TextMeshProUGUI healthCostText;
@@ -50,7 +55,6 @@ public class UpgradeSceneController : MonoBehaviour
     private int _lastHealthUpgradeCost;
     private int _lastResourceUpgradeCost;
     private int _lastDamageUpgradeCost;
-    private int _currentUpgradeScore;
 
     private float _currentMaxHealth;
     private float _currentMaxWaterResource;
@@ -77,16 +81,19 @@ public class UpgradeSceneController : MonoBehaviour
     private void Awake()
     {
         // ONLY FOR DEBUG
-        _lastOriginSceneIndex = testIndexForDebug;
-        bountyProgressionData.currentUpgradeScore = testScoreForDebug;
+        //_lastOriginSceneIndex = testIndexForDebug;
+        //bountyProgressionData.currentUpgradeScore = testScoreForDebug;
         //---------------------------------------------------------------------------
-
-        _currentUpgradeScore = bountyProgressionData.currentUpgradeScore;
-        currentScoreText.text = _currentUpgradeScore.ToString();
+        
+        currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
         
         _lastHealthUpgradeCost = baseHealthUpgradeCost;
         _lastResourceUpgradeCost = baseResourceUpgradeCost;
         _lastDamageUpgradeCost = baseDamageUpgradeCost;
+
+        healthAmountText.text = "+ " + healthUpgradeAmount;
+        resourceAmountText.text = "+ " + resourceUpgradeAmount;
+        damageAmountText.text = "+ " + damageUpgradeAmount;
         
         healthCostText.text = _lastHealthUpgradeCost.ToString();
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
@@ -121,7 +128,20 @@ public class UpgradeSceneController : MonoBehaviour
     {
         int currentCost = _lastHealthUpgradeCost;
         
-        playerProgressionData.maxHealth += healthUpgradeAmount;
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.maxHealth += healthUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
         
         _lastHealthUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         healthCostText.text = _lastHealthUpgradeCost.ToString();
@@ -131,7 +151,20 @@ public class UpgradeSceneController : MonoBehaviour
     {
         int currentCost = _lastResourceUpgradeCost;
         
-        playerProgressionData.maxResource += resourceUpgradeAmount;
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.maxResource += resourceUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
         
         _lastResourceUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
@@ -141,7 +174,20 @@ public class UpgradeSceneController : MonoBehaviour
     {
         int currentCost = _lastDamageUpgradeCost;
         
-        playerProgressionData.attackDamage += damageUpgradeAmount;
+        if (bountyProgressionData.currentUpgradeScore >= currentCost)
+        {
+            playerProgressionData.attackDamage += damageUpgradeAmount;
+            
+            bountyProgressionData.currentUpgradeScore -= currentCost;
+            currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
+            
+            //TODO Play Buy Sound
+        }
+        else
+        {
+            //TODO Play Fail Sound
+            return;
+        }
         
         _lastDamageUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         damageCostText.text = _lastDamageUpgradeCost.ToString();
