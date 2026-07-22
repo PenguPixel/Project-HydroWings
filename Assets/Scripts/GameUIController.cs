@@ -80,6 +80,7 @@ public class GameUIController : MonoBehaviour
             returnToTitleButton.SetActive(false);
             gameWinText.gameObject.SetActive(false);
             finalScoreHeadText.gameObject.SetActive(false);
+            finalScoreNumberText.gameObject.SetActive(false);
         }
     }
     
@@ -183,6 +184,7 @@ public class GameUIController : MonoBehaviour
             gameWinText.gameObject.SetActive(true);
             returnToTitleButton.SetActive(true);
             finalScoreHeadText.gameObject.SetActive(true);
+            finalScoreNumberText.gameObject.SetActive(true);
             
             finalScoreNumberText.text = _currentScore.ToString();
 

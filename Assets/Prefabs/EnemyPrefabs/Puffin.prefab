@@ -54,7 +54,7 @@ MonoBehaviour:
   m_LoopMode: 0
   m_Method: 1
   m_Duration: 1
-  m_MaxSpeed: 5
+  m_MaxSpeed: 7
   m_EasingMode: 0
   m_AlignmentMode: 1
   m_ObjectForwardAxis: 2
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KamikazeEnemy
   Stats: {fileID: 11400000, guid: cae54d44d48c52f579fd3251a236c397, type: 2}
   splineAnimate: {fileID: 1089142664846909617}
-  attackSpeedMultiplier: 1.8
+  attackSpeedMultiplier: 1.2
   rotationSpeed: 3
   explosionDelay: 2
   _blinkRenderer: {fileID: 7968625840536616316}
@@ -147,7 +147,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.5
+  m_Radius: 6.5
   m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &1309219259108373751
 PrefabInstance:
