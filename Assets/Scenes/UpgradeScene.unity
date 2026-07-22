@@ -1179,7 +1179,7 @@ GameObject:
   - component: {fileID: 284413061}
   - component: {fileID: 284413060}
   m_Layer: 0
-  m_Name: UpgradeSceneHandler
+  m_Name: UpgradeSceneController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1207,13 +1207,10 @@ MonoBehaviour:
   bountyProgressionData: {fileID: 11400000, guid: 9bbc863765daf7716be0d47216c14825, type: 2}
   playerProgressionData: {fileID: 11400000, guid: 10112ff155a74297a94067ba02aea36b, type: 2}
   levelFlowData: {fileID: 11400000, guid: 517f86ac094e0b028adbbe5c6369a197, type: 2}
-  baseHealthUpgradeCost: 100
-  healthUpgradeAmount: 20
-  baseResourceUpgradeCost: 100
+  healthUpgradeAmount: 15
   resourceUpgradeAmount: 10
-  baseDamageUpgradeCost: 100
-  damageUpgradeAmount: 5
-  upgradeCostMultiplier: 1.5
+  damageUpgradeAmount: 3
+  upgradeCostMultiplier: 2
   currentScoreText: {fileID: 172214017}
   healthAmountText: {fileID: 952287275}
   resourceAmountText: {fileID: 747727892}
@@ -3554,6 +3551,14 @@ PrefabInstance:
     - target: {fileID: 1234966297226661006, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220840157336584563, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220840157336584563, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 6220840157336584563, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
       propertyPath: m_LocalScale.x

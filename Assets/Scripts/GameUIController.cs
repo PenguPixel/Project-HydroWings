@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour
 {
+    [Header("Portrait UI")] 
+    [SerializeField] private Image dolphImage;
+    [SerializeField] private Image penguImage;
+    
     [Header("Water UI")]
     [SerializeField] private Slider waterSlider;
 
@@ -22,7 +26,7 @@ public class GameUIController : MonoBehaviour
     
     [Header("Game Win Ui")]
     [SerializeField] private TextMeshProUGUI gameWinText;
-    [SerializeField] private GameObject finalScoreBox;
+    [SerializeField] private TextMeshProUGUI finalScoreHeadText;
     [SerializeField] private TextMeshProUGUI finalScoreNumberText;
     [SerializeField] private GameObject returnToTitleButton;
     
@@ -56,13 +60,26 @@ public class GameUIController : MonoBehaviour
 
     private void Awake()
     {
+        if (CharacterSelection.SelectedWing == PlayableWing.DolphWing)
+        {
+            dolphImage.gameObject.SetActive(true);
+            penguImage.gameObject.SetActive(false);
+        }
+
+        if (CharacterSelection.SelectedWing == PlayableWing.PenguWing)
+        {
+            dolphImage.gameObject.SetActive(false);
+            penguImage.gameObject.SetActive(true);
+        }
+        
         if (endOverlayPanel != null && gameOverText != null)
         {
             endOverlayPanel.gameObject.SetActive(false);
             gameOverText.gameObject.SetActive(false);
             gameOverButtons.SetActive(false);
+            returnToTitleButton.SetActive(false);
             gameWinText.gameObject.SetActive(false);
-            finalScoreBox.SetActive(false);
+            finalScoreHeadText.gameObject.SetActive(false);
         }
     }
     
@@ -115,6 +132,7 @@ public class GameUIController : MonoBehaviour
         {
             gameOverText.gameObject.SetActive(true);
             gameOverButtons.SetActive(true);
+            returnToTitleButton.SetActive(true);
 
             Image panelImage = endOverlayPanel.GetComponent<Image>();
             TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
@@ -164,11 +182,14 @@ public class GameUIController : MonoBehaviour
         {
             gameWinText.gameObject.SetActive(true);
             returnToTitleButton.SetActive(true);
-            finalScoreBox.SetActive(true);
+            finalScoreHeadText.gameObject.SetActive(true);
+            
+            finalScoreNumberText.text = _currentScore.ToString();
 
             Image panelImage = endOverlayPanel.GetComponent<Image>();
             TextMeshProUGUI winText = gameWinText.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI finalScoreText = finalScoreNumberText.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI finalScoreHead = finalScoreHeadText.GetComponent<TextMeshProUGUI>();
 
             Color startPanelColor = new Color(0f, 0f, 0f, 0f);
             Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
@@ -178,6 +199,7 @@ public class GameUIController : MonoBehaviour
             Color targetTextColor = new Color(1f, 1f, 1f, 1f);
             winText.color = startTextColor;
             finalScoreText.color = startTextColor;
+            finalScoreHead.color = startTextColor;
 
 
             float startGameSpeed = 1.0f;
@@ -201,6 +223,7 @@ public class GameUIController : MonoBehaviour
                 panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
                 winText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
                 finalScoreText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
+                finalScoreHead.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
                 
                 Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
                 lastTimeScale = Time.timeScale;
