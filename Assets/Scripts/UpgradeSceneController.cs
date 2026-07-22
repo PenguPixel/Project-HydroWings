@@ -7,10 +7,15 @@ using UnityEngine.Events;
 public class UpgradeSceneController : MonoBehaviour
 {
     [SerializeField] private int testIndexForDebug;
+    [SerializeField] private int testScoreForDebug;
     
     [Header("Upgrade Meshes")]
     [SerializeField] private List<GameObject> upgradeMeshes = new List<GameObject>();
     [SerializeField] private float rotationSpeed = 15f;
+
+    [Header("Data")] 
+    [SerializeField] private BountyProgressionData bountyProgressionData;
+    [SerializeField] private PlayerProgressionData playerProgressionData;
     
     [Header("Upgrade Base Values")]
     [SerializeField] private int baseHealthUpgradeCost = 100;
@@ -20,6 +25,9 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private int baseDamageUpgradeCost = 100;
     [SerializeField] private float damageUpgradeAmount = 5f;
     [SerializeField] private float upgradeCostMultiplier = 1.5f;
+    
+    [Header("Score")]
+    [SerializeField] private TextMeshProUGUI currentScoreText;
     
     [Header("CostUI")]
     [SerializeField] private TextMeshProUGUI healthCostText;
@@ -32,14 +40,17 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI maxAttackDamageText;
     
     public static UnityEvent<int> OnLoadNextLevel = new UnityEvent<int>();
+    /*
     public static UnityEvent<int,float> OnHealthUpgraded = new UnityEvent<int, float>();
     public static UnityEvent<int, float> OnWaterResourceUpgraded = new UnityEvent<int, float>();
     public static UnityEvent<int, float> OnAttackDamageUpgraded = new UnityEvent<int, float>();
+    */
 
     private int _lastOriginSceneIndex;
     private int _lastHealthUpgradeCost;
     private int _lastResourceUpgradeCost;
     private int _lastDamageUpgradeCost;
+    private int _currentUpgradeScore;
 
     private float _currentMaxHealth;
     private float _currentMaxWaterResource;
@@ -48,22 +59,30 @@ public class UpgradeSceneController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnUpgradescreenLoad.AddListener(SetOriginSceneIndex);
-        Character.OnMaxHealthChanged.AddListener(UpdateHealthStat);
+        /*Character.OnMaxHealthChanged.AddListener(UpdateHealthStat);
         Character.OnMaxResourceChanged.AddListener(UpdateResourceStat);
         Character.OnMaxAttackDamageChanged.AddListener(UpdateDamageStat);
+        */
     }
 
     private void OnDisable()
     {
         GameManager.OnUpgradescreenLoad.RemoveListener(SetOriginSceneIndex);
-        Character.OnMaxHealthChanged.RemoveListener(UpdateHealthStat);
+        /*Character.OnMaxHealthChanged.RemoveListener(UpdateHealthStat);
         Character.OnMaxResourceChanged.RemoveListener(UpdateResourceStat);
         Character.OnMaxAttackDamageChanged.RemoveListener(UpdateDamageStat);
+        */
     }
 
     private void Awake()
     {
+        // ONLY FOR DEBUG
         _lastOriginSceneIndex = testIndexForDebug;
+        bountyProgressionData.currentUpgradeScore = testScoreForDebug;
+        //---------------------------------------------------------------------------
+
+        _currentUpgradeScore = bountyProgressionData.currentUpgradeScore;
+        currentScoreText.text = _currentUpgradeScore.ToString();
         
         _lastHealthUpgradeCost = baseHealthUpgradeCost;
         _lastResourceUpgradeCost = baseResourceUpgradeCost;
@@ -73,10 +92,6 @@ public class UpgradeSceneController : MonoBehaviour
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
         damageCostText.text = _lastDamageUpgradeCost.ToString();
 
-        maxHealthText.text = GetComponent<Character>().CurrentMaxHealth.ToString();
-        maxResourceText.text = GetComponent<Character>().CurrentMaxWaterResource.ToString();
-        maxAttackDamageText.text = GetComponent<Character>().CurrentAttackDamage.ToString();
-
     }
 
     private void Update()
@@ -85,6 +100,10 @@ public class UpgradeSceneController : MonoBehaviour
         {
             mesh.transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
+        
+        maxHealthText.text = playerProgressionData.maxHealth.ToString();
+        maxResourceText.text = playerProgressionData.maxResource.ToString();
+        maxAttackDamageText.text = playerProgressionData.attackDamage.ToString();
     }
 
     private void SetOriginSceneIndex(int originSceneIndex)
@@ -101,8 +120,9 @@ public class UpgradeSceneController : MonoBehaviour
     public void UpgradeMaxHealth()
     {
         int currentCost = _lastHealthUpgradeCost;
-        float upgradeAmount = healthUpgradeAmount;
-        OnHealthUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        playerProgressionData.maxHealth += healthUpgradeAmount;
+        
         _lastHealthUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         healthCostText.text = _lastHealthUpgradeCost.ToString();
     }
@@ -110,8 +130,9 @@ public class UpgradeSceneController : MonoBehaviour
     public void UpgradeMaxWaterResource()
     {
         int currentCost = _lastResourceUpgradeCost;
-        float upgradeAmount = resourceUpgradeAmount;
-        OnWaterResourceUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        playerProgressionData.maxResource += resourceUpgradeAmount;
+        
         _lastResourceUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         resourceCostText.text = _lastResourceUpgradeCost.ToString();
     }
@@ -119,13 +140,14 @@ public class UpgradeSceneController : MonoBehaviour
     public void UpgradeAttackDamage()
     {
         int currentCost = _lastDamageUpgradeCost;
-        float upgradeAmount = damageUpgradeAmount;
-        OnAttackDamageUpgraded.Invoke(currentCost, upgradeAmount);
+        
+        playerProgressionData.attackDamage += damageUpgradeAmount;
+        
         _lastDamageUpgradeCost = Mathf.CeilToInt(currentCost * upgradeCostMultiplier);
         damageCostText.text = _lastDamageUpgradeCost.ToString();
     }
 
-    public void UpdateHealthStat(float newMaxHealth)
+    /*public void UpdateHealthStat(float newMaxHealth)
     {
         maxHealthText.text = newMaxHealth.ToString();
     }
@@ -139,4 +161,5 @@ public class UpgradeSceneController : MonoBehaviour
     {
         maxResourceText.text = newAttackDamage.ToString();
     }
+    */
 }

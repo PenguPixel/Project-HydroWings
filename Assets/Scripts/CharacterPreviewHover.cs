@@ -8,6 +8,10 @@ public class CharacterPreviewHover : MonoBehaviour
     [SerializeField] private Transform model;
     [SerializeField] private Sprite statsSprite;
 
+    [Header("Stats & Data")]
+    [SerializeField] private CharacterStats baseStats;
+    [SerializeField] private PlayerProgressionData playerProgressionData;
+    
     [Header("Scene")]
     [SerializeField] private string levelSceneName = "Level_01Scene";
 
@@ -52,6 +56,8 @@ public class CharacterPreviewHover : MonoBehaviour
 
         _startPosition = model.localPosition;
         _hoverPhaseOffset = Random.Range(0f, Mathf.PI * 2f);
+        
+        playerProgressionData.ResetToDefaults();
     }
 
     private void Update()
@@ -168,6 +174,8 @@ public class CharacterPreviewHover : MonoBehaviour
 
         CharacterSelection.SelectWing(wingType);
 
+        InitializeProgressionData();
+
         if (audioSource && selectSound)
         {
             audioSource.PlayOneShot(
@@ -175,9 +183,16 @@ public class CharacterPreviewHover : MonoBehaviour
                 SFXVolumeManager.Volume
             );
         }
-
+        
         Debug.Log($"{wingType} wurde ausgewählt.");
 
         SceneFader.Instance.LoadScene(levelSceneName);
+    }
+
+    private void InitializeProgressionData()
+    {
+        playerProgressionData.maxHealth = baseStats.MaxHealth;
+        playerProgressionData.maxResource = baseStats.MaxWaterAmount;
+        playerProgressionData.attackDamage = baseStats.AttackDamage;
     }
 }

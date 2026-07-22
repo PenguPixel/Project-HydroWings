@@ -1,9 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class BountyController : MonoBehaviour
 {
+    [SerializeField] private BountyProgressionData _bountyProgressionData;
+    
     private int _currentScore;
     public int CurrentUpgradePoints { get; private set; }
 
@@ -22,8 +25,16 @@ public class BountyController : MonoBehaviour
 
     private void Start()
     {
-        _currentScore = 0;
-        CurrentUpgradePoints = 0;
+        if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            _currentScore = 0;
+            CurrentUpgradePoints = 0;
+        }
+        else
+        {
+            _currentScore = _bountyProgressionData.currentScore;
+            CurrentUpgradePoints = _bountyProgressionData.currentUpgradeScore;
+        }
         OnScoreChange?.Invoke(_currentScore);
     }
 

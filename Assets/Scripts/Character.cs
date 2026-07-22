@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
     public CharacterStats Stats;
     public PlayerController CharacterController;
+    
+    public PlayerProgressionData PlayerProgressionData;
 
     public static UnityEvent<float, float> OnHealthchange = new UnityEvent<float, float>();
     public static UnityEvent OnPlayerDied = new UnityEvent();
@@ -13,6 +16,7 @@ public class Character : MonoBehaviour
     public static UnityEvent<float> OnMaxHealthChanged = new UnityEvent<float>();
     public static UnityEvent<float> OnMaxResourceChanged = new UnityEvent<float>();
     public static UnityEvent<float> OnMaxAttackDamageChanged = new UnityEvent<float>();
+    public static UnityEvent<float, float, float> OnUpgradeScreenActive = new UnityEvent<float, float, float>();
 
     private WaterResource _waterResource;
     private InputAction _moveAction;
@@ -32,26 +36,42 @@ public class Character : MonoBehaviour
     {
         UnderwaterController.OnSubmerged.AddListener(SetSubmerged);
         HeartPowerUp.OnHeartCollected.AddListener(RestoreHealth);
-        UpgradeSceneController.OnHealthUpgraded.AddListener(IncreaseMaxHealth);
+        /*UpgradeSceneController.OnHealthUpgraded.AddListener(IncreaseMaxHealth);
         UpgradeSceneController.OnWaterResourceUpgraded.AddListener(IncreaseMaxResource);
         UpgradeSceneController.OnAttackDamageUpgraded.AddListener(IncreaseAttackDamage);
+        */
     }
 
     private void OnDisable()
     {
         UnderwaterController.OnSubmerged.RemoveListener(SetSubmerged);
         HeartPowerUp.OnHeartCollected.RemoveListener(RestoreHealth);
-        UpgradeSceneController.OnHealthUpgraded.RemoveListener(IncreaseMaxHealth);
+        /*UpgradeSceneController.OnHealthUpgraded.RemoveListener(IncreaseMaxHealth);
         UpgradeSceneController.OnWaterResourceUpgraded.RemoveListener(IncreaseMaxResource);
         UpgradeSceneController.OnAttackDamageUpgraded.RemoveListener(IncreaseAttackDamage);
+        */
     }
 
     private void Awake()
     {
         CharacterController = GetComponentInParent<PlayerController>();
-        CurrentMaxHealth = Stats.MaxHealth;
-        CurrentMaxWaterResource = Stats.MaxWaterAmount;
-        CurrentAttackDamage = Stats.AttackDamage;
+        /*if (SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            CurrentMaxHealth = Stats.MaxHealth; 
+            CurrentMaxWaterResource = Stats.MaxWaterAmount; 
+            CurrentAttackDamage = Stats.AttackDamage;
+        }
+        else
+        {
+            CurrentMaxHealth = _playerProgressionData.maxHealth;
+            CurrentMaxWaterResource = _playerProgressionData.maxResource;
+            CurrentAttackDamage = _playerProgressionData.attackDamage;
+        }*/
+        
+        CurrentMaxHealth = PlayerProgressionData.maxHealth;
+        CurrentMaxWaterResource = PlayerProgressionData.maxResource;
+        CurrentAttackDamage = PlayerProgressionData.attackDamage;
+        Debug.Log($"Aktuelle Stats - Health: {CurrentMaxHealth}, Resource: {CurrentMaxWaterResource}, Damage: {CurrentAttackDamage}");
     }
 
     private void Start()
