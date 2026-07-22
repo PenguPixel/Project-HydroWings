@@ -45,6 +45,12 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI maxResourceText;
     [SerializeField] private TextMeshProUGUI maxAttackDamageText;
     
+    [Header("UISounds")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip successSound;
+    [SerializeField] private AudioClip denySound;
+    [SerializeField, Range(0f, 1f)] private float uIVolume = 1f;
+    
     public static UnityEvent<int> OnLoadNextLevel = new UnityEvent<int>();
     /*
     public static UnityEvent<int,float> OnHealthUpgraded = new UnityEvent<int, float>();
@@ -64,19 +70,11 @@ public class UpgradeSceneController : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnUpgradescreenLoad.AddListener(SetOriginSceneIndex);
-        /*Character.OnMaxHealthChanged.AddListener(UpdateHealthStat);
-        Character.OnMaxResourceChanged.AddListener(UpdateResourceStat);
-        Character.OnMaxAttackDamageChanged.AddListener(UpdateDamageStat);
-        */
     }
 
     private void OnDisable()
     {
         GameManager.OnUpgradescreenLoad.RemoveListener(SetOriginSceneIndex);
-        /*Character.OnMaxHealthChanged.RemoveListener(UpdateHealthStat);
-        Character.OnMaxResourceChanged.RemoveListener(UpdateResourceStat);
-        Character.OnMaxAttackDamageChanged.RemoveListener(UpdateDamageStat);
-        */
     }
 
     private void Awake()
@@ -138,11 +136,11 @@ public class UpgradeSceneController : MonoBehaviour
             bountyProgressionData.currentUpgradeScore -= currentCost;
             currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
             
-            //TODO Play Buy Sound
+            PlaySuccessSound();
         }
         else
         {
-            //TODO Play Fail Sound
+            PlayDenySound();
             return;
         }
         
@@ -161,11 +159,11 @@ public class UpgradeSceneController : MonoBehaviour
             bountyProgressionData.currentUpgradeScore -= currentCost;
             currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
             
-            //TODO Play Buy Sound
+            PlaySuccessSound();
         }
         else
         {
-            //TODO Play Fail Sound
+            PlayDenySound();
             return;
         }
         
@@ -184,11 +182,11 @@ public class UpgradeSceneController : MonoBehaviour
             bountyProgressionData.currentUpgradeScore -= currentCost;
             currentScoreText.text = bountyProgressionData.currentUpgradeScore.ToString();
             
-            //TODO Play Buy Sound
+            PlaySuccessSound();
         }
         else
         {
-            //TODO Play Fail Sound
+            PlayDenySound();
             return;
         }
         
@@ -196,19 +194,15 @@ public class UpgradeSceneController : MonoBehaviour
         damageCostText.text = _lastDamageUpgradeCost.ToString();
     }
 
-    /*public void UpdateHealthStat(float newMaxHealth)
+    public void PlayDenySound()
     {
-        maxHealthText.text = newMaxHealth.ToString();
+        if (audioSource == null || denySound == null) return;
+        audioSource.PlayOneShot(denySound, uIVolume);
     }
 
-    public void UpdateResourceStat(float newMaxResource)
+    public void PlaySuccessSound()
     {
-        maxResourceText.text = newMaxResource.ToString();
+        if (audioSource == null || successSound == null) return;
+        audioSource.PlayOneShot(successSound, uIVolume);
     }
-
-    public void UpdateDamageStat(float newAttackDamage)
-    {
-        maxResourceText.text = newAttackDamage.ToString();
-    }
-    */
 }
