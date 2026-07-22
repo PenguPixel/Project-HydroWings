@@ -3325,7 +3325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb581c14ebea13fba413e97046e71c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  _sceneFader: {fileID: 1424979500}
+  sceneFader: {fileID: 1424979500}
+  bountyProgressionData: {fileID: 11400000, guid: 9bbc863765daf7716be0d47216c14825, type: 2}
+  bountyController: {fileID: 1375092242}
 --- !u!4 &986347627
 Transform:
   m_ObjectHideFlags: 0
