@@ -2336,7 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionController
   kamikazeExplosion: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
-  explosionSound: {fileID: 8300000, guid: 3183ed371679fa5438a923476c01f683, type: 3}
+  explosionSound: {fileID: 8300000, guid: e780b5ca0b2ae2f44b7eee6d350bf7f5, type: 3}
   explosionVolume: 1
 --- !u!4 &425977674
 Transform:
@@ -6730,7 +6730,7 @@ MonoBehaviour:
   - {fileID: 1716964972}
   - {fileID: 556540589}
   bossStartDelay: 11
-  minimumIdleLoops: 2
+  minimumIdleLoops: 1
   maximumIdleLoops: 3
   explosionCount: 12
   timeBetweenExplosions: 0.2
@@ -6741,7 +6741,7 @@ MonoBehaviour:
   kamikazeExplosion: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
   finalExplosionScale: 10
   finalExplosionOffset: {x: 0, y: 10, z: 0}
-  finalExplosionSound: {fileID: 8300000, guid: 581e249d970e2264a8fa35d15d05a960, type: 3}
+  finalExplosionSound: {fileID: 8300000, guid: f5ec073611efa464fbad5858b1a0357b, type: 3}
   finalExplosionVolume: 1
 --- !u!114 &1335655035
 MonoBehaviour:
@@ -6755,7 +6755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdba533057816fb4c8a46f17df351175, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LolliOliBotHealth
-  maxHealth: 600
+  maxHealth: 800
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6773,8 +6773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossLiquidWeapon
   projectilePrefab: {fileID: -3656658170912881867, guid: cd4633ad9b01cc0408253d268ffac564, type: 3}
   spawnPoint: {fileID: 1623826665}
-  liquidShotSound: {fileID: 8300000, guid: 4ab5ea265d224214d860a7b53b3c3f56, type: 3}
-  shotVolume: 0.2
+  liquidShotSound: {fileID: 8300000, guid: aa984a667dc6e4c46bc146b03d5a0117, type: 3}
+  shotVolume: 1
   projectilesPerVolley: 3
   spreadAngle: 30
   localFireDirection: {x: -1, y: 0, z: 0}
@@ -9918,7 +9918,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 759cffe6911ee3d4789ee3b0b3936840, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -10017,7 +10017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossAudio
   introOutroAudioSource: {fileID: 2053240006}
-  loopAudioSource: {fileID: 2053240006}
+  loopAudioSource: {fileID: 2053240008}
   introClip: {fileID: 8300000, guid: 759cffe6911ee3d4789ee3b0b3936840, type: 3}
   loopClip: {fileID: 8300000, guid: dd6fabf15937bb3408cd1f2a56574b7b, type: 3}
   outroClip: {fileID: 8300000, guid: a3d3d140f61e00348afc7f1e3ff0be64, type: 3}
@@ -10033,7 +10033,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: dd6fabf15937bb3408cd1f2a56574b7b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
