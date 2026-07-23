@@ -47,12 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   projectileStats: {fileID: 11400000, guid: 6ee6cd9ada6b5db48860b99f000132fc, type: 2}
   weaponStats: {fileID: 11400000, guid: 737bf404c8bce984b81a131bbb5d246e, type: 2}
+  characterStats: {fileID: 0}
   audioSource: {fileID: 0}
-  waterShootSound: {fileID: 8300000, guid: e616d05f1f90a0a488e4d0b22ae19164, type: 3}
+  shootSound: {fileID: 8300000, guid: e616d05f1f90a0a488e4d0b22ae19164, type: 3}
   shootVolume: 1
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!135 &9140404538682945560
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -146,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character
   Stats: {fileID: 11400000, guid: cd53f5118cc51074987fcdb558a2b29f, type: 2}
   CharacterController: {fileID: 0}
+  PlayerProgressionData: {fileID: 11400000, guid: 10112ff155a74297a94067ba02aea36b, type: 2}
 --- !u!114 &4439059341152076154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c31dbdb58620ee1ba6abdbffe780b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterResource
-  maxWater: 100
-  refillRate: 50
 --- !u!1001 &1151747925306198489
 PrefabInstance:
   m_ObjectHideFlags: 0

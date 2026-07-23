@@ -75,11 +75,11 @@ public class KamikazeEnemy : Enemy
                         _explosionTimer += Time.deltaTime;
                         if (_explosionTimer >= explosionDelay)
                         {
-                                if (_targetCollider != null)
+                                if (_targetCollider)
                                 {
                                         var target = _targetCollider.GetComponent<Character>();
 
-                                        if (target != null)
+                                        if (target)
                                         {
                                                 target.TakeDamage(_scaledKamikazeDamage);
                                         }

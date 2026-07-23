@@ -2061,7 +2061,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: b3f8421b2e5dad0469e70f7e10d746a4, type: 3}
+  m_Resource: {fileID: 8300000, guid: 87c613668cdd45443aa546725476fdf0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -6344,7 +6344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionController
   kamikazeExplosion: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
-  explosionSound: {fileID: 0}
+  explosionSound: {fileID: 8300000, guid: e780b5ca0b2ae2f44b7eee6d350bf7f5, type: 3}
   explosionVolume: 1
 --- !u!4 &1614419223
 Transform:
