@@ -162,15 +162,14 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void SelectCharacter()
     {
-        if (CharacterSelectionLocked)
-        {
-            return;
-        }
+        if (CharacterSelectionLocked) return;
+
+        if (SceneFader.IsTransitioning) return;
 
         // Sofort sperren, bevor Sound, Animation oder Szenenwechsel starten.
         CharacterSelectionLocked = true;
         _isSelected = true;
-
+        
         CharacterStatsImage.Instance?.Hide();
 
         CharacterSelection.SelectWing(wingType);
@@ -186,7 +185,7 @@ public class CharacterPreviewHover : MonoBehaviour
         }
         
         Debug.Log($"{wingType} wurde ausgewählt.");
-
+        
         SceneFader.Instance.LoadScene(levelSceneName);
     }
 

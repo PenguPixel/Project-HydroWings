@@ -15,7 +15,7 @@ public class SceneFader : MonoBehaviour
     [Header("Fade Out")]
     [SerializeField] private float fadeOutDuration = 1f;
 
-    private bool _isTransitioning;
+    public static bool IsTransitioning { get; private set;}
 
     public static SceneFader Instance { get; private set;}
     
@@ -53,7 +53,7 @@ public class SceneFader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        if (_isTransitioning)
+        if (IsTransitioning)
             return;
 
         StartCoroutine(FadeOutAndLoadScene(sceneName));
@@ -61,7 +61,7 @@ public class SceneFader : MonoBehaviour
     
     public void LoadScene(int sceneIndex)
     {
-        if (_isTransitioning)
+        if (IsTransitioning)
             return;
         Debug.Log(sceneIndex);
 
@@ -76,19 +76,19 @@ public class SceneFader : MonoBehaviour
 
     private IEnumerator FadeInRoutine()
     {
-        _isTransitioning = true;
+        IsTransitioning = true;
 
         yield return FadeTo(0f, fadeInDuration);
 
         fadeImage.raycastTarget = false;
         fadeImage.gameObject.SetActive(false);
 
-        _isTransitioning = false;
+        IsTransitioning = false;
     }
 
     private IEnumerator FadeOutAndLoadScene(string sceneName)
     {
-        _isTransitioning = true;
+        IsTransitioning = true;
 
         fadeImage.gameObject.SetActive(true);
         fadeImage.raycastTarget = true;
@@ -100,7 +100,7 @@ public class SceneFader : MonoBehaviour
     
     private IEnumerator FadeOutAndLoadScene(int sceneIndex)
     {
-        _isTransitioning = true;
+        IsTransitioning = true;
 
         Debug.Log("Coroutine funzt");
         fadeImage.gameObject.SetActive(true);
