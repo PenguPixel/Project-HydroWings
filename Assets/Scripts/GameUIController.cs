@@ -18,6 +18,11 @@ public class GameUIController : MonoBehaviour
     
     [Header("Score UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
+
+    [Header("PauseUI")] 
+    [SerializeField] private GameObject settingsWindow;
+    [SerializeField] private GameObject quitButton;
+    [SerializeField] private GameObject playButton;
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
@@ -37,8 +42,8 @@ public class GameUIController : MonoBehaviour
     private bool isFading = false;
     private bool isWin = false;
     
-
     private int _currentScore;
+    private Image _endOverlayPanelImage;
 
     private void OnEnable()
     {
@@ -72,16 +77,18 @@ public class GameUIController : MonoBehaviour
             penguImage.gameObject.SetActive(true);
         }
         
-        if (endOverlayPanel != null && gameOverText != null)
-        {
-            endOverlayPanel.gameObject.SetActive(false);
-            gameOverText.gameObject.SetActive(false);
-            gameOverButtons.SetActive(false);
-            returnToTitleButton.SetActive(false);
-            gameWinText.gameObject.SetActive(false);
-            finalScoreHeadText.gameObject.SetActive(false);
-            finalScoreNumberText.gameObject.SetActive(false);
-        }
+        endOverlayPanel.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
+        gameOverButtons.SetActive(false);
+        returnToTitleButton.SetActive(false);
+        gameWinText.gameObject.SetActive(false);
+        finalScoreHeadText.gameObject.SetActive(false);
+        finalScoreNumberText.gameObject.SetActive(false);
+        settingsWindow.SetActive(false);
+        playButton.SetActive(false);
+        quitButton.SetActive(false);
+        
+        _endOverlayPanelImage = endOverlayPanel.GetComponent<Image>();
     }
     
     private void UpdateScoreUI(int newScore)
@@ -100,6 +107,35 @@ public class GameUIController : MonoBehaviour
     {
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
+    }
+
+    public void OpenSettings()
+    {
+        Time.timeScale = 0f;
+        endOverlayPanel.gameObject.SetActive(true);
+        _endOverlayPanelImage.color = new Color(0f, 0f, 0f, panelTargetAlpha);
+        settingsWindow.SetActive(true);
+        playButton.SetActive(true);
+        quitButton.SetActive(true);
+        CharacterPreviewHover.CharacterSelectionLocked = true;
+    }
+
+    public void CloseSettings()
+    {
+        _endOverlayPanelImage.color = new Color(0f, 0f, 0f, panelTargetAlpha);
+        endOverlayPanel.gameObject.SetActive(false);
+        settingsWindow.SetActive(false);
+        playButton.SetActive(false);
+        quitButton.SetActive(false);
+        CharacterPreviewHover.CharacterSelectionLocked = false;
+        Time.timeScale = 1f;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        
+        if (UnityEditor.EditorApplication.isPlaying) UnityEditor.EditorApplication.isPlaying = false;
     }
     
     public void TriggerLose()
@@ -134,13 +170,12 @@ public class GameUIController : MonoBehaviour
             gameOverText.gameObject.SetActive(true);
             gameOverButtons.SetActive(true);
             returnToTitleButton.SetActive(true);
-
-            Image panelImage = endOverlayPanel.GetComponent<Image>();
+            
             TextMeshProUGUI loseText = gameOverText.GetComponent<TextMeshProUGUI>();
 
             Color startPanelColor = new Color(0f, 0f, 0f, 0f);
             Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
-            panelImage.color = startPanelColor;
+            _endOverlayPanelImage.color = startPanelColor;
 
             Color startTextColor = new Color(1f, 1f, 1f, 0f);
             Color targetTextColor = new Color(1f, 1f, 1f, 1f);
@@ -165,7 +200,7 @@ public class GameUIController : MonoBehaviour
 
                 float currentFactor = elapsedTime / fadeDuration;
 
-                panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+                _endOverlayPanelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
                 loseText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
                 
                 Time.timeScale = Mathf.Lerp(startGameSpeed, targetGameSpeed, currentFactor);
@@ -175,7 +210,7 @@ public class GameUIController : MonoBehaviour
                 yield return null;
             }
 
-            panelImage.color = targetPanelColor;
+            _endOverlayPanelImage.color = targetPanelColor;
             if (!canceledLerp) Time.timeScale = targetGameSpeed;
             isFading = false;
         }
@@ -187,15 +222,14 @@ public class GameUIController : MonoBehaviour
             finalScoreNumberText.gameObject.SetActive(true);
             
             finalScoreNumberText.text = _currentScore.ToString();
-
-            Image panelImage = endOverlayPanel.GetComponent<Image>();
+            
             TextMeshProUGUI winText = gameWinText.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI finalScoreText = finalScoreNumberText.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI finalScoreHead = finalScoreHeadText.GetComponent<TextMeshProUGUI>();
 
             Color startPanelColor = new Color(0f, 0f, 0f, 0f);
             Color targetPanelColor = new Color(0f, 0f, 0f, panelTargetAlpha);
-            panelImage.color = startPanelColor;
+            _endOverlayPanelImage.color = startPanelColor;
 
             Color startTextColor = new Color(1f, 1f, 1f, 0f);
             Color targetTextColor = new Color(1f, 1f, 1f, 1f);
@@ -222,7 +256,7 @@ public class GameUIController : MonoBehaviour
 
                 float currentFactor = elapsedTime / fadeDuration;
 
-                panelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
+                _endOverlayPanelImage.color = Color.Lerp(startPanelColor, targetPanelColor, currentFactor);
                 winText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
                 finalScoreText.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
                 finalScoreHead.color = Color.Lerp(startTextColor, targetTextColor, currentFactor);
@@ -234,7 +268,7 @@ public class GameUIController : MonoBehaviour
                 yield return null;
             }
 
-            panelImage.color = targetPanelColor;
+            _endOverlayPanelImage.color = targetPanelColor;
             if (!canceledLerp) Time.timeScale = targetGameSpeed;
             isFading = false;
         }

@@ -37,12 +37,13 @@ public class CharacterPreviewHover : MonoBehaviour
     private Camera _mainCamera;
 
     // Diese Sperre gilt gemeinsam für alle CharacterPreviewHover-Objekte.
-    private static bool _characterSelectionLocked;
+    public static bool CharacterSelectionLocked;
+    
 
     private void Awake()
     {
         // Beim erneuten Laden der Character-Select-Szene zurücksetzen.
-        _characterSelectionLocked = false;
+        CharacterSelectionLocked = false;
     }
 
     private void Start()
@@ -64,7 +65,7 @@ public class CharacterPreviewHover : MonoBehaviour
     {
         HoverAnimation();
 
-        if (!_isSelected && !_characterSelectionLocked)
+        if (!_isSelected && !CharacterSelectionLocked)
         {
             CheckMouseHover();
             UpdateStatsImage();
@@ -121,7 +122,7 @@ public class CharacterPreviewHover : MonoBehaviour
             return;
         }
 
-        if (_isHovered && !_characterSelectionLocked)
+        if (_isHovered && !CharacterSelectionLocked)
         {
             model.Rotate(
                 Vector3.up,
@@ -148,7 +149,7 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void CheckSelectionInput()
     {
-        if (_characterSelectionLocked ||
+        if (CharacterSelectionLocked ||
             !_isHovered ||
             Mouse.current == null ||
             !Mouse.current.leftButton.wasPressedThisFrame)
@@ -161,13 +162,13 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void SelectCharacter()
     {
-        if (_characterSelectionLocked)
+        if (CharacterSelectionLocked)
         {
             return;
         }
 
         // Sofort sperren, bevor Sound, Animation oder Szenenwechsel starten.
-        _characterSelectionLocked = true;
+        CharacterSelectionLocked = true;
         _isSelected = true;
 
         CharacterStatsImage.Instance?.Hide();

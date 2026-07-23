@@ -23,4 +23,11 @@ public class MainMenuUI : MonoBehaviour
         settingsWindow.SetActive(false);
         mainMenuButtons.SetActive(true);
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        
+        if (UnityEditor.EditorApplication.isPlaying) UnityEditor.EditorApplication.isPlaying = false;
+    }
 }
