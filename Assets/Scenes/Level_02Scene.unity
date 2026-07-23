@@ -471,7 +471,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 986347626}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ReloadLevelScene
         m_Mode: 1
@@ -1365,7 +1365,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 986347626}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadTitleScreen
         m_Mode: 1
@@ -4965,6 +4965,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 107320695}
   quitButton: {fileID: 672115599}
   playButton: {fileID: 1417884913}
+  musicPlayer: {fileID: 512868851}
   gameOverText: {fileID: 893275652}
   endOverlayPanel: {fileID: 1125237760}
   gameOverButtons: {fileID: 875548491}

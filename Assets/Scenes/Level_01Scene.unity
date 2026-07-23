@@ -4501,6 +4501,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 1334302467}
   quitButton: {fileID: 289385452}
   playButton: {fileID: 371904071}
+  musicPlayer: {fileID: 512868851}
   gameOverText: {fileID: 436942052}
   endOverlayPanel: {fileID: 2042580495}
   gameOverButtons: {fileID: 81155996}

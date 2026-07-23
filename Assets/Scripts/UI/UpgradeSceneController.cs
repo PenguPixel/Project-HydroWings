@@ -24,6 +24,7 @@ public class UpgradeSceneController : MonoBehaviour
     [SerializeField] private float damageUpgradeAmount = 5f;
     [SerializeField] private float upgradeCostMultiplier = 1.5f;
     
+    
     [Header("Score")]
     [SerializeField] private TextMeshProUGUI currentScoreText;
 

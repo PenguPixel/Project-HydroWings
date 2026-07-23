@@ -16,5 +16,5 @@ MonoBehaviour:
   MovementSpeed: 35
   MaxWaterAmount: 150
   WaterRefillRate: 150
-  AttackDamage: 2
+  AttackDamage: 3
   FireRate: 0.2

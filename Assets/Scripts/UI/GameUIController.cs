@@ -23,6 +23,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private GameObject settingsWindow;
     [SerializeField] private GameObject quitButton;
     [SerializeField] private GameObject playButton;
+    [SerializeField] private GameObject musicPlayer;
     
     [Header("GameOverUI")]
     [SerializeField] private TextMeshProUGUI gameOverText;
@@ -44,6 +45,7 @@ public class GameUIController : MonoBehaviour
     
     private int _currentScore;
     private Image _endOverlayPanelImage;
+    private AudioSource _audioSource = null;
 
     private void OnEnable()
     {
@@ -89,6 +91,10 @@ public class GameUIController : MonoBehaviour
         quitButton.SetActive(false);
         
         _endOverlayPanelImage = endOverlayPanel.GetComponent<Image>();
+        if (musicPlayer != null)
+        {
+            _audioSource = musicPlayer.GetComponent<AudioSource>();
+        }
     }
     
     private void UpdateScoreUI(int newScore)
@@ -112,6 +118,7 @@ public class GameUIController : MonoBehaviour
     public void OpenSettings()
     {
         Time.timeScale = 0f;
+        if(_audioSource != null) _audioSource.Pause();
         endOverlayPanel.gameObject.SetActive(true);
         _endOverlayPanelImage.color = new Color(0f, 0f, 0f, panelTargetAlpha);
         settingsWindow.SetActive(true);
@@ -128,6 +135,7 @@ public class GameUIController : MonoBehaviour
         playButton.SetActive(false);
         quitButton.SetActive(false);
         CharacterPreviewHover.CharacterSelectionLocked = false;
+        if (_audioSource != null) _audioSource.UnPause();
         Time.timeScale = 1f;
     }
 

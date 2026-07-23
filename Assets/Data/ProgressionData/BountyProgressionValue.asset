@@ -16,4 +16,4 @@ MonoBehaviour:
   currentUpgradeScore: 0
   currentHealthUpgradeCost: 100
   currentResourceUpgradeCost: 100
-  currentDamageUpgradeCost: 100
+  currentDamageUpgradeCost: 150
