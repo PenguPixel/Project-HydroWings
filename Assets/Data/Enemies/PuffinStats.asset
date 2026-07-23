@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   MaxHealth: 10
   MaxLifetime: 25
-  MovementSpeed: 3
+  MovementSpeed: 6
   Bounty: 60
   IsKamikaze: 1
   KamikazeDamage: 5
