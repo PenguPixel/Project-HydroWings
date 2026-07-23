@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossLollipopProjectile
   fallSpeed: 10
-  damage: 10
+  damage: 15
   lifetime: 10
   hitRadius: 0.25
   playerLayer:

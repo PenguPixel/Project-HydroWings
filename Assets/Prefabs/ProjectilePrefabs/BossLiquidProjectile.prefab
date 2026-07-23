@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossLiquidProjectile
   speed: 12
-  damage: 5
+  damage: 8
   lifetime: 5
   hitRadius: 0.15
   playerLayer:

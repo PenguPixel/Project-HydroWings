@@ -9085,6 +9085,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 1150828548}
   quitButton: {fileID: 580663098}
   playButton: {fileID: 1066855455}
+  musicPlayer: {fileID: 0}
   gameOverText: {fileID: 839761625}
   endOverlayPanel: {fileID: 141189552}
   gameOverButtons: {fileID: 352935069}

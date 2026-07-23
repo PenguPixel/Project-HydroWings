@@ -1815,7 +1815,7 @@ MonoBehaviour:
   levelFlowData: {fileID: 11400000, guid: 517f86ac094e0b028adbbe5c6369a197, type: 2}
   healthUpgradeAmount: 15
   resourceUpgradeAmount: 10
-  damageUpgradeAmount: 3
+  damageUpgradeAmount: 2
   upgradeCostMultiplier: 2
   currentScoreText: {fileID: 172214017}
   healthAmountText: {fileID: 952287275}
@@ -1973,6 +1973,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 1862633276}
   quitButton: {fileID: 301687211}
   playButton: {fileID: 1344764669}
+  musicPlayer: {fileID: 0}
   gameOverText: {fileID: 1379255889}
   endOverlayPanel: {fileID: 1996951731}
   gameOverButtons: {fileID: 1655346458}

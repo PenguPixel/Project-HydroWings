@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45cf1fa10dc74a438fd09071a57c9ce, type: 3}
   m_Name: Dolph Wing Stats
   m_EditorClassIdentifier: Assembly-CSharp::CharacterStats
-  MaxHealth: 200
+  MaxHealth: 180
   MovementSpeed: 20
   MaxWaterAmount: 200
   WaterRefillRate: 70
-  AttackDamage: 10
+  AttackDamage: 6
   FireRate: 0.4
