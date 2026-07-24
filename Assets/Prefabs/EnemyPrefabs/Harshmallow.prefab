@@ -46,12 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponPoint
   projectileStats: {fileID: 11400000, guid: 11842dda7d8239f438f7a7b8016e1001, type: 2}
   weaponStats: {fileID: 11400000, guid: 923c75442982bc049ac0ed92d817d3d6, type: 2}
+  characterStats: {fileID: 0}
   audioSource: {fileID: 0}
-  waterShootSound: {fileID: 8300000, guid: 4806ebfb44a4bad4ead48ef4a8c8668f, type: 3}
+  shootSound: {fileID: 0}
   shootVolume: 1
-  OnEmpty:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &8723569561935452007
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,6 +64,7 @@ GameObject:
   - component: {fileID: 6682666885125591763}
   - component: {fileID: 582484257202241663}
   - component: {fileID: 786439975672861984}
+  - component: {fileID: 3617314394946300845}
   m_Layer: 8
   m_Name: Harshmallow
   m_TagString: Untagged
@@ -187,6 +186,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &3617314394946300845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723569561935452007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d706427570d3591429192b183aade43e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHitFlash
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.18
+  emissionStrength: 20
 --- !u!1001 &6665853391285741358
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   projectileStats: {fileID: 11400000, guid: 6ee6cd9ada6b5db48860b99f000132fc, type: 2}
   weaponStats: {fileID: 11400000, guid: 38a43f9e8decad94d84e302c91a0bc58, type: 2}
+  hitSound: {fileID: 8300000, guid: 0e44b322e8667404c8ae21cdc43cbb82, type: 3}
+  hitVolume: 1
 --- !u!1 &5999163667596243978
 GameObject:
   m_ObjectHideFlags: 0

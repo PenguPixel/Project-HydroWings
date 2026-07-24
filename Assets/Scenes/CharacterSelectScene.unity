@@ -293,6 +293,7 @@ MonoBehaviour:
   settingsWindow: {fileID: 771849117}
   quitButton: {fileID: 931708377}
   playButton: {fileID: 1879633266}
+  musicPlayer: {fileID: 0}
   gameOverText: {fileID: 694036306}
   endOverlayPanel: {fileID: 1119999956}
   gameOverButtons: {fileID: 1048644541}
@@ -1139,6 +1140,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &345675444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  m_PrefabInstance: {fileID: 1892580353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &367877805
 GameObject:
   m_ObjectHideFlags: 0
@@ -4256,6 +4262,7 @@ PrefabInstance:
     - {fileID: 4439059341152076154, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
     - {fileID: 6316110817970361566, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
     - {fileID: 9140404538682945560, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
+    - {fileID: 2183346134040031582, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7974772488791404013, guid: 4c4e602d5b2cc9f41931878bfe12374e, type: 3}
     m_AddedGameObjects: []
@@ -5208,13 +5215,76 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1892580355}
   m_SourcePrefab: {fileID: 100100000, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
 --- !u!4 &1892580354 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
   m_PrefabInstance: {fileID: 1892580353}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &1892580355
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345675444}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 0}
+  m_Bones: []
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_DirtyAABB: 0
 --- !u!1 &1915565569
 GameObject:
   m_ObjectHideFlags: 0

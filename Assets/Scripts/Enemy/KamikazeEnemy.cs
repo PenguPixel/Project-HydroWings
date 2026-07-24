@@ -8,164 +8,166 @@ using static UnityEngine.Quaternion;
 
 public class KamikazeEnemy : Enemy
 {
-        [SerializeField] private float attackSpeedMultiplier = 2f;
-        [SerializeField] private float rotationSpeed = 15f;
-        [SerializeField] private float explosionDelay = 3f;
-        [SerializeField] private MeshRenderer _blinkRenderer;
-        
-        private MaterialPropertyBlock _propBlock;
-        private static readonly int IsBlinking = Shader.PropertyToID("_IsBlinking");
+    [SerializeField] private float attackSpeedMultiplier = 2f;
+    [SerializeField] private float rotationSpeed = 15f;
+    [SerializeField] private float explosionDelay = 3f;
+    [SerializeField] private MeshRenderer _blinkRenderer;
 
-        private Collider _targetCollider;
-        private bool _isInRange;
-        private Vector3 _baseLookDirection = Vector3.left;
-        private bool _isExploding = false;
-        private float _explosionTimer = 0f;
-        private float _scaledKamikazeDamage;
-        private float _scaledMovementSpeed;
+    [Header("Audio")]
+    [SerializeField] private AudioClip detectionSound;
 
-        public static UnityEvent<Vector3> OnExplosion = new UnityEvent<Vector3>();
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float detectionVolume = 1f;
 
-        private void Start()
+    private MaterialPropertyBlock _propBlock;
+    private static readonly int IsBlinking = Shader.PropertyToID("_IsBlinking");
+
+    private Collider _targetCollider;
+    private bool _isInRange;
+    private Vector3 _baseLookDirection = Vector3.left;
+    private bool _isExploding = false;
+    private float _explosionTimer = 0f;
+    private float _scaledKamikazeDamage;
+    private float _scaledMovementSpeed;
+
+    public static UnityEvent<Vector3> OnExplosion = new UnityEvent<Vector3>();
+
+    private void Start()
+    {
+        _propBlock = new MaterialPropertyBlock();
+    }
+
+    private void OnEnable()
+    {
+        _scaledKamikazeDamage = Stats.KamikazeDamage * GameManager.GlobalDifficultiyMultiplier;
+        _scaledMovementSpeed = Stats.MovementSpeed * GameManager.GlobalDifficultiyMultiplier;
+
+        _targetCollider = null;
+        _isInRange = false;
+        _isExploding = false;
+        _explosionTimer = 0f;
+
+        if (splineAnimate != null)
         {
+            splineAnimate.enabled = true;
+        }
+
+        if (_blinkRenderer != null)
+        {
+            if (_propBlock == null)
+            {
                 _propBlock = new MaterialPropertyBlock();
+            }
+
+            _blinkRenderer.GetPropertyBlock(_propBlock);
+            _propBlock.SetFloat(IsBlinking, 0f);
+            _blinkRenderer.SetPropertyBlock(_propBlock);
+        }
+    }
+
+    private void Update()
+    {
+        if (_isDead)
+        {
+            return;
         }
 
-        private void OnEnable()
-        {
-                _scaledKamikazeDamage = Stats.KamikazeDamage * GameManager.GlobalDifficultiyMultiplier;
-                _scaledMovementSpeed = Stats.MovementSpeed * GameManager.GlobalDifficultiyMultiplier;
-                _targetCollider = null;
-                _isInRange = false;
-                _isExploding = false;
-                _explosionTimer = 0f;
+        LifetimeHandling();
+        BasicMovementHandling();
 
-                if (splineAnimate != null)
+        if (_isExploding)
+        {
+            _blinkRenderer.GetPropertyBlock(_propBlock);
+            _propBlock.SetFloat(IsBlinking, 1f);
+            _blinkRenderer.SetPropertyBlock(_propBlock);
+
+            _explosionTimer += Time.deltaTime;
+
+            if (_explosionTimer >= explosionDelay)
+            {
+                if (_targetCollider)
                 {
-                        splineAnimate.enabled = true;
+                    Character target =
+                        _targetCollider.GetComponent<Character>();
+
+                    if (target)
+                    {
+                        target.TakeDamage(_scaledKamikazeDamage);
+                    }
                 }
 
-                if (_blinkRenderer != null)
-                {
-                        if (_propBlock == null)
-                        {
-                                _propBlock = new MaterialPropertyBlock();
-                        }
-
-                        _blinkRenderer.GetPropertyBlock(_propBlock);
-                        _propBlock.SetFloat(IsBlinking, 0f);
-                        _blinkRenderer.SetPropertyBlock(_propBlock);
-                }
+                TriggerLocalDeath();
+                OnExplosion?.Invoke(transform.position);
+            }
         }
+    }
 
-        
-        
-        private void Update()
+    private void BasicMovementHandling()
+    {
+        if (!_isInRange)
         {
-                if (_isDead) return;
-                LifetimeHandling();
-                BasicMovementHandling();
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, _baseLookDirection, rotationSpeed * Time.deltaTime, 0.0f);
 
-                if (_isExploding) 
-                {
-                        _blinkRenderer.GetPropertyBlock(_propBlock);
-                        _propBlock.SetFloat(IsBlinking, _isExploding ? 1f : 0f);
-                        _blinkRenderer.SetPropertyBlock(_propBlock);
-                        
-                        _explosionTimer += Time.deltaTime;
-                        if (_explosionTimer >= explosionDelay)
-                        {
-                                if (_targetCollider)
-                                {
-                                        var target = _targetCollider.GetComponent<Character>();
+            transform.rotation = LookRotation(newDirection);
 
-                                        if (target)
-                                        {
-                                                target.TakeDamage(_scaledKamikazeDamage);
-                                        }
-                                }
+            Vector3 moveDirection = transform.forward * (_scaledMovementSpeed * Time.deltaTime);
 
-                                TriggerLocalDeath();
-                                OnExplosion?.Invoke(transform.position);
-                        }
-                }
+            transform.Translate(moveDirection, Space.World);
         }
-        
-        private void BasicMovementHandling()
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other)
         {
-                if (!_isInRange)
-                {
-                       Vector3 newDirection = Vector3.RotateTowards(
-                                transform.forward, 
-                                _baseLookDirection,
-                                rotationSpeed * Time.deltaTime, 
-                                0.0f
-                                );
+            splineAnimate.enabled = false;
+            _isInRange = true;
 
-                        transform.rotation = LookRotation(newDirection);
-
-                        Vector3 moveDirection =
-                                transform.forward *
-                                (_scaledMovementSpeed * Time.deltaTime);
-
-                        transform.Translate(moveDirection, Space.World);
-                }
+            MoveTowardsTarget(other);
+            TriggerSelfDestruction(other);
         }
+    }
 
-        private void OnTriggerStay(Collider other)
+    private void TriggerSelfDestruction(Collider other)
+    {
+        if (_isExploding)
         {
-                if (other)
-                {
-                        splineAnimate.enabled = false;
-                        _isInRange = true;
-                        MoveTowardsTarget(other);
-                        TriggerSelfDestruction(other);
-                }
+            return;
         }
 
-        private void TriggerSelfDestruction(Collider other)
+        Debug.Log(
+            "Kamikaze wurde ausgelöst von: " +
+            other.name
+        );
+
+        _targetCollider = other;
+        _explosionTimer = 0f;
+        _isExploding = true;
+
+        // Detection-Sound einmal abspielen
+        if (detectionSound != null)
         {
-                if (_isExploding) return;
-
-                Debug.Log(
-                        "Kamikaze wurde ausgelöst von: " +
-                        other.name
-                );
-
-                _targetCollider = other;
-                _explosionTimer = 0f;
-                _isExploding = true;
+            AudioSource.PlayClipAtPoint(detectionSound, transform.position, detectionVolume * SFXVolumeManager.Volume);
         }
+    }
 
-        private void OnTriggerExit(Collider other)
-        {
-                _isInRange = false;
-                _targetCollider = null;
-        }
+    private void OnTriggerExit(Collider other)
+    {
+        _isInRange = false;
+        _targetCollider = null;
+    }
 
-        private void MoveTowardsTarget(Collider other)
-        {
-                Vector3 targetDirection =
-                        other.transform.position -
-                        transform.position;
+    private void MoveTowardsTarget(Collider other)
+    {
+        Vector3 targetDirection = other.transform.position - transform.position;
 
-                Vector3 newDirection = Vector3.RotateTowards(
-                        transform.forward,
-                        targetDirection,
-                        rotationSpeed * Time.deltaTime,
-                        0.0f
-                );
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed * Time.deltaTime, 0.0f);
 
-                transform.rotation = LookRotation(newDirection);
+        transform.rotation = LookRotation(newDirection);
 
-                Vector3 moveDirection =
-                        transform.forward *
-                        (
-                                _scaledMovementSpeed *
-                                attackSpeedMultiplier *
-                                Time.deltaTime
-                        );
+        Vector3 moveDirection = transform.forward * (_scaledMovementSpeed * attackSpeedMultiplier * Time.deltaTime);
 
-                transform.Translate(moveDirection, Space.World);
-        }
+        transform.Translate(moveDirection, Space.World);
+    }
 }

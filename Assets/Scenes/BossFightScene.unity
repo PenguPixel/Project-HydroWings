@@ -1106,6 +1106,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!137 &152483411 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -8621035717839163704, guid: 374b4dbcb244a234cb7949ec9833aeb0, type: 3}
+  m_PrefabInstance: {fileID: 468642291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &166459328
 GameObject:
   m_ObjectHideFlags: 0
@@ -2849,6 +2854,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1335655041}
   m_SourcePrefab: {fileID: 100100000, guid: 374b4dbcb244a234cb7949ec9833aeb0, type: 3}
+--- !u!137 &468642292 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4489319261455563329, guid: 374b4dbcb244a234cb7949ec9833aeb0, type: 3}
+  m_PrefabInstance: {fileID: 468642291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487718354
 GameObject:
   m_ObjectHideFlags: 0
@@ -3470,6 +3480,7 @@ GameObject:
   - component: {fileID: 556540587}
   - component: {fileID: 556540589}
   - component: {fileID: 556540588}
+  - component: {fileID: 556540590}
   m_Layer: 8
   m_Name: Lollipop-AugeHitbox
   m_TagString: Untagged
@@ -3527,6 +3538,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.0015
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &556540590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556540586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 245434d56b8e1604a95b10a02964acb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeakpointHitFlash
+  weakpointRenderer: {fileID: 152483411}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.12
+  emissionStrength: 20
 --- !u!1 &558155304
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,6 +8420,7 @@ GameObject:
   - component: {fileID: 1716964970}
   - component: {fileID: 1716964972}
   - component: {fileID: 1716964971}
+  - component: {fileID: 1716964973}
   m_Layer: 8
   m_Name: BonbonHitbox
   m_TagString: Untagged
@@ -8450,6 +8478,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1716964973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716964969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 245434d56b8e1604a95b10a02964acb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeakpointHitFlash
+  weakpointRenderer: {fileID: 468642292}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.12
+  emissionStrength: 20
 --- !u!1 &1735713676
 GameObject:
   m_ObjectHideFlags: 0

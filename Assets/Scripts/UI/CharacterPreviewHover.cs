@@ -77,12 +77,9 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void HoverAnimation()
     {
-        float hoverOffset =
-            Mathf.Sin(Time.time * hoverSpeed + _hoverPhaseOffset)
-            * hoverHeight;
+        float hoverOffset = Mathf.Sin(Time.time * hoverSpeed + _hoverPhaseOffset) * hoverHeight;
 
-        model.localPosition =
-            _startPosition + Vector3.up * hoverOffset;
+        model.localPosition = _startPosition + Vector3.up * hoverOffset;
     }
 
     private void CheckMouseHover()
@@ -113,22 +110,14 @@ public class CharacterPreviewHover : MonoBehaviour
     {
         if (_isSelected)
         {
-            model.Rotate(
-                Vector3.up,
-                selectionRotationSpeed * Time.deltaTime,
-                Space.Self
-            );
+            model.Rotate(Vector3.up, selectionRotationSpeed * Time.deltaTime, Space.Self);
 
             return;
         }
 
         if (_isHovered && !CharacterSelectionLocked)
         {
-            model.Rotate(
-                Vector3.up,
-                hoverRotationSpeed * Time.deltaTime,
-                Space.Self
-            );
+            model.Rotate(Vector3.up, hoverRotationSpeed * Time.deltaTime, Space.Self);
         }
     }
 
@@ -149,10 +138,7 @@ public class CharacterPreviewHover : MonoBehaviour
 
     private void CheckSelectionInput()
     {
-        if (CharacterSelectionLocked ||
-            !_isHovered ||
-            Mouse.current == null ||
-            !Mouse.current.leftButton.wasPressedThisFrame)
+        if (CharacterSelectionLocked || !_isHovered || Mouse.current == null || !Mouse.current.leftButton.wasPressedThisFrame)
         {
             return;
         }
@@ -166,7 +152,6 @@ public class CharacterPreviewHover : MonoBehaviour
 
         if (SceneFader.IsTransitioning) return;
 
-        // Sofort sperren, bevor Sound, Animation oder Szenenwechsel starten.
         CharacterSelectionLocked = true;
         _isSelected = true;
         
@@ -178,10 +163,7 @@ public class CharacterPreviewHover : MonoBehaviour
 
         if (audioSource && selectSound)
         {
-            audioSource.PlayOneShot(
-                selectSound,
-                SFXVolumeManager.Volume
-            );
+            audioSource.PlayOneShot(selectSound, SFXVolumeManager.Volume);
         }
         
         Debug.Log($"{wingType} wurde ausgewählt.");
