@@ -45,6 +45,7 @@ Der Spieler steuert ein bewaffnetes Flugtier (wie den Delfin "DolphWing" oder de
 - **Spezielle Shader:** Angepasste und modifizierte Shader aus dem Unity Asset Store sowie eigene Shader Graph Implementierungen.
 - **Eigene Audio-Komposition:** Eigens komponierter Soundtrack und Sounddesign.
 - **Custom VFX / Partikelsysteme:** Eigenes Partikelsystem für Wassertropfen-Spuren bei abgefeuerten Projektilen.
+- **Custom Shader:** Eigener Shader für Outline Materials um Cartoon Look zu erzielen.
 
 ---
 
