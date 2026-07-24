@@ -67,6 +67,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -251,6 +252,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -341,6 +343,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -431,6 +434,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -593,6 +597,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 050b33951eb8792d6ae2bab7e19e79a8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -683,6 +688,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -853,8 +859,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5727894, y: 1.6184708, z: 4.32}
-  m_Center: {x: 0.07450223, y: -0.4, z: -1.7056215e-16}
+  m_Size: {x: 3.28, y: 1.29, z: 4.52}
+  m_Center: {x: 0.07450223, y: -0.06, z: 0.12}
 --- !u!114 &8290590607865599670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,6 +1082,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -3846018093981099296, guid: 9929dd924d3093548af9c50bcca8ed6f, type: 3}
+  - {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -253,6 +253,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mund
       objectReference: {fileID: 0}
+    - target: {fileID: -5819016870978334117, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5819016870978334117, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
+    - target: {fileID: -5818537154838427711, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5818537154838427711, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
+    - target: {fileID: -449150537503566137, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -449150537503566137, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
+    - target: {fileID: 148838628828892247, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 148838628828892247, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
     - target: {fileID: 919132149155446097, guid: 39b6adf7f4e46964fa51d4cedb15f28d, type: 3}
       propertyPath: m_Name
       value: Harshmallow
