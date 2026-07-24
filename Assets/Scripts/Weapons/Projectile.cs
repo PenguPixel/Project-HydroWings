@@ -8,9 +8,13 @@ public class Projectile : MonoBehaviour
     [SerializeField] private ProjectileStats projectileStats;
     [SerializeField] private WeaponPointStats weaponStats;
 
+    [Header("Hit Sound")]
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField, Range(0f, 1f)] private float hitVolume = 1f;
+
     private ObjectPool<Projectile> _assignedPool;
     private float _localRemainingLifetime;
-    
+
     private float _currentDamage;
     private bool _hasHit;
     private bool _isEnemy;
@@ -19,27 +23,20 @@ public class Projectile : MonoBehaviour
     {
         if (projectileStats != null)
         {
-            _localRemainingLifetime =
-                projectileStats.RemainingLifetime;
+            _localRemainingLifetime = projectileStats.RemainingLifetime;
 
-            _isEnemy =
-                projectileStats.IsEnemyProjectile;
-
-            // Standardwert, falls kein anderer Schaden gesetzt wird.
-            //_currentDamage = projectileStats.Basedamage;
+            _isEnemy = projectileStats.IsEnemyProjectile;
         }
         else
         {
-            Debug.LogWarning(
-                $"ProjectileStats fehlen auf {name}."
-            );
+            Debug.LogWarning($"ProjectileStats fehlen auf {name}.");
         }
     }
 
     public void SetupDamage(float damage, bool isEnemyProjectile)
     {
         _isEnemy = isEnemyProjectile;
-        
+
         if (!_isEnemy)
         {
             _currentDamage = damage;
@@ -49,16 +46,12 @@ public class Projectile : MonoBehaviour
             _currentDamage = projectileStats.Basedamage * GameManager.GlobalDifficultiyMultiplier;
         }
     }
-    
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         LifetimeHandling();
 
-        float distanceThisFrame =
-            projectileStats.BaseSpeed *
-            Time.deltaTime;
+        float distanceThisFrame = projectileStats.BaseSpeed * Time.deltaTime;
 
         if (!_isEnemy)
         {
@@ -105,87 +98,68 @@ public class Projectile : MonoBehaviour
 
         MovementHandling();
     }
-    
-    private void DealDamageToCharacter(
-        RaycastHit hitInfo)
-    {
-        Character characterComponent =
-            hitInfo.collider.GetComponent<Character>();
 
-        characterComponent?.TakeDamage(
-            _currentDamage
-        );
+    private void DealDamageToCharacter(RaycastHit hitInfo)
+    {
+        Character characterComponent = hitInfo.collider.GetComponent<Character>();
+
+        characterComponent?.TakeDamage(_currentDamage);
     }
 
-    private void DealDamageToEnemy(
-        RaycastHit hitInfo)
+    private void DealDamageToEnemy(RaycastHit hitInfo)
     {
-        if (hitInfo.collider.TryGetComponent<Enemy>(
-                out Enemy enemy))
+        if (hitInfo.collider.TryGetComponent<Enemy>(out Enemy enemy))
         {
             enemy.TakeDamage(_currentDamage);
+            PlayHitSound(hitInfo.point);
             return;
         }
 
-        if (hitInfo.collider.TryGetComponent<BossHitbox>(
-                out BossHitbox bossHitbox))
+        if (hitInfo.collider.TryGetComponent<BossHitbox>(out BossHitbox bossHitbox))
         {
-            bossHitbox.DealDamage(
-                _currentDamage
-            );
+            bossHitbox.DealDamage(_currentDamage);
+            PlayHitSound(hitInfo.point);
         }
+    }
+
+    private void PlayHitSound(Vector3 hitPosition)
+    {
+        if (!hitSound)
+            return;
+
+        AudioSource.PlayClipAtPoint(hitSound, hitPosition, hitVolume * SFXVolumeManager.Volume);
     }
 
     private void MovementHandling()
     {
-        if (!weaponStats.IsEnemyWeapon &&
-            weaponStats.IsAutoFire)
+        if (!weaponStats.IsEnemyWeapon && weaponStats.IsAutoFire)
         {
-            float speed =
-                projectileStats.BaseSpeed *
-                Time.deltaTime;
+            float speed = projectileStats.BaseSpeed * Time.deltaTime;
+            
+            Vector3 moveDirection = transform.forward * speed;
 
-            Vector3 moveDirection =
-                transform.forward * speed;
-
-            transform.Translate(
-                moveDirection,
-                Space.World
-            );
+            transform.Translate(moveDirection, Space.World);
         }
 
         if (weaponStats.IsEnemyWeapon)
         {
-            transform.Translate(
-                Vector3.left *
-                (projectileStats.BaseSpeed *
-                 Time.deltaTime),
-                Space.World
-            );
+            transform.Translate(Vector3.left * (projectileStats.BaseSpeed * Time.deltaTime), Space.World);
         }
 
-        if (!weaponStats.IsEnemyWeapon &&
-            !weaponStats.IsAutoFire)
+        if (!weaponStats.IsEnemyWeapon && !weaponStats.IsAutoFire)
         {
-            transform.Translate(
-                Vector3.right *
-                (projectileStats.BaseSpeed *
-                 Time.deltaTime),
-                Space.World
-            );
+            transform.Translate(Vector3.right * (projectileStats.BaseSpeed * Time.deltaTime), Space.World);
         }
     }
 
     private void LifetimeHandling()
     {
-        if (_localRemainingLifetime <= 0f &&
-            isActiveAndEnabled)
+        if (_localRemainingLifetime <= 0f && isActiveAndEnabled)
         {
             ReleaseToPool();
         }
 
-        _localRemainingLifetime -=
-            Time.deltaTime;
+        _localRemainingLifetime -= Time.deltaTime;
     }
 
     public void ReleaseToPool()

@@ -99,6 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 192121596238391319}
+  - component: {fileID: 5229527430784329310}
   m_Layer: 0
   m_Name: PenguWing
   m_TagString: Untagged
@@ -123,6 +124,66 @@ Transform:
   - {fileID: 6754724448880726431}
   m_Father: {fileID: 6240422999978489859}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!137 &5229527430784329310
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711952738913104557}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 0}
+  m_Bones: []
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 0}
+  m_AABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_DirtyAABB: 0
 --- !u!1 &2973091133454453666
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +809,7 @@ GameObject:
   - component: {fileID: 8290590607865599670}
   - component: {fileID: 1816069519900869394}
   - component: {fileID: 2439330425904944699}
+  - component: {fileID: -3998099759689158976}
   m_Layer: 7
   m_Name: Pengu_Wing
   m_TagString: Untagged
@@ -808,6 +870,9 @@ MonoBehaviour:
   Stats: {fileID: 11400000, guid: cd53f5118cc51074987fcdb558a2b29f, type: 2}
   CharacterController: {fileID: 0}
   PlayerProgressionData: {fileID: 11400000, guid: 10112ff155a74297a94067ba02aea36b, type: 2}
+  hitSound: {fileID: 8300000, guid: 6186d1192d0989743b70591648ad8f4f, type: 3}
+  hitVolume: 1
+  deathExplosionPrefab: {fileID: 3815556769079230259, guid: 1642a65b7a563b9499c84b08d704220a, type: 3}
 --- !u!114 &1816069519900869394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +897,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c31dbdb58620ee1ba6abdbffe780b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaterResource
+--- !u!114 &-3998099759689158976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6760394571157693113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90458b5525d863647a25103d88080c96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHitFlash
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.18
+  emissionStrength: 20
 --- !u!1 &7613226364665803368
 GameObject:
   m_ObjectHideFlags: 0
