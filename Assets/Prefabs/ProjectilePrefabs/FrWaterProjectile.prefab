@@ -4947,6 +4947,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fc7684dbb54e81d498f23a7762cbcfde, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: fc7684dbb54e81d498f23a7762cbcfde, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 79c8cf60bbb0dec4a9b557a55ba6c9b6, type: 2}
     - target: {fileID: 919132149155446097, guid: fc7684dbb54e81d498f23a7762cbcfde, type: 3}
       propertyPath: m_Name
       value: WaterProjectileMesh
