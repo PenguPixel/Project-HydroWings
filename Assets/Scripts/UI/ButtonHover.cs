@@ -4,7 +4,9 @@ using UnityEngine.EventSystems;
 public class ButtonHover : MonoBehaviour,
     IPointerEnterHandler,
     IPointerExitHandler,
-    IPointerClickHandler
+    IPointerClickHandler,
+    ISelectHandler,
+    IDeselectHandler
 {
     [SerializeField] private float hoverScale = 1.1f;
     [SerializeField] private float speed = 10f;
@@ -56,5 +58,15 @@ public class ButtonHover : MonoBehaviour,
     {
         targetScale = normalScale;
         transform.localScale = normalScale;
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        targetScale = normalScale * hoverScale;
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        targetScale = normalScale;
     }
 }
