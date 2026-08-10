@@ -77,6 +77,7 @@ enum SceneName
     UpgradeScene = 2,
     Level_01Scene = 3,
     Level_02Scene = 4,
-    BossLevelScene = 5
+    BossLevelScene = 5,
+    ScoreboardScene = 6
 }
 
