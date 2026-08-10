@@ -61,7 +61,9 @@ public class TitleLogoSequence : MonoBehaviour
         bool pressed =
             (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame) ||
             (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) ||
-            (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame);
+            (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame) ||
+            (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame) ||
+            (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame);
 
         if (pressed && !menuOpened)
         {
