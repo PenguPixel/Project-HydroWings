@@ -42,9 +42,9 @@ public class MainMenuUI : MonoBehaviour
     {
         Application.Quit();
         
-        if (UnityEditor.EditorApplication.isPlaying)
+        /*if (UnityEditor.EditorApplication.isPlaying)
         {
             UnityEditor.EditorApplication.isPlaying = false;
-        }
+        }*/
     }
 }

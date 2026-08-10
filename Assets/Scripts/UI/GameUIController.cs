@@ -396,10 +396,10 @@ public class GameUIController : MonoBehaviour
     {
         Application.Quit();
         
-        if (UnityEditor.EditorApplication.isPlaying)
+        /*if (UnityEditor.EditorApplication.isPlaying)
         {
             UnityEditor.EditorApplication.isPlaying = false;
-        }
+        }*/
     }
 
     public void TriggerLose()
