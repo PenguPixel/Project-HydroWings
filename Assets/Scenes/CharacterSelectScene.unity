@@ -289,6 +289,10 @@ MonoBehaviour:
   penguImage: {fileID: 2129644572}
   waterSlider: {fileID: 304372438}
   healthSlider: {fileID: 1287512730}
+  baseHealthValue: 100
+  baseWaterValue: 100
+  healthSliderRect: {fileID: 0}
+  waterSliderRect: {fileID: 0}
   scoreText: {fileID: 31626359}
   settingsWindow: {fileID: 771849117}
   quitButton: {fileID: 931708377}
@@ -524,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1025488982}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &170303471
@@ -2872,6 +2876,11 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1025488982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6378337136401425762, guid: 917c4d9df2b5f5544994aea39877b6db, type: 3}
+  m_PrefabInstance: {fileID: 1881540461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1048644541
 GameObject:
   m_ObjectHideFlags: 0

@@ -1969,10 +1969,6 @@ MonoBehaviour:
   penguImage: {fileID: 1195377355}
   waterSlider: {fileID: 2084184503}
   healthSlider: {fileID: 642764211}
-  baseHealthValue: 100
-  baseWaterValue: 100
-  healthSliderRect: {fileID: 0}
-  waterSliderRect: {fileID: 0}
   scoreText: {fileID: 667886796}
   settingsWindow: {fileID: 1862633276}
   quitButton: {fileID: 301687211}
@@ -7140,10 +7136,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1234966297226661006, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2284184628170723239, guid: 7544b2a5566a3be4c9cd34c89f58dee5, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
