@@ -12,6 +12,8 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+/*.vscode/*
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -113,3 +115,5 @@ Desktop.ini
 .DS_Store
 .idea/.idea.Project-HydroWings/.idea/indexLayout.xml
 /.idea
+
+*.slnx
